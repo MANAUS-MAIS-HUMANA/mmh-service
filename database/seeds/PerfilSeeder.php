@@ -19,19 +19,11 @@ class PerfilSeeder extends Seeder
             ],
             'Codese' => [
                 'perfil' => 'codese',
-                'descricao' => 'Administrador',
+                'descricao' => 'Administrador do sistema',
             ],
             'Parceiro' => [
                 'perfil' => 'parceiro',
                 'descricao' => 'Igreja, Ong, Transportador e etc',
-            ],
-            'Doador' => [
-                'perfil' => 'doador',
-                'descricao' => 'Beneficiador',
-            ],
-            'Beneficiario' => [
-                'perfil' => 'beneficiario',
-                'descricao' => 'Beneficiado',
             ],
         ]);
 
