@@ -45,7 +45,7 @@ class AuthService
                 'pessoa_id' => $pessoa->id,
             ]);
 
-            throw_if(!$usuario, \Exception::class, ['Não foi possível criar o usuaŕio!', 500]);
+            throw_if($usuario, \Exception::class, 'Não foi possível criar o usuaŕio!', 500);
 
             $this->perfisAttach($usuario, $request->perfis);
 

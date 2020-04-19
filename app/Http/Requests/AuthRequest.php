@@ -10,7 +10,6 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class AuthRequest extends FormRequest
@@ -36,8 +35,8 @@ class AuthRequest extends FormRequest
             "nome" => "required|string|max:255",
             "email" => "required|string|email|max:255|unique:users,email,{$this->getUserId()},id",
             "endereco" => "required|string|max:255",
-            "estado" => "required|string|max:2",
-            "tipo_pessoa" => "required|string|max:2|in:{$this->getTiposPessoa()}",
+            "estado" => "required|string|size:2",
+            "tipo_pessoa" => "required|string|in:{$this->getTiposPessoa()}",
             "cpf" => "required_without:cnpj|cpf|size:11|unique:tipo_pessoas,cpf_cnpj,{$this->getUserId()},id",
             "cnpj" => "required_without:cpf|cnpj|size:14|unique:tipo_pessoas,cpf_cnpj,{$this->getUserId()},id",
             "perfis" => "required|array",
@@ -134,7 +133,12 @@ class AuthRequest extends FormRequest
         foreach ($validator->failed() as $key => $value) {
             if (Arr::has($perfis, $key) && Arr::has($validator->errors()->messages(), $key)) {
                 $descricao = Arr::get($perfis, Str::replaceFirst('id', 'descricao', $key));
-                $message = Str::replaceFirst('?', $descricao, Arr::get($validator->errors()->messages(), $key)[0]);
+
+                if ($descricao) {
+                    $message = Str::replaceFirst('?', $descricao, Arr::get($validator->errors()->messages(), $key)[0]);
+                } else {
+                    $message = preg_replace('/\s+/', ' ', Str::replaceFirst('\'?\'', null, Arr::get($validator->errors()->messages(), $key)[0]));
+                }
 
                 $errors->push($message);
             } elseif (Arr::has($validator->errors()->messages(), 'tipo_pessoa') && Arr::has($value, 'In')) {
