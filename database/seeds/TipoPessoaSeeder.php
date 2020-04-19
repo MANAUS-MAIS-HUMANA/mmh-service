@@ -13,7 +13,7 @@ class TipoPessoaSeeder extends Seeder
     public function run()
     {
         TipoPessoa::updateOrCreate([
-            'tipo' => 'pj',
+            'tipo_pessoa' => 'pj',
             'cpf_cnpj' => '0'
         ]);
     }
