@@ -52,7 +52,7 @@
 <h1>AuthController</h1>
 <p>Controller responsável pelo gerenciamento de Usuários</p>
 <!-- START_a4a233f86d97c8deebe3bedaa936f967 -->
-<h2>Criar Usuário</h2>
+<h2>Criar usuário</h2>
 <p>Endpoint para criação de um novo usuário.</p>
 <blockquote>
 <p>Example request:</p>
@@ -304,6 +304,127 @@ response.json()</code></pre>
 </tbody>
 </table>
 <!-- END_a4a233f86d97c8deebe3bedaa936f967 -->
+<!-- START_758d1bc327f18e2d4dbb9b0a22083976 -->
+<h2>Redefinir senha</h2>
+<p>Endpoint para solicitação de redefinição de senha do usuário.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://back.localhost/api/v1/auth/password-reset"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "email": "fulano@fulano.com"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;post(
+    'http://back.localhost/api/v1/auth/password-reset',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'email' =&gt; 'fulano@fulano.com',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://back.localhost/api/v1/auth/password-reset'
+payload = {
+    "email": "fulano@fulano.com"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X POST \
+    "http://back.localhost/api/v1/auth/password-reset" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"email":"fulano@fulano.com"}'
+</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "email": "fulano@fulano.com",
+        "nome": "Fulano da Silva",
+        "token": "II35RthZxZ5hTRHsqzA84x0ztuXpXu6YLx89SBMTrLIyON6D8SAIWEMJ0Ixa",
+        "validade": "2020-04-21T01:17:22.012273Z"
+    },
+    "message": "Recuperação de Senha solicitada com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/password-reset"
+}</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "errors": [
+        "O E-mail é obrigatório.",
+        "O E-mail deve ser um endereço de e-mail válido.",
+        "O E-mail fulano@fulano.com é inválido.",
+        "Já existe uma solicitação de redefinição de senha para o e-mail fulano@fulano.com."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/password-reset"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não foi possível solicitador a recuperação da senha!",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/password-reset"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v1/auth/password-reset</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>email</code></td>
+<td>string</td>
+<td>required</td>
+<td>Endereço de e-mail.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_758d1bc327f18e2d4dbb9b0a22083976 -->
       </div>
       <div class="dark-box">
                         <div class="lang-selector">

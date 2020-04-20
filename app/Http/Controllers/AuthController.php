@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Http\Requests\RedefinirSenhaRequest;
 use App\Http\Resources\AuthResource;
+use App\Http\Resources\RedefinirSenhaResource;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 
@@ -27,7 +29,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Criar Usuário
+     * Criar usuário
      *
      * Endpoint para criação de um novo usuário.
      *
@@ -56,7 +58,30 @@ class AuthController extends Controller
     {
         $result = $this->authService->create($request);
 
-        return (new AuthResource($result['data'] ?? [], $result['success'], $result['message']))
+        return (new AuthResource($result['data'] ?? null, $result['success'], $result['message']))
+            ->response()
+            ->setStatusCode($result['code']);
+    }
+
+    /**
+     * Redefinir senha
+     *
+     * Endpoint para solicitação de redefinição de senha do usuário.
+     *
+     * @bodyParam email string required Endereço de e-mail. Example: fulano@fulano.com
+     *
+     * @responseFile responses/AuthController/passwordReset.get.json
+     * @responseFile 422 responses/AuthController/passwordReset.422.json
+     * @responseFile 500 responses/AuthController/passwordReset.500.json
+     *
+     * @param RedefinirSenhaRequest $request
+     * @return JsonResponse
+     */
+    public function passwordReset(RedefinirSenhaRequest $request): JsonResponse
+    {
+        $result = $this->authService->passwordReset($request);
+
+        return (new RedefinirSenhaResource($result['data'] ?? null, $result['success'], $result['message']))
             ->response()
             ->setStatusCode($result['code']);
     }

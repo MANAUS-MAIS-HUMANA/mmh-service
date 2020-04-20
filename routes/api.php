@@ -8,5 +8,6 @@ Route::prefix('v1')->middleware('api')->group(function () {
     Route::prefix('auth')->group(function () {
         /** @api /api/v1/auth/create */
         Route::post('create', 'AuthController@create')->name('user.create');
+        Route::post('password-reset', 'AuthController@passwordReset')->name('user.passwordReset');
     });
 });

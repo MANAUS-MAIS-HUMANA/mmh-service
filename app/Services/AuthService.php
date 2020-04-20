@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Pessoa;
+use App\Models\RedefinirSenha;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthService
 {
@@ -18,12 +20,19 @@ class AuthService
     private PessoaService $pessoaService;
 
     /**
+     * @var UsuarioService
+     */
+    private UsuarioService $usuarioService;
+
+    /**
      * AuthService constructor.
      * @param PessoaService $pessoaService
+     * @param UsuarioService $usuarioService
      */
-    public function __construct(PessoaService $pessoaService)
+    public function __construct(PessoaService $pessoaService, UsuarioService $usuarioService)
     {
         $this->pessoaService = $pessoaService;
+        $this->usuarioService = $usuarioService;
     }
 
     /**
@@ -71,6 +80,47 @@ class AuthService
     }
 
     /**
+     * Registra a solicitação de recuperação de senha
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function passwordReset(Request $request): array
+    {
+        DB::beginTransaction();
+
+        try {
+            $usuario = $this->getUsuarioByEmail($request);
+
+            $pwdReset = RedefinirSenha::create([
+                'user_id' => $usuario->id,
+                'email' => $usuario->email,
+                'token' => Str::random(60),
+                'validade' => now()->addDay(),
+            ]);
+
+            throw_if($pwdReset, \Exception::class, 'Não foi possível solicitador a recuperação da senha!', 500);
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => $pwdReset,
+                'message' => 'Recuperação de Senha solicitada com sucesso!',
+                'code' => 200,
+            ];
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+            ];
+        }
+    }
+
+    /**
      * Solicita a criação de Pessoa
      *
      * @param Request $request
@@ -81,17 +131,35 @@ class AuthService
     {
         $pessoa = $this->pessoaService->create($request);
 
-        throw_if(!$pessoa['success'], \Exception::class, [$pessoa['message'], $pessoa['code']]);
+        throw_if(!$pessoa['success'] ??= [], \Exception::class, $pessoa['message'], $pessoa['code']);
 
         return $pessoa['data'];
     }
 
     /**
+     * Associa o usuário ao perfil
+     *
      * @param User $user
      * @param array $perfis
      */
     private function perfisAttach(User $user, array $perfis): void
     {
         $user->perfis()->attach(data_get($perfis, '*.id'));
+    }
+
+    /**
+     * Retorna o usuário pelo E-mail
+     *
+     * @param Request $request
+     * @return User
+     * @throws \Throwable
+     */
+    private function getUsuarioByEmail(Request $request): User
+    {
+        $usuario = $this->usuarioService->getUsuarioByEmail($request);
+
+        throw_if(!$usuario['data'] ??= [], \Exception::class, $usuario['message'], $usuario['code']);
+
+        return $usuario['data'];
     }
 }

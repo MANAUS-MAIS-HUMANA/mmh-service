@@ -45,7 +45,7 @@ class PessoaService
                 'tipo_pessoa_id' => $tipoPessoa->id,
             ]);
 
-            throw_if(!$pessoa, \Exception::class, ['Não foi possível criar a Pessoa!', 500]);
+            throw_if(!$pessoa, \Exception::class, 'Não foi possível criar a Pessoa!', 500);
 
             DB::commit();
 
@@ -77,7 +77,7 @@ class PessoaService
     {
         $tipoPessoa = $this->tipoPessoaService->create($request);
 
-        throw_if(!$tipoPessoa['success'], \Exception::class, [$tipoPessoa['message'], $tipoPessoa['code']]);
+        throw_if(!$tipoPessoa['success'], \Exception::class, $tipoPessoa['message'], $tipoPessoa['code']);
 
         return $tipoPessoa['data'];
     }
