@@ -58,7 +58,7 @@ class AuthController extends Controller
     {
         $result = $this->authService->create($request);
 
-        return (new AuthResource($result['data'] ?? null, $result['success'], $result['message']))
+        return (new AuthResource($result['data'] ??= null, $result['success'], $result['message']))
             ->response()
             ->setStatusCode($result['code']);
     }
@@ -81,7 +81,7 @@ class AuthController extends Controller
     {
         $result = $this->authService->passwordReset($request);
 
-        return (new RedefinirSenhaResource($result['data'] ?? null, $result['success'], $result['message']))
+        return (new RedefinirSenhaResource($result['data'] ??= null, $result['success'], $result['message']))
             ->response()
             ->setStatusCode($result['code']);
     }
