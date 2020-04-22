@@ -7,9 +7,11 @@ namespace App\Services;
 use App\Models\Pessoa;
 use App\Models\RedefinirSenha;
 use App\Models\User;
+use App\Mail\RedefinirSenha as RedefinirSenhaMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AuthService
@@ -99,7 +101,9 @@ class AuthService
                 'validade' => now()->addDay(),
             ]);
 
-            throw_if($pwdReset, \Exception::class, 'Não foi possível solicitador a recuperação da senha!', 500);
+            throw_if(!$pwdReset, \Exception::class, 'Não foi possível solicitador a recuperação da senha!', 500);
+
+            Mail::to($pwdReset->email)->locale('pt-BR')->send(new RedefinirSenhaMail($usuario, $pwdReset));
 
             DB::commit();
 
