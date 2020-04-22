@@ -46,7 +46,7 @@ class RedefinirSenha extends Mailable implements ShouldQueue
             ->with([
                 'user' => $this->user,
                 'redefinirSenha' => $this->redefinirSenha,
-                'token' => base64_encode("{$this->redefinirSenha->email}&&{$this->redefinirSenha->token}&&{$this->redefinirSenha->validade}")
+                'token' => base64_encode("{$this->redefinirSenha->email}&&{$this->redefinirSenha->token}")
             ]);
     }
 }
