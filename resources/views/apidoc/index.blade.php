@@ -58,7 +58,7 @@
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-javascript">const url = new URL(
-    "http://back.localhost/api/v1/auth/create"
+    "http://localhost/api/v1/auth/create"
 );
 
 let headers = {
@@ -97,7 +97,7 @@ fetch(url, {
 <pre><code class="language-php">
 $client = new \GuzzleHttp\Client();
 $response = $client-&gt;post(
-    'http://back.localhost/api/v1/auth/create',
+    'http://localhost/api/v1/auth/create',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -130,7 +130,7 @@ print_r(json_decode((string) $body));</code></pre>
 <pre><code class="language-python">import requests
 import json
 
-url = 'http://back.localhost/api/v1/auth/create'
+url = 'http://localhost/api/v1/auth/create'
 payload = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
@@ -158,7 +158,7 @@ headers = {
 response = requests.request('POST', url, headers=headers, json=payload)
 response.json()</code></pre>
 <pre><code class="language-bash">curl -X POST \
-    "http://back.localhost/api/v1/auth/create" \
+    "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
@@ -311,7 +311,7 @@ response.json()</code></pre>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-javascript">const url = new URL(
-    "http://back.localhost/api/v1/auth/password-reset"
+    "http://localhost/api/v1/auth/password-reset"
 );
 
 let headers = {
@@ -333,7 +333,7 @@ fetch(url, {
 <pre><code class="language-php">
 $client = new \GuzzleHttp\Client();
 $response = $client-&gt;post(
-    'http://back.localhost/api/v1/auth/password-reset',
+    'http://localhost/api/v1/auth/password-reset',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -349,7 +349,7 @@ print_r(json_decode((string) $body));</code></pre>
 <pre><code class="language-python">import requests
 import json
 
-url = 'http://back.localhost/api/v1/auth/password-reset'
+url = 'http://localhost/api/v1/auth/password-reset'
 payload = {
     "email": "fulano@fulano.com"
 }
@@ -360,7 +360,7 @@ headers = {
 response = requests.request('POST', url, headers=headers, json=payload)
 response.json()</code></pre>
 <pre><code class="language-bash">curl -X POST \
-    "http://back.localhost/api/v1/auth/password-reset" \
+    "http://localhost/api/v1/auth/password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -d '{"email":"fulano@fulano.com"}'

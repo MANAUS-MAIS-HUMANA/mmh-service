@@ -34,7 +34,7 @@ Endpoint para criação de um novo usuário.
 
 ```javascript
 const url = new URL(
-    "http://back.localhost/api/v1/auth/create"
+    "http://localhost/api/v1/auth/create"
 );
 
 let headers = {
@@ -76,7 +76,7 @@ fetch(url, {
 
 $client = new \GuzzleHttp\Client();
 $response = $client->post(
-    'http://back.localhost/api/v1/auth/create',
+    'http://localhost/api/v1/auth/create',
     [
         'headers' => [
             'Content-Type' => 'application/json',
@@ -112,7 +112,7 @@ print_r(json_decode((string) $body));
 import requests
 import json
 
-url = 'http://back.localhost/api/v1/auth/create'
+url = 'http://localhost/api/v1/auth/create'
 payload = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
@@ -143,7 +143,7 @@ response.json()
 
 ```bash
 curl -X POST \
-    "http://back.localhost/api/v1/auth/create" \
+    "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
@@ -233,7 +233,7 @@ Endpoint para solicitação de redefinição de senha do usuário.
 
 ```javascript
 const url = new URL(
-    "http://back.localhost/api/v1/auth/password-reset"
+    "http://localhost/api/v1/auth/password-reset"
 );
 
 let headers = {
@@ -258,7 +258,7 @@ fetch(url, {
 
 $client = new \GuzzleHttp\Client();
 $response = $client->post(
-    'http://back.localhost/api/v1/auth/password-reset',
+    'http://localhost/api/v1/auth/password-reset',
     [
         'headers' => [
             'Content-Type' => 'application/json',
@@ -277,7 +277,7 @@ print_r(json_decode((string) $body));
 import requests
 import json
 
-url = 'http://back.localhost/api/v1/auth/password-reset'
+url = 'http://localhost/api/v1/auth/password-reset'
 payload = {
     "email": "fulano@fulano.com"
 }
@@ -291,7 +291,7 @@ response.json()
 
 ```bash
 curl -X POST \
-    "http://back.localhost/api/v1/auth/password-reset" \
+    "http://localhost/api/v1/auth/password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -d '{"email":"fulano@fulano.com"}'
