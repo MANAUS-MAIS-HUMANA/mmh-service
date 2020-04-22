@@ -66,7 +66,11 @@ class AuthRequest extends FormRequest
             "array" => "O :attribute deve ser uma matriz.",
             "numeric" => "O :attribute deve ser um numérico.",
             "exists" => "O :attribute '?' é inválido.",
-            "confirmed" => "A confirmação da :attribute não corresponde.",
+
+            "senha.required" => "A :attribute é obrigatória.",
+            "senha.string" => "A :attribute deve ser um texto.",
+            "senha.min" => "A :attribute não pode ter menos de :min caracteres.",
+            "senha.confirmed" => "A confirmação da :attribute não corresponde.",
         ];
     }
 

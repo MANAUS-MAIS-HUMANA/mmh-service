@@ -7,7 +7,7 @@ namespace App\Rules;
 use App\Models\RedefinirSenha;
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidateIfExistsPasswordReset implements Rule
+class ValidarTokenRedefinirSenha implements Rule
 {
     /**
      * Determine if the validation rule passes.
@@ -18,12 +18,13 @@ class ValidateIfExistsPasswordReset implements Rule
      */
     public function passes($attribute, $value)
     {
-        $pwdReset = RedefinirSenha::whereEmail($value)
+        $pwdReset = RedefinirSenha::whereToken($value)
             ->whereDate('validade', '>', now())
+            ->whereStatus('A')
             ->latest()
             ->first();
 
-        return $pwdReset ? false : true;
+        return $pwdReset ? true : false;
     }
 
     /**
@@ -33,6 +34,6 @@ class ValidateIfExistsPasswordReset implements Rule
      */
     public function message()
     {
-        return "Já existe uma solicitação de redefinição de senha para o e-mail :input.";
+        return "O :attribute de validação de redefinição de senha expirou ou está inválido.";
     }
 }

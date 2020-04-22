@@ -8,6 +8,6 @@ Route::prefix('v1')->middleware('api')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('create', 'AuthController@create')->name('auth.create');
         Route::post('password-reset', 'AuthController@passwordReset')->name('auth.passwordReset');
-        Route::post('confirm-password-reset/{token}', 'AuthController@confirmPasswordReset')->name('auth.confirmPasswordReset');
+        Route::post('confirm-password-reset', 'AuthController@confirmPasswordReset')->name('auth.confirmPasswordReset');
     });
 });

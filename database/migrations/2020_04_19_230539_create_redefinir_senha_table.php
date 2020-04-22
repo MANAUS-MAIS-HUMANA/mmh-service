@@ -17,9 +17,10 @@ class CreateRedefinirSenhaTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('email')->index();
-            $table->string('token');
+            $table->string('email');
+            $table->string('token')->index();
             $table->dateTime('validade');
+            $table->enum('status', array_keys(\App\Models\RedefinirSenha::TIPO_STATUS))->default('A')->comment("A - Ativo;\nI - Inativo.");
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ class CreateTipoPessoasTable extends Migration
     {
         Schema::create('tipo_pessoas', function (Blueprint $table) {
             $table->id();
-            $table->enum('tipo_pessoa', array_keys(\App\Models\TipoPessoa::TIPO_PESSOA))->default('pf');
+            $table->enum('tipo_pessoa', array_keys(\App\Models\TipoPessoa::TIPO_PESSOA))->default('pf')->comment("pf - Pessoa Física;\npj - Pessoa Jurídica.");
             $table->string('cpf_cnpj', 14)->unique();
             $table->timestamps();
         });

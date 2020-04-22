@@ -307,6 +307,20 @@ response.json()</code></pre>
 <!-- START_758d1bc327f18e2d4dbb9b0a22083976 -->
 <h2>Redefinir senha</h2>
 <p>Endpoint para solicitação de redefinição de senha do usuário.</p>
+<p>
+<strong>Obs.:</strong> Será enviado um link por e-mail para o usuário,
+ao clicar no link, o mesmo será redirecionado para página de redefinição de senha
+na aplicação frontend, no corpo do link, terá o <u>endereço
+de e-mail e o token de autorização condificado em base64</u>.<br>
+Para separação do e-mail e token, foi colocado <strong>&&</strong>.
+ <p>
+     <strong>Exemplos:</strong>
+     <ul>
+         <li><strong>Codificado</strong>: ZnVsYW5vQGZ1bGFuby5jb20mJkJGS1NkaGw2Q05TOUNaZk1O</li>
+         <li><strong>Decodificado</strong>: fulano@fulano.com&&BFKSdhl6CNS9CZfMN</li>
+     </ul>
+ </p>
+</p>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -425,6 +439,157 @@ response.json()</code></pre>
 </tbody>
 </table>
 <!-- END_758d1bc327f18e2d4dbb9b0a22083976 -->
+<!-- START_64744f99fcf3bece9ec84aee8c3b0cfc -->
+<h2>Confirmar redefinição de senha</h2>
+<p>Endpoint para confirmar a solicitação de redefinição de senha.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/auth/confirm-password-reset"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
+    "email": "fulano@fulano.com",
+    "senha": "5&amp;bnaC#f",
+    "senha_confirmation": "5&amp;bnaC#f"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;post(
+    'http://localhost/api/v1/auth/confirm-password-reset',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'token' =&gt; 'BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y',
+            'email' =&gt; 'fulano@fulano.com',
+            'senha' =&gt; '5&amp;bnaC#f',
+            'senha_confirmation' =&gt; '5&amp;bnaC#f',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/auth/confirm-password-reset'
+payload = {
+    "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
+    "email": "fulano@fulano.com",
+    "senha": "5&amp;bnaC#f",
+    "senha_confirmation": "5&amp;bnaC#f"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X POST \
+    "http://localhost/api/v1/auth/confirm-password-reset" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"token":"BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y","email":"fulano@fulano.com","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
+</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "id": 2,
+        "nome": "Fulano de Tal",
+        "email": "fulano@tal.com",
+        "perfis": [
+            "admin",
+            "codese"
+        ]
+    },
+    "message": "Senha de usuário redefinida com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/confirm-password-reset"
+}</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "errors": [
+        "A Senha é obrigatória.",
+        "O E-mail é obrigatório.",
+        "O Token é obrigatório.",
+        "O Token de validação de redefinição de senha expirou ou está inválido."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/confirm-password-reset"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não foi possível redefinir a senha do usuaŕio!",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/confirm-password-reset"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v1/auth/confirm-password-reset</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>token</code></td>
+<td>string</td>
+<td>required</td>
+<td>Token de validação.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>string</td>
+<td>required</td>
+<td>Endereço de e-mail.</td>
+</tr>
+<tr>
+<td><code>senha</code></td>
+<td>string</td>
+<td>required</td>
+<td>Nova senha (min. 8).</td>
+</tr>
+<tr>
+<td><code>senha_confirmation</code></td>
+<td>string</td>
+<td>required</td>
+<td>Confirmação de nova senha.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_64744f99fcf3bece9ec84aee8c3b0cfc -->
       </div>
       <div class="dark-box">
                         <div class="lang-selector">

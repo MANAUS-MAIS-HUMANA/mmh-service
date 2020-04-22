@@ -98,7 +98,7 @@ class AuthService
                 'user_id' => $usuario->id,
                 'email' => $usuario->email,
                 'token' => Str::random(60),
-                'validade' => now()->addDay(),
+                'validade' => now()->addDay()
             ]);
 
             throw_if(!$pwdReset, \Exception::class, 'Não foi possível solicitador a recuperação da senha!', 500);
@@ -120,6 +120,50 @@ class AuthService
                 'success' => false,
                 'message' => $e->getMessage(),
                 'code' => $e->getCode(),
+            ];
+        }
+    }
+
+    public function confirmPasswordReset(Request $request): array
+    {
+        DB::beginTransaction();
+
+        try {
+            $pwdReset = RedefinirSenha::whereToken($request->token)
+                ->whereDate('validade', '>', now())
+                ->whereStatus('A')
+                ->latest()
+                ->first();
+
+            throw_if(!$pwdReset, \Exception::class, 'Não foi possível redefinir a senha do usuaŕio!', 500);
+
+            $pwdReset->update([
+                'status' => 'I'
+            ]);
+
+            $usuario = $pwdReset->usuario;
+
+            $usuario->update([
+                'senha' => Hash::make($request->senha)
+            ]);
+
+            DB::commit();
+
+            auth()->login($usuario);
+
+            return [
+                'success' => true,
+                'data' => $usuario,
+                'message' => 'Senha de usuário redefinida com sucesso!',
+                'code' => 200
+            ];
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
             ];
         }
     }

@@ -11,7 +11,12 @@ class RedefinirSenha extends Model
     protected $table = 'redefinir_senha';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'user_id', 'email', 'token', 'validade'
+        'user_id', 'email', 'token', 'validade', 'status'
+    ];
+
+    const TIPO_STATUS = [
+        'A' => 'Ativo',
+        'I' => 'Inativo',
     ];
 
     public function usuario()

@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Http\Requests\ConfirmarRedefinirSenhaRequest;
 use App\Http\Requests\RedefinirSenhaRequest;
 use App\Http\Resources\AuthResource;
+use App\Http\Resources\ConfirmarRedefinirSenhaResource;
 use App\Http\Resources\RedefinirSenhaResource;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
@@ -67,6 +69,20 @@ class AuthController extends Controller
      * Redefinir senha
      *
      * Endpoint para solicitação de redefinição de senha do usuário.
+     * <p>
+     * <strong>Obs.:</strong> Será enviado um link por e-mail para o usuário,
+     * ao clicar no link, o mesmo será redirecionado para página de redefinição de senha
+     * na aplicação frontend, no corpo do link, terá o <u>endereço
+     * de e-mail e o token de autorização condificado em base64</u>.<br>
+     * Para separação do e-mail e token, foi colocado <strong>&&</strong>.
+     *  <p>
+     *      <strong>Exemplos:</strong>
+     *      <ul>
+     *          <li><strong>Codificado</strong>: ZnVsYW5vQGZ1bGFuby5jb20mJkJGS1NkaGw2Q05TOUNaZk1O</li>
+     *          <li><strong>Decodificado</strong>: fulano@fulano.com&&BFKSdhl6CNS9CZfMN</li>
+     *      </ul>
+     *  </p>
+     *</p>
      *
      * @bodyParam email string required Endereço de e-mail. Example: fulano@fulano.com
      *
@@ -82,6 +98,32 @@ class AuthController extends Controller
         $result = $this->authService->passwordReset($request);
 
         return (new RedefinirSenhaResource($result['data'] ??= null, $result['success'], $result['message']))
+            ->response()
+            ->setStatusCode($result['code']);
+    }
+
+    /**
+     * Confirmar redefinição de senha
+     *
+     * Endpoint para confirmar a solicitação de redefinição de senha.
+     *
+     * @bodyParam token string required Token de validação. Example: BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y
+     * @bodyParam email string required Endereço de e-mail. Example: fulano@fulano.com
+     * @bodyParam senha string required Nova senha (min. 8). Example: 5&bnaC#f
+     * @bodyParam senha_confirmation string required Confirmação de nova senha. Example: 5&bnaC#f
+     *
+     * @responseFile responses/AuthController/confirmPasswordReset.get.json
+     * @responseFile 422 responses/AuthController/confirmPasswordReset.422.json
+     * @responseFile 500 responses/AuthController/confirmPasswordReset.500.json
+     *
+     * @param ConfirmarRedefinirSenhaRequest $request
+     * @return JsonResponse
+     */
+    public function confirmPasswordReset(ConfirmarRedefinirSenhaRequest $request): JsonResponse
+    {
+        $result = $this->authService->confirmPasswordReset($request);
+
+        return (new ConfirmarRedefinirSenhaResource($result['data'] ??= null, $result['success'], $result['message']))
             ->response()
             ->setStatusCode($result['code']);
     }
