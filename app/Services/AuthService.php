@@ -25,13 +25,37 @@ class AuthService
 
             throw_if(!$usuario || !Hash::check($request->senha, $usuario->senha), \Exception::class, "E-mail ou senha de usuário inválido!", 401);
 
-            $token = auth()->login($usuario);
+            $token = auth('api')->login($usuario);
 
             return [
                 'success' => true,
                 'data' => $this->respondWithToken((string)$token),
                 'message' => 'Usuário logado com sucesso!',
                 'code' => 202,
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+            ];
+        }
+    }
+
+    /**
+     * Desloga o usuário
+     *
+     * @return array
+     */
+    public function logout(): array
+    {
+        try {
+            auth('api')->logout();
+
+            return [
+                'success' => true,
+                'message' => 'Usuário deslogado com sucesso!',
+                'code' => 200,
             ];
         } catch (\Throwable $e) {
             return [

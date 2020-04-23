@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\Auth\LoginResource;
+use App\Http\Resources\Auth\LogoutResource;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 
@@ -29,7 +30,7 @@ class AuthController extends Controller
     {
         $this->authService = $authService;
 
-        $this->middleware('auth:api')->except('login');
+        $this->middleware(['auth:api', 'validarToken'])->except('login');
     }
 
     /**
@@ -52,6 +53,27 @@ class AuthController extends Controller
         $result = $this->authService->login($request);
 
         return (new LoginResource($result['data'] ??= null, $result['success'], $result['message']))
+            ->response()
+            ->setStatusCode($result['code']);
+    }
+
+    /**
+     * Logout
+     *
+     * Endpoint para deslogar o usuário.
+     *
+     * @authenticated
+     *
+     * @responseFile 200 responses/AuthController/logout.200.json
+     * @responseFile 401 responses/AuthController/logout.401.json
+     *
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
+    {
+        $result = $this->authService->logout();
+
+        return (new LogoutResource(null, $result['success'], $result['message']))
             ->response()
             ->setStatusCode($result['code']);
     }
