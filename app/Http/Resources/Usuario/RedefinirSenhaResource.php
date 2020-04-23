@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Usuario;
 
-class AuthResource extends ResourceBase
+use App\Http\Resources\ResourceBase;
+
+class RedefinirSenhaResource extends ResourceBase
 {
     /**
      * Transform the resource collection into an array.
@@ -14,12 +16,10 @@ class AuthResource extends ResourceBase
     {
         if ($this->resource) {
             return [
-                'id' => $this->id,
-                'nome' => $this->pessoa->nome,
                 'email' => $this->email,
-                'perfis' => $this->perfis()
-                    ->get(['perfil'])
-                    ->pluck('perfil')
+                'nome' => $this->usuario->pessoa->nome,
+                'token' => $this->token,
+                'validade' => $this->validade,
             ];
         }
     }

@@ -14,7 +14,7 @@ class AddPessoaToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('pessoa_id')->after('senha');
+            $table->unsignedBigInteger('pessoa_id')->after('id');
             $table->foreign('pessoa_id')->references('id')->on('pessoas');
         });
     }
