@@ -23,15 +23,18 @@ class AuthService
                 ->whereStatus('A')
                 ->first();
 
-            throw_if(!$usuario || !Hash::check($request->senha, $usuario->senha), \Exception::class, "E-mail ou senha de usuário inválido!", 401);
+            throw_if(
+                !$usuario || !Hash::check($request->senha, $usuario->senha),
+                \Exception::class, "E-mail ou senha de usuário inválido!", 401
+            );
 
             $token = auth('api')->login($usuario);
 
             return [
                 'success' => true,
-                'data' => $this->respondWithToken((string)$token),
+                'data' => $this->respondWithToken((string) $token),
                 'message' => 'Usuário logado com sucesso!',
-                'code' => 202,
+                'code' => 200,
             ];
         } catch (\Throwable $e) {
             return [
