@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://front.localhost:8000'],
+    'allowed_origins' => [env('FRONT_URL')],
 
     'allowed_origins_patterns' => ['*'],
 
