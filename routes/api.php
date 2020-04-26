@@ -21,4 +21,8 @@ Route::prefix('v1')->group(function () {
         Route::put('{id}/set-password', 'UsuarioController@setPassword')->name('usuario.setPassword');
     });
 
+    Route::prefix('parceiros')->group(function () {
+        Route::get('/', 'ParceiroController@get')->name('parceiros.get');
+        Route::get('/{id}', 'ParceiroController@find')->name('parceiros.getbyid');
+    });
 });

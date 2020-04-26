@@ -13,6 +13,11 @@ class Telefone extends Model
     protected $guarded = [
         'id',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'parceiro_id',
+    ];
 
     const TIPO_TELEFONE_CELULAR = 1;
     const TIPO_TELEFONE_FIXO = 2;
@@ -24,5 +29,10 @@ class Telefone extends Model
     public function parceiro()
     {
         return $this->belongsTo('App\Models\Parceiro', 'parceiro_id');
+    }
+
+    public function getTipoAttribute($value)
+    {
+        return self::TIPO_TELEFONES[$value];
     }
 }
