@@ -28,9 +28,9 @@ class AuthController extends Controller
      */
     public function __construct(AuthService $authService)
     {
-        $this->authService = $authService;
-
         $this->middleware(['auth:api', 'validarToken'])->except('login');
+
+        $this->authService = $authService;
     }
 
     /**
