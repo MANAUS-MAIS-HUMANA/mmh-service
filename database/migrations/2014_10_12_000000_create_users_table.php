@@ -17,7 +17,10 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->string('senha');
+            $table->enum('status', array_keys(\App\Models\User::STATUS_USUARIO))->default('I')->comment("A - Ativo;\nI - Inativo;\nB - Bloqueado");
             $table->timestamps();
+
+            $table->index(['email', 'status']);
         });
     }
 

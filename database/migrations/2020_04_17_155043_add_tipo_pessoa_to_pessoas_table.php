@@ -14,7 +14,7 @@ class AddTipoPessoaToPessoasTable extends Migration
     public function up()
     {
         Schema::table('pessoas', function (Blueprint $table) {
-            $table->unsignedBigInteger('tipo_pessoa_id')->after('estado');
+            $table->unsignedBigInteger('tipo_pessoa_id')->after('id');
             $table->foreign('tipo_pessoa_id')->references('id')->on('tipo_pessoas');
         });
     }

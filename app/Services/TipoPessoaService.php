@@ -26,7 +26,7 @@ class TipoPessoaService
                 'cpf_cnpj' => $request->cpf ?? $request->cnpj,
             ]);
 
-            throw_if(!$tipoPessoa, \Exception::class, ['Não foi possível criar o Tipo de Pessoa!', 500]);
+            throw_if(!$tipoPessoa, \Exception::class, 'Não foi possível criar o Tipo de Pessoa!', 500);
 
             DB::commit();
 
