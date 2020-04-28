@@ -5,7 +5,8 @@ Olá **{{ $user->pessoa->nome }}**, recebemos uma solicitação para redefinir a
 
 Caso você tenha solicitado uma redefinição de senha para **{{ $redefinirSenha->email }}**, clique no botão abaixo. Se você não fez essa solicitação, ignore este e-mail.
 
-@component('mail::button', ['url' => "http://front.localhost/confirm-password-reset/{$token}"])
+@component('mail::button', ['url' => env('FRONT_URL', 'localhost') . 
+"/confirm-password-reset/{$token}"])
 Redefinir Senha
 @endcomponent
 
