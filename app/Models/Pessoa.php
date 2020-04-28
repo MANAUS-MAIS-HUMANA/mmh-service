@@ -9,7 +9,7 @@ class Pessoa extends Model
     protected $table = 'pessoas';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'nome', 'endereco', 'estado', 'tipo_pessoa_id'
+        'tipo_pessoa_id', 'nome', 'endereco', 'estado'
     ];
 
     public function tipoPessoa()

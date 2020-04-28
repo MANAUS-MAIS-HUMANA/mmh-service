@@ -67,24 +67,8 @@ let headers = {
 };
 
 let body = {
-    "nome": "Fulano de Tal",
-    "email": "fulano@tal.com",
-    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
-    "estado": "AM",
-    "tipo_pessoa": "pf",
-    "cpf": "111.111.111-11",
-    "cnpj": "11.111.111\/1111-11",
-    "perfis": [
-        {
-            "id": 1,
-            "descricao": "Master"
-        },
-        {
-            "id": 2
-        }
-    ],
-    "senha": "5&amp;bnaC#f",
-    "senha_confirmation": "5&amp;bnaC#f"
+    "email": "fulano@fulano.com",
+    "senha": "5&amp;bnaC#f"
 }
 
 fetch(url, {
@@ -104,24 +88,8 @@ $response = $client-&gt;post(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'nome' =&gt; 'Fulano de Tal',
-            'email' =&gt; 'fulano@tal.com',
-            'endereco' =&gt; 'Rua Dom Pedro, S/N, Dom Pedro',
-            'estado' =&gt; 'AM',
-            'tipo_pessoa' =&gt; 'pf',
-            'cpf' =&gt; '111.111.111-11',
-            'cnpj' =&gt; '11.111.111/1111-11',
-            'perfis' =&gt; [
-                [
-                    'id' =&gt; 1,
-                    'descricao' =&gt; 'Master',
-                ],
-                [
-                    'id' =&gt; 2,
-                ],
-            ],
+            'email' =&gt; 'fulano@fulano.com',
             'senha' =&gt; '5&amp;bnaC#f',
-            'senha_confirmation' =&gt; '5&amp;bnaC#f',
         ],
     ]
 );
@@ -132,24 +100,8 @@ import json
 
 url = 'http://localhost/api/v1/auth/create'
 payload = {
-    "nome": "Fulano de Tal",
-    "email": "fulano@tal.com",
-    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
-    "estado": "AM",
-    "tipo_pessoa": "pf",
-    "cpf": "111.111.111-11",
-    "cnpj": "11.111.111\/1111-11",
-    "perfis": [
-        {
-            "id": 1,
-            "descricao": "Master"
-        },
-        {
-            "id": 2
-        }
-    ],
-    "senha": "5&amp;bnaC#f",
-    "senha_confirmation": "5&amp;bnaC#f"
+    "email": "fulano@fulano.com",
+    "senha": "5&amp;bnaC#f"
 }
 headers = {
   'Content-Type': 'application/json',
@@ -161,24 +113,20 @@ response.json()</code></pre>
     "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
+    -d '{"email":"fulano@fulano.com","senha":"5&amp;bnaC#f"}'
 </code></pre>
 <blockquote>
-<p>Example response (200):</p>
+<p>Example response (202):</p>
 </blockquote>
 <pre><code class="language-json">{
     "data": {
-        "id": 2,
-        "nome": "Fulano de Tal",
-        "email": "fulano@tal.com",
-        "perfis": [
-            "admin",
-            "codese"
-        ]
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+        "token_type": "Bearer",
+        "expires_in": 3600
     },
-    "message": "Usuário criado com sucesso!",
+    "message": "Usuário logado com sucesso!",
     "success": true,
-    "url": "http:\/\/back.localhost\/api\/v1\/auth\/create"
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/login"
 }</code></pre>
 <blockquote>
 <p>Example response (422):</p>
@@ -186,32 +134,24 @@ response.json()</code></pre>
 <pre><code class="language-json">{
     "data": [],
     "errors": [
-        "A confirmação da Senha não corresponde.",
-        "O CNPJ é obrigatório quando CPF não foi informado.",
-        "O CPF é obrigatório quando CNPJ não foi informado.",
-        "O E-mail é obrigatório.",
-        "O Endereço é obrigatório.",
-        "O Estado é obrigatório.",
-        "O Nome é obrigatório.",
-        "O Perfil de Usuário 'Master' é inválido.",
-        "O Perfil de Usuário é inválido.",
-        "O Tipo de Pessoa é obrigatório."
+        "A Senha é obrigatória.",
+        "O E-mail é obrigatório."
     ],
     "message": "Existem campos inválidos.",
     "success": false,
-    "url": "http:\/\/back.localhost\/api\/v1\/auth\/create"
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/login"
 }</code></pre>
 <blockquote>
-<p>Example response (500):</p>
+<p>Example response (401):</p>
 </blockquote>
 <pre><code class="language-json">{
     "data": [],
-    "message": "Não foi possível criar o usuaŕio!",
+    "message": "E-mail ou senha de usuário inválido!",
     "success": false,
-    "url": "http:\/\/back.localhost\/api\/v1\/auth\/create"
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/login"
 }</code></pre>
 <h3>HTTP Request</h3>
-<p><code>POST api/v1/auth/create</code></p>
+<p><code>POST api/v1/auth/login</code></p>
 <h4>Body Parameters</h4>
 <table>
 <thead>
@@ -224,82 +164,16 @@ response.json()</code></pre>
 </thead>
 <tbody>
 <tr>
-<td><code>nome</code></td>
-<td>string</td>
-<td>required</td>
-<td>Nome do novo usuário - (max. 255).</td>
-</tr>
-<tr>
 <td><code>email</code></td>
 <td>string</td>
 <td>required</td>
-<td>Endereço de e-mail - (max. 255).</td>
-</tr>
-<tr>
-<td><code>endereco</code></td>
-<td>string</td>
-<td>required</td>
-<td>Endereço residencial - (max. 255).</td>
-</tr>
-<tr>
-<td><code>estado</code></td>
-<td>string</td>
-<td>required</td>
-<td>Estado - (tam. 2).</td>
-</tr>
-<tr>
-<td><code>tipo_pessoa</code></td>
-<td>string</td>
-<td>required</td>
-<td>Tipo de Pessoa (PF ou PJ).</td>
-</tr>
-<tr>
-<td><code>cpf</code></td>
-<td>string</td>
-<td>optional</td>
-<td>Número do CPF do usuário (obrigatório se não houver CNPJ).</td>
-</tr>
-<tr>
-<td><code>cnpj</code></td>
-<td>string</td>
-<td>optional</td>
-<td>Número do CNPJ da instituição (obrigatório se não houver CPF).</td>
-</tr>
-<tr>
-<td><code>perfis</code></td>
-<td>array</td>
-<td>required</td>
-<td>Matriz de perfis</td>
-</tr>
-<tr>
-<td><code>perfis[0].id</code></td>
-<td>integer</td>
-<td>required</td>
-<td>ID do perfil.</td>
-</tr>
-<tr>
-<td><code>perfis[0].descricao</code></td>
-<td>string</td>
-<td>optional</td>
-<td>Descricao do perfil.</td>
-</tr>
-<tr>
-<td><code>perfis[1].id</code></td>
-<td>integer</td>
-<td>required</td>
-<td>ID do perfil.</td>
+<td>Endereço de e-mail.</td>
 </tr>
 <tr>
 <td><code>senha</code></td>
 <td>string</td>
 <td>required</td>
-<td>Senha de usuário (min. 8).</td>
-</tr>
-<tr>
-<td><code>senha_confirmation</code></td>
-<td>string</td>
-<td>required</td>
-<td>Confirmação de senha de usuário.</td>
+<td>Senha (min. 8).</td>
 </tr>
 </tbody>
 </table>

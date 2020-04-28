@@ -1,0 +1,6 @@
+{
+  "data": [],
+  "message": "E-mail ou senha de usuário inválido!",
+  "success": false,
+  "url": "http:\/\/back.localhost\/api\/v1\/auth\/login"
+}

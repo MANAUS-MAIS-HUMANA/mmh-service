@@ -28,7 +28,7 @@ Controller responsável pelo gerenciamento de Usuários
 <!-- START_a4a233f86d97c8deebe3bedaa936f967 -->
 ## Criar usuário
 
-Endpoint para criação de um novo usuário.
+Endpoint para autenticar o usuário.
 
 > Example request:
 
@@ -43,24 +43,8 @@ let headers = {
 };
 
 let body = {
-    "nome": "Fulano de Tal",
-    "email": "fulano@tal.com",
-    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
-    "estado": "AM",
-    "tipo_pessoa": "pf",
-    "cpf": "111.111.111-11",
-    "cnpj": "11.111.111\/1111-11",
-    "perfis": [
-        {
-            "id": 1,
-            "descricao": "Master"
-        },
-        {
-            "id": 2
-        }
-    ],
-    "senha": "5&bnaC#f",
-    "senha_confirmation": "5&bnaC#f"
+    "email": "fulano@fulano.com",
+    "senha": "5&bnaC#f"
 }
 
 fetch(url, {
@@ -83,24 +67,8 @@ $response = $client->post(
             'Accept' => 'application/json',
         ],
         'json' => [
-            'nome' => 'Fulano de Tal',
-            'email' => 'fulano@tal.com',
-            'endereco' => 'Rua Dom Pedro, S/N, Dom Pedro',
-            'estado' => 'AM',
-            'tipo_pessoa' => 'pf',
-            'cpf' => '111.111.111-11',
-            'cnpj' => '11.111.111/1111-11',
-            'perfis' => [
-                [
-                    'id' => 1,
-                    'descricao' => 'Master',
-                ],
-                [
-                    'id' => 2,
-                ],
-            ],
+            'email' => 'fulano@fulano.com',
             'senha' => '5&bnaC#f',
-            'senha_confirmation' => '5&bnaC#f',
         ],
     ]
 );
@@ -114,24 +82,8 @@ import json
 
 url = 'http://localhost/api/v1/auth/create'
 payload = {
-    "nome": "Fulano de Tal",
-    "email": "fulano@tal.com",
-    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
-    "estado": "AM",
-    "tipo_pessoa": "pf",
-    "cpf": "111.111.111-11",
-    "cnpj": "11.111.111\/1111-11",
-    "perfis": [
-        {
-            "id": 1,
-            "descricao": "Master"
-        },
-        {
-            "id": 2
-        }
-    ],
-    "senha": "5&bnaC#f",
-    "senha_confirmation": "5&bnaC#f"
+    "email": "fulano@fulano.com",
+    "senha": "5&bnaC#f"
 }
 headers = {
   'Content-Type': 'application/json',
@@ -146,27 +98,23 @@ curl -X POST \
     "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
+    -d '{"email":"fulano@fulano.com","senha":"5&bnaC#f"}'
 
 ```
 
 
-> Example response (200):
+> Example response (202):
 
 ```json
 {
     "data": {
-        "id": 2,
-        "nome": "Fulano de Tal",
-        "email": "fulano@tal.com",
-        "perfis": [
-            "admin",
-            "codese"
-        ]
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+        "token_type": "Bearer",
+        "expires_in": 3600
     },
-    "message": "Usuário criado com sucesso!",
+    "message": "Usuário logado com sucesso!",
     "success": true,
-    "url": "http:\/\/back.localhost\/api\/v1\/auth\/create"
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/login"
 }
 ```
 > Example response (422):
@@ -175,54 +123,35 @@ curl -X POST \
 {
     "data": [],
     "errors": [
-        "A confirmação da Senha não corresponde.",
-        "O CNPJ é obrigatório quando CPF não foi informado.",
-        "O CPF é obrigatório quando CNPJ não foi informado.",
-        "O E-mail é obrigatório.",
-        "O Endereço é obrigatório.",
-        "O Estado é obrigatório.",
-        "O Nome é obrigatório.",
-        "O Perfil de Usuário 'Master' é inválido.",
-        "O Perfil de Usuário é inválido.",
-        "O Tipo de Pessoa é obrigatório."
+        "A Senha é obrigatória.",
+        "O E-mail é obrigatório."
     ],
     "message": "Existem campos inválidos.",
     "success": false,
-    "url": "http:\/\/back.localhost\/api\/v1\/auth\/create"
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/login"
 }
 ```
-> Example response (500):
+> Example response (401):
 
 ```json
 {
     "data": [],
-    "message": "Não foi possível criar o usuaŕio!",
+    "message": "E-mail ou senha de usuário inválido!",
     "success": false,
-    "url": "http:\/\/back.localhost\/api\/v1\/auth\/create"
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/login"
 }
 ```
 
 ### HTTP Request
-`POST api/v1/auth/create`
+`POST api/v1/auth/login`
 
 #### Body Parameters
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    `nome` | string |  required  | Nome do novo usuário - (max. 255).
-        `email` | string |  required  | Endereço de e-mail - (max. 255).
-        `endereco` | string |  required  | Endereço residencial - (max. 255).
-        `estado` | string |  required  | Estado - (tam. 2).
-        `tipo_pessoa` | string |  required  | Tipo de Pessoa (PF ou PJ).
-        `cpf` | string |  optional  | Número do CPF do usuário (obrigatório se não houver CNPJ).
-        `cnpj` | string |  optional  | Número do CNPJ da instituição (obrigatório se não houver CPF).
-        `perfis` | array |  required  | Matriz de perfis
-        `perfis[0].id` | integer |  required  | ID do perfil.
-        `perfis[0].descricao` | string |  optional  | Descricao do perfil.
-        `perfis[1].id` | integer |  required  | ID do perfil.
-        `senha` | string |  required  | Senha de usuário (min. 8).
-        `senha_confirmation` | string |  required  | Confirmação de senha de usuário.
+    `email` | string |  required  | Endereço de e-mail.
+        `senha` | string |  required  | Senha (min. 8).
     
-<!-- END_a4a233f86d97c8deebe3bedaa936f967 -->
+<!-- END_2be1f0e022faf424f18f30275e61416e -->
 
 <!-- START_758d1bc327f18e2d4dbb9b0a22083976 -->
 ## Redefinir senha

@@ -28,10 +28,6 @@ class CreateUsersPerfisTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['user_id', 'perfil_id']);
-        });
-
         Schema::dropIfExists('users_perfis');
     }
 }

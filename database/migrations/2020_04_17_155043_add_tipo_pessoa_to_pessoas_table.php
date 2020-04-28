@@ -27,7 +27,8 @@ class AddTipoPessoaToPessoasTable extends Migration
     public function down()
     {
         Schema::table('pessoas', function (Blueprint $table) {
-            $table->dropForeign('tipo_pessoa_id');
+            $table->dropForeign('pessoas_tipo_pessoa_id_foreign');
+            $table->dropColumn('tipo_pessoa_id');
         });
     }
 }

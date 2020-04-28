@@ -5,31 +5,43 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
     protected $table = 'users';
     protected $primaryKey = 'id';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'email', 'senha', 'pessoa_id',
+        'pessoa_id', 'email', 'senha', 'status'
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'senha'
     ];
+
+    const STATUS_USUARIO = [
+        'A' => 'Ativo',
+        'I' => 'Inativo',
+        'B' => 'Bloqueado',
+    ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [
+            'user' => [
+                'nome' => $this->pessoa->nome,
+                'email' => $this->email,
+                'status' => self::STATUS_USUARIO[$this->status],
+                'criado' => $this->created_at->format('d/m/Y'),
+            ]
+        ];
+    }
 
     public function pessoa()
     {
