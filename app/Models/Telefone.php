@@ -30,9 +30,4 @@ class Telefone extends Model
     {
         return $this->belongsTo('App\Models\Parceiro', 'parceiro_id');
     }
-
-    public function getTipoAttribute($value)
-    {
-        return self::TIPO_TELEFONES[$value];
-    }
 }

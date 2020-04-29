@@ -24,5 +24,6 @@ Route::prefix('v1')->group(function () {
     Route::prefix('parceiros')->group(function () {
         Route::get('/', 'ParceiroController@get')->name('parceiros.get');
         Route::get('/{id}', 'ParceiroController@find')->name('parceiros.getbyid');
+        Route::post('/', 'ParceiroController@store')->name('parceiros.save');
     });
 });

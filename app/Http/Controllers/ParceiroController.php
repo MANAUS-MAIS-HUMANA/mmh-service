@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\Parceiro;
 use Illuminate\Http\Request;
+use App\Models\Parceiro;
+use App\Services\ParceiroService;
 
 class ParceiroController extends Controller
 {
     const PARCEIROS_POR_PAGINA = 6;
 
+    private ParceiroService $parceiroService;
+
     public function __construct(Parceiro $parceiro)
     {
         $this->parceiro = $parceiro;
+        $this->parceiroService = new ParceiroService();
     }
 
     public function get()
@@ -28,5 +32,17 @@ class ParceiroController extends Controller
         $data = ['data' => $id];
 
         return response()->json($data);
+    }
+
+    public function store(Request $request)
+    {
+        $resultado = $this->parceiroService->create($request);
+
+        if ($resultado['success']) {
+            $dado = ['data' => ['id' => $resultado['data']->id]];
+            return response()->json($dado, $resultado['code']);
+        }
+
+        return response()->json($resultado['message'], $resultado['code']);
     }
 }
