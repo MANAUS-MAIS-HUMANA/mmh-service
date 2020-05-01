@@ -35,6 +35,25 @@ class ParceiroService
         'enderecos.*.cidade_id' => 'required|exists:cidades,id',
     ];
 
+    public function find(string $parceiroId): array
+    {
+        $parceiro = Parceiro::find($parceiroId);
+        if (is_null($parceiro)) {
+            return [
+                'success' => false,
+                'message' => ApiError::parceiroNaoEncontrado($parceiroId),
+                'code' => HttpStatus::NOT_FOUND,
+            ];
+        }
+
+        return [
+            'success' => true,
+            'data' => $parceiro,
+            'message' => 'Parceiro encontrado!',
+            'code' => HttpStatus::OK,
+        ];
+    }
+
     public function create(Request $request): array
     {
         $resultado = $this->validate($request);
@@ -76,14 +95,13 @@ class ParceiroService
 
     public function update(Request $request, string $parceiroId): array
     {
-        $parceiro = Parceiro::find($parceiroId);
-        if (is_null($parceiro)) {
-            return [
-                'success' => false,
-                'message' => ApiError::parceiroNaoEncontrado($parceiroId),
-                'code' => HttpStatus::NOT_FOUND,
-            ];
+        $resultado = $this->find($parceiroId);
+        if (!$resultado['success']) {
+            return $resultado;
         }
+
+        $parceiro = $resultado['data'];
+
         $resultado = $this->validate($request);
         if (!$resultado[0]) {
             return [

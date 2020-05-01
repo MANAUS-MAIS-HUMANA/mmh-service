@@ -27,11 +27,15 @@ class ParceiroController extends Controller
         return response()->json($data);
     }
 
-    public function find(Parceiro $id)
+    public function find(Request $request, string $id)
     {
-        $data = ['data' => $id];
+        $resultado = $this->parceiroService->find($id);
+        if ($resultado['success']) {
+            $dado = ['data' => $resultado['data']];
+            return response()->json($dado, $resultado['code']);
+        }
 
-        return response()->json($data);
+        return response()->json($resultado['message'], $resultado['code']);
     }
 
     public function store(Request $request)
