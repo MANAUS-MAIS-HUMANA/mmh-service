@@ -74,6 +74,55 @@ class ParceiroService
         }
     }
 
+    public function update(Request $request, string $parceiroId): array
+    {
+        $parceiro = Parceiro::find($parceiroId);
+        if (is_null($parceiro)) {
+            return [
+                'success' => false,
+                'message' => ApiError::parceiroNaoEncontrado($parceiroId),
+                'code' => HttpStatus::NOT_FOUND,
+            ];
+        }
+        $resultado = $this->validate($request);
+        if (!$resultado[0]) {
+            return [
+                'success' => false,
+                'message' => $resultado[1],
+                'code' => HttpStatus::BAD_REQUEST,
+            ];
+        }
+
+        $dados = $resultado[1];
+        DB::beginTransaction();
+
+        try {
+            $this->removerEnderecos($parceiro);
+            $this->removerTelefones($parceiro);
+            $this->atualizarParceiro($dados, $parceiro);
+            $this->atualizarTipoPessoa($dados, $parceiro->tipoPessoa);
+            $this->criarEndereco($dados, $parceiro);
+            $this->criarTelefone($dados, $parceiro);
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => $parceiro,
+                'message' => 'Parceiro criada com sucesso!',
+                'code' => HttpStatus::OK,
+            ];
+        } catch (Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+            ];
+        }
+    }
+
     protected function validate(Request $request): array
     {
         $dadosValidados = $request->validate($this->regrasValidacao);
@@ -163,5 +212,60 @@ class ParceiroService
                 [ApiError::falhaSalvarTelefone(), HttpStatus::INTERNAL_SERVER_ERROR],
             );
         }
+    }
+
+    private function atualizarParceiro(array $dados, Parceiro $parceiro): Parceiro
+    {
+        $resultado = $parceiro->update([
+            'nome' => $dados['nome'],
+            'email' => $dados['email'],
+            'tipo_pessoa_id' => $parceiro->tipoPessoa->id,
+        ]);
+
+        throw_if(
+            !$resultado,
+            Exception::class,
+            [ApiError::falhaAtualizarParceiro($parceiro->id), HttpStatus::INTERNAL_SERVER_ERROR],
+        );
+
+        return $parceiro;
+    }
+
+    private function atualizarTipoPessoa(array $dados, TipoPessoa $tipoPessoa)
+    {
+        $tipoPessoa->tipo_pessoa = $this->getTipoPessoa($dados);
+        $tipoPessoa->cpf_cnpj = $this->getCpfOrCnpj($dados);
+        $resultado = $tipoPessoa->update();
+
+        throw_if(
+            !$resultado,
+            Exception::class,
+            [
+                ApiError::falhaAtualizarTipoPessoa($tipoPessoa->id),
+                HttpStatus::INTERNAL_SERVER_ERROR,
+            ],
+        );
+    }
+
+    private function removerEnderecos(Parceiro $parceiro)
+    {
+        $resultado = Endereco::where('parceiro_id', '=', $parceiro->id)->delete();
+
+        throw_if(
+            !$resultado,
+            Exception::class,
+            [ApiError::falhaRemoverEndereco(), HttpStatus::INTERNAL_SERVER_ERROR],
+        );
+    }
+
+    private function removerTelefones(Parceiro $parceiro)
+    {
+        $resultado = Telefone::where('parceiro_id', '=', $parceiro->id)->delete();
+
+        throw_if(
+            !$resultado,
+            Exception::class,
+            [ApiError::falhaRemoverTelefone(), HttpStatus::INTERNAL_SERVER_ERROR],
+        );
     }
 }

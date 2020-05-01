@@ -45,4 +45,16 @@ class ParceiroController extends Controller
 
         return response()->json($resultado['message'], $resultado['code']);
     }
+
+    public function update(Request $request, string $id)
+    {
+        $resultado = $this->parceiroService->update($request, $id);
+
+        if ($resultado['success']) {
+            $dado = ['data' => null];
+            return response()->json($dado, $resultado['code']);
+        }
+
+        return response()->json($resultado['message'], $resultado['code']);
+    }
 }
