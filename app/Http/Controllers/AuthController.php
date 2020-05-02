@@ -155,7 +155,7 @@ class AuthController extends Controller
      *
      * @bodyParam email string required Endereço de e-mail. Example: fulano@fulano.com
      *
-     * @responseFile responses/AuthController/passwordReset.200.json
+     * @responseFile 200 responses/AuthController/passwordReset.200.json
      * @responseFile 422 responses/AuthController/passwordReset.422.json
      * @responseFile 500 responses/AuthController/passwordReset.500.json
      *
@@ -184,7 +184,7 @@ class AuthController extends Controller
      * @bodyParam senha string required Nova senha (min. 8). Example: 5&bnaC#f
      * @bodyParam senha_confirmation string required Confirmação de nova senha. Example: 5&bnaC#f
      *
-     * @responseFile responses/AuthController/confirmPasswordReset.200.json
+     * @responseFile 200 responses/AuthController/confirmPasswordReset.200.json
      * @responseFile 422 responses/AuthController/confirmPasswordReset.422.json
      * @responseFile 500 responses/AuthController/confirmPasswordReset.500.json
      *
