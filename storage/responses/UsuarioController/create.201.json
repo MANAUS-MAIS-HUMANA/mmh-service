@@ -1,0 +1,14 @@
+{
+  "data": {
+    "id": 2,
+    "nome": "Fulano de Tal",
+    "email": "fulano@tal.com",
+    "perfis": [
+      "admin",
+      "codese"
+    ]
+  },
+  "message": "Usuário criado com sucesso!",
+  "success": true,
+  "url": "http:\/\/back.localhost\/api\/v1\/auth\/create"
+}
