@@ -9,13 +9,14 @@ Route::prefix('v1')->middleware('api')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', 'AuthController@login')->name('auth.login');
         Route::post('logout', 'AuthController@logout')->name('auth.logout');
+        Route::post('create', 'UsuarioController@create')->name('auth.create');
+        Route::post('password-reset', 'UsuarioController@passwordReset')->name('auth.passwordReset');
+        Route::post('confirm-password-reset', 'UsuarioController@confirmPasswordReset')->name('auth.confirmPasswordReset');
     });
 
     /** @api /api/v1/usuario */
     Route::prefix('usuario')->group(function () {
-        Route::post('create', 'UsuarioController@create')->name('usuario.create');
-        Route::post('password-reset', 'UsuarioController@passwordReset')->name('usuario.passwordReset');
-        Route::post('confirm-password-reset', 'UsuarioController@confirmPasswordReset')->name('usuario.confirmPasswordReset');
+        Route::post('/', 'UsuarioController@getAll')->name('usuario.getAll');
     });
 
 });
