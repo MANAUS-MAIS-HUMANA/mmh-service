@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Usuario\ConfirmarRedefinirSenhaRequest;
-use App\Http\Requests\Usuario\CriarUsuarioRequest;
-use App\Http\Requests\Usuario\RedefinirSenhaRequest;
+use App\Http\Requests\Auth\ConfirmarRedefinirSenhaRequest;
+use App\Http\Requests\Auth\CriarUsuarioRequest;
+use App\Http\Requests\Auth\RedefinirSenhaRequest;
 use App\Http\Resources\Auth\LoginResource;
 use App\Http\Resources\Auth\LogoutResource;
 use App\Http\Resources\Auth\ConfirmarRedefinirSenhaResource;
