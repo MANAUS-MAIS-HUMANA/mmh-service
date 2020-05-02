@@ -52,7 +52,7 @@ class AuthService
 
             return [
                 'success' => true,
-                'data' => $this->respondWithToken((string) $token),
+                'data' => $this->respondWithToken((string)$token),
                 'message' => 'Usuário logado com sucesso!',
                 'code' => 200,
             ];
@@ -102,13 +102,15 @@ class AuthService
         try {
             $pessoa = $this->createPessoa($request);
 
-            $usuario = User::create([
-                'pessoa_id' => $pessoa->id,
-                'email' => $request->email,
-                'password' => Hash::make($request->senha),
-            ]);
+            $usuario = User::create(
+                [
+                    'pessoa_id' => $pessoa->id,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->senha),
+                ]
+            );
 
-            throw_if($usuario, \Exception::class, 'Não foi possível criar o usuaŕio!', 500);
+            throw_if(!$usuario, \Exception::class, 'Não foi possível criar o usuaŕio!', 500);
 
             $this->perfisAttach($usuario, $request->perfis);
 
@@ -146,16 +148,22 @@ class AuthService
         try {
             $usuario = $this->getUsuarioByEmail($request);
 
-            $pwdReset = RedefinirSenha::create([
-                'user_id' => $usuario->id,
-                'email' => $usuario->email,
-                'token' => Str::random(60),
-                'validade' => now()->addDay()
-            ]);
+            $pwdReset = RedefinirSenha::create(
+                [
+                    'user_id' => $usuario->id,
+                    'email' => $usuario->email,
+                    'token' => Str::random(60),
+                    'validade' => now()->addDay()
+                ]
+            );
 
-            throw_if(!$pwdReset, \Exception::class, 'Não foi possível solicitador a recuperação da senha!', 500);
+            throw_if(
+                !$pwdReset, \Exception::class, 'Não foi possível solicitador a recuperação da senha!', 500
+            );
 
-            Mail::to($pwdReset->email)->locale('pt-BR')->send(new RedefinirSenhaMail($usuario, $pwdReset));
+            Mail::to($pwdReset->email)
+                ->locale('pt-BR')
+                ->send(new RedefinirSenhaMail($usuario, $pwdReset));
 
             DB::commit();
 
@@ -193,17 +201,23 @@ class AuthService
                 ->latest()
                 ->first();
 
-            throw_if(!$pwdReset, \Exception::class, 'Não foi possível redefinir a senha do usuaŕio!', 500);
+            throw_if(
+                !$pwdReset, \Exception::class, 'Não foi possível redefinir a senha do usuaŕio!', 500
+            );
 
-            $pwdReset->update([
-                'status' => 'I'
-            ]);
+            $pwdReset->update(
+                [
+                    'status' => 'I'
+                ]
+            );
 
             $usuario = $pwdReset->usuario;
 
-            $usuario->update([
-                'password' => Hash::make($request->senha)
-            ]);
+            $usuario->update(
+                [
+                    'password' => Hash::make($request->senha)
+                ]
+            );
 
             DB::commit();
 
@@ -252,7 +266,9 @@ class AuthService
     {
         $pessoa = $this->pessoaService->create($request);
 
-        throw_if(!$pessoa['success'] ??= [], \Exception::class, $pessoa['message'], $pessoa['code']);
+        throw_if(
+            !$pessoa['success'] ??= [], \Exception::class, $pessoa['message'], $pessoa['code']
+        );
 
         return $pessoa['data'];
     }

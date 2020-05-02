@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\ConfirmarRedefinirSenhaRequest;
 use App\Http\Requests\Auth\CriarUsuarioRequest;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RedefinirSenhaRequest;
-use App\Http\Resources\Auth\LoginResource;
-use App\Http\Resources\Auth\LogoutResource;
 use App\Http\Resources\Auth\ConfirmarRedefinirSenhaResource;
 use App\Http\Resources\Auth\CriarUsuarioResource;
+use App\Http\Resources\Auth\LoginResource;
+use App\Http\Resources\Auth\LogoutResource;
 use App\Http\Resources\Auth\RedefinirSenhaResource;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
@@ -34,7 +34,11 @@ class AuthController extends Controller
      */
     public function __construct(AuthService $authService)
     {
-        $this->middleware(['auth:api', 'validarToken'])->except(['login', 'create', 'passwordReset', 'confirmPasswordReset']);
+        $this->middleware(['auth:api', 'validarToken'])->except(
+            [
+                'login', 'create', 'passwordReset', 'confirmPasswordReset'
+            ]
+        );
 
         $this->authService = $authService;
     }
@@ -58,7 +62,9 @@ class AuthController extends Controller
     {
         $result = $this->authService->login($request);
 
-        return (new LoginResource($result['data'] ??= null, $result['success'], $result['message']))
+        return (new LoginResource(
+            $result['data'] ??= null, $result['success'], $result['message']
+        ))
             ->response()
             ->setStatusCode($result['code']);
     }
@@ -79,7 +85,9 @@ class AuthController extends Controller
     {
         $result = $this->authService->logout();
 
-        return (new LogoutResource(null, $result['success'], $result['message']))
+        return (new LogoutResource(
+            null, $result['success'], $result['message']
+        ))
             ->response()
             ->setStatusCode($result['code']);
     }
@@ -91,17 +99,21 @@ class AuthController extends Controller
      *
      * @bodyParam nome string required Nome do novo usuário - (max. 255). Example: Fulano de Tal
      * @bodyParam email string required Endereço de e-mail - (max. 255). Example: fulano@tal.com
-     * @bodyParam endereco string required Endereço residencial - (max. 255). Example: Rua Dom Pedro, S/N, Dom Pedro
+     * @bodyParam endereco string required Endereço residencial - (max. 255). Example: Rua Dom
+     *     Pedro, S/N, Dom Pedro
      * @bodyParam estado string required Estado - (tam. 2). Example: AM
      * @bodyParam tipo_pessoa string required Tipo de Pessoa (PF ou PJ). Example: pf
-     * @bodyParam cpf string Número do CPF do usuário (obrigatório se não houver CNPJ). Example: 111.111.111-11
-     * @bodyParam cnpj string Número do CNPJ da instituição (obrigatório se não houver CPF). Example: 11.111.111/1111-11
+     * @bodyParam cpf string Número do CPF do usuário (obrigatório se não houver CNPJ). Example:
+     *     111.111.111-11
+     * @bodyParam cnpj string Número do CNPJ da instituição (obrigatório se não houver CPF).
+     *     Example: 11.111.111/1111-11
      * @bodyParam perfis array required Matriz de perfis
      * @bodyParam perfis[0].id int required ID do perfil. Example: 1
      * @bodyParam perfis[0].descricao string Descricao do perfil. Example: Master
      * @bodyParam perfis[1].id int required ID do perfil. Example: 2
      * @bodyParam senha string required Senha de usuário (min. 8). Example: 5&bnaC#f
-     * @bodyParam senha_confirmation string required Confirmação de senha de usuário. Example: 5&bnaC#f
+     * @bodyParam senha_confirmation string required Confirmação de senha de usuário. Example:
+     *     5&bnaC#f
      *
      * @responseFile 201 responses/AuthController/create.201.json
      * @responseFile 422 responses/AuthController/create.422.json
@@ -114,7 +126,9 @@ class AuthController extends Controller
     {
         $result = $this->authService->create($request);
 
-        return (new CriarUsuarioResource($result['data'] ??= null, $result['success'], $result['message']))
+        return (new CriarUsuarioResource(
+            $result['data'] ??= null, $result['success'], $result['message']
+        ))
             ->response()
             ->setStatusCode($result['code']);
     }
@@ -132,7 +146,8 @@ class AuthController extends Controller
      *  <p>
      *      <strong>Exemplos:</strong>
      *      <ul>
-     *          <li><strong>Codificado</strong>: ZnVsYW5vQGZ1bGFuby5jb20mJkJGS1NkaGw2Q05TOUNaZk1O</li>
+     *          <li><strong>Codificado</strong>:
+     * ZnVsYW5vQGZ1bGFuby5jb20mJkJGS1NkaGw2Q05TOUNaZk1O</li>
      *          <li><strong>Decodificado</strong>: fulano@fulano.com&&BFKSdhl6CNS9CZfMN</li>
      *      </ul>
      *  </p>
@@ -151,7 +166,9 @@ class AuthController extends Controller
     {
         $result = $this->authService->passwordReset($request);
 
-        return (new RedefinirSenhaResource($result['data'] ??= null, $result['success'], $result['message']))
+        return (new RedefinirSenhaResource(
+            $result['data'] ??= null, $result['success'], $result['message']
+        ))
             ->response()
             ->setStatusCode($result['code']);
     }
@@ -161,7 +178,8 @@ class AuthController extends Controller
      *
      * Endpoint para confirmar a solicitação de redefinição de senha.
      *
-     * @bodyParam token string required Token de validação. Example: BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y
+     * @bodyParam token string required Token de validação. Example:
+     *     BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y
      * @bodyParam email string required Endereço de e-mail. Example: fulano@fulano.com
      * @bodyParam senha string required Nova senha (min. 8). Example: 5&bnaC#f
      * @bodyParam senha_confirmation string required Confirmação de nova senha. Example: 5&bnaC#f
@@ -177,7 +195,9 @@ class AuthController extends Controller
     {
         $result = $this->authService->confirmPasswordReset($request);
 
-        return (new ConfirmarRedefinirSenhaResource($result['data'] ??= null, $result['success'], $result['message']))
+        return (new ConfirmarRedefinirSenhaResource(
+            $result['data'] ??= null, $result['success'], $result['message']
+        ))
             ->response()
             ->setStatusCode($result['code']);
     }
