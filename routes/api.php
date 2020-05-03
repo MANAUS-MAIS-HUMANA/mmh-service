@@ -17,6 +17,7 @@ Route::prefix('v1')->middleware('api')->group(function () {
     /** @api /api/v1/usuario */
     Route::prefix('usuario')->group(function () {
         Route::post('/', 'UsuarioController@getAll')->name('usuario.getAll');
+        Route::post('{id}', 'UsuarioController@getById')->name('usuario.getById');
     });
 
 });

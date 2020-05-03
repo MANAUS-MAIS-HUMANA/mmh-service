@@ -15,17 +15,15 @@ class UsuarioResource extends ResourceBase
     public function toArray($request)
     {
         if ($this->resource) {
-            return $this->resource->map(function ($usuario) {
-                return [
-                    'id' => $usuario->id,
-                    'nome' => $usuario->pessoa->nome,
-                    'email' => $usuario->email,
-                    'status' => $usuario->statusParse,
-                    'perfis' => $usuario->perfis()
-                        ->get(['perfil'])
-                        ->pluck('perfil')
-                ];
-            });
+            return [
+                'id' => $this->id,
+                'nome' => $this->pessoa->nome,
+                'email' => $this->email,
+                'status' => $this->statusParse,
+                'perfis' => $this->perfis()
+                    ->get(['perfil'])
+                    ->pluck('perfil')
+            ];
         }
     }
 }
