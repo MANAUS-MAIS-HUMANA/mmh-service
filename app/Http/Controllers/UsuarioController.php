@@ -16,6 +16,22 @@ use Illuminate\Http\JsonResponse;
 class UsuarioController extends Controller
 {
     /**
+     * @var UsuarioService
+     */
+    private UsuarioService $usuarioService;
+
+    /**
+     * UsuarioController constructor.
+     * @param UsuarioService $usuarioService
+     */
+    public function __construct(UsuarioService $usuarioService)
+    {
+        $this->middleware(['auth:api', 'validarToken']);
+
+        $this->usuarioService = $usuarioService;
+    }
+
+    /**
      * GetAll
      *
      * Endpoint que retorna todos os usuários.
@@ -37,21 +53,5 @@ class UsuarioController extends Controller
         ))
             ->response()
             ->setStatusCode($result['code']);
-    }
-
-    /**
-     * @var UsuarioService
-     */
-    private UsuarioService $usuarioService;
-
-    /**
-     * UsuarioController constructor.
-     * @param UsuarioService $usuarioService
-     */
-    public function __construct(UsuarioService $usuarioService)
-    {
-        $this->middleware(['auth:api', 'validarToken']);
-
-        $this->usuarioService = $usuarioService;
     }
 }
