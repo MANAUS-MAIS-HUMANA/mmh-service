@@ -262,11 +262,11 @@ let headers = {
 let body = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
-    "endereco": "Rua Dom",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "sapiente",
-    "cnpj": "quae",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
     "perfis": [
         {
             "id": 1,
@@ -277,7 +277,7 @@ let body = {
         }
     ],
     "senha": "5&bnaC#f",
-    "senha_confirmation": "quibusdam"
+    "senha_confirmation": "5&bnaC#f"
 }
 
 fetch(url, {
@@ -302,11 +302,11 @@ $response = $client->post(
         'json' => [
             'nome' => 'Fulano de Tal',
             'email' => 'fulano@tal.com',
-            'endereco' => 'Rua Dom',
+            'endereco' => 'Rua Dom Pedro, S/N, Dom Pedro',
             'estado' => 'AM',
             'tipo_pessoa' => 'pf',
-            'cpf' => 'sapiente',
-            'cnpj' => 'quae',
+            'cpf' => '111.111.111-11',
+            'cnpj' => '11.111.111/1111-11',
             'perfis' => [
                 [
                     'id' => 1,
@@ -317,7 +317,7 @@ $response = $client->post(
                 ],
             ],
             'senha' => '5&bnaC#f',
-            'senha_confirmation' => 'quibusdam',
+            'senha_confirmation' => '5&bnaC#f',
         ],
     ]
 );
@@ -333,11 +333,11 @@ url = 'http://localhost/api/v1/auth/create'
 payload = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
-    "endereco": "Rua Dom",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "sapiente",
-    "cnpj": "quae",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
     "perfis": [
         {
             "id": 1,
@@ -348,7 +348,7 @@ payload = {
         }
     ],
     "senha": "5&bnaC#f",
-    "senha_confirmation": "quibusdam"
+    "senha_confirmation": "5&bnaC#f"
 }
 headers = {
   'Content-Type': 'application/json',
@@ -363,7 +363,7 @@ curl -X POST \
     "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom","estado":"AM","tipo_pessoa":"pf","cpf":"sapiente","cnpj":"quae","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&bnaC#f","senha_confirmation":"quibusdam"}'
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
 
 ```
 
@@ -430,14 +430,14 @@ Parameter | Type | Status | Description
         `endereco` | string |  required  | Endereço residencial - (max. 255).
         `estado` | string |  required  | Estado - (tam. 2).
         `tipo_pessoa` | string |  required  | Tipo de Pessoa (PF ou PJ).
-        `cpf` | string |  optional  | Número do CPF do usuário (obrigatório se não houver CNPJ). Example:
+        `cpf` | string |  optional  | Número do CPF do usuário (obrigatório se não houver CNPJ).
         `cnpj` | string |  optional  | Número do CNPJ da instituição (obrigatório se não houver CPF).
         `perfis` | array |  required  | Matriz de perfis
         `perfis[0].id` | integer |  required  | ID do perfil.
         `perfis[0].descricao` | string |  optional  | Descricao do perfil.
         `perfis[1].id` | integer |  required  | ID do perfil.
         `senha` | string |  required  | Senha de usuário (min. 8).
-        `senha_confirmation` | string |  required  | Confirmação de senha de usuário. Example:
+        `senha_confirmation` | string |  required  | Confirmação de senha de usuário.
     
 <!-- END_a4a233f86d97c8deebe3bedaa936f967 -->
 
@@ -601,7 +601,7 @@ let headers = {
 };
 
 let body = {
-    "token": "eveniet",
+    "token": "libero",
     "email": "fulano@fulano.com",
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
@@ -627,7 +627,7 @@ $response = $client->post(
             'Accept' => 'application/json',
         ],
         'json' => [
-            'token' => 'eveniet',
+            'token' => 'libero',
             'email' => 'fulano@fulano.com',
             'senha' => '5&bnaC#f',
             'senha_confirmation' => '5&bnaC#f',
@@ -644,7 +644,7 @@ import json
 
 url = 'http://localhost/api/v1/auth/confirm-password-reset'
 payload = {
-    "token": "eveniet",
+    "token": "libero",
     "email": "fulano@fulano.com",
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
@@ -662,7 +662,7 @@ curl -X POST \
     "http://localhost/api/v1/auth/confirm-password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"token":"eveniet","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
+    -d '{"token":"libero","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
 
 ```
 

@@ -265,11 +265,11 @@ let headers = {
 let body = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
-    "endereco": "Rua Dom",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "sapiente",
-    "cnpj": "quae",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
     "perfis": [
         {
             "id": 1,
@@ -280,7 +280,7 @@ let body = {
         }
     ],
     "senha": "5&amp;bnaC#f",
-    "senha_confirmation": "quibusdam"
+    "senha_confirmation": "5&amp;bnaC#f"
 }
 
 fetch(url, {
@@ -302,11 +302,11 @@ $response = $client-&gt;post(
         'json' =&gt; [
             'nome' =&gt; 'Fulano de Tal',
             'email' =&gt; 'fulano@tal.com',
-            'endereco' =&gt; 'Rua Dom',
+            'endereco' =&gt; 'Rua Dom Pedro, S/N, Dom Pedro',
             'estado' =&gt; 'AM',
             'tipo_pessoa' =&gt; 'pf',
-            'cpf' =&gt; 'sapiente',
-            'cnpj' =&gt; 'quae',
+            'cpf' =&gt; '111.111.111-11',
+            'cnpj' =&gt; '11.111.111/1111-11',
             'perfis' =&gt; [
                 [
                     'id' =&gt; 1,
@@ -317,7 +317,7 @@ $response = $client-&gt;post(
                 ],
             ],
             'senha' =&gt; '5&amp;bnaC#f',
-            'senha_confirmation' =&gt; 'quibusdam',
+            'senha_confirmation' =&gt; '5&amp;bnaC#f',
         ],
     ]
 );
@@ -330,11 +330,11 @@ url = 'http://localhost/api/v1/auth/create'
 payload = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
-    "endereco": "Rua Dom",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "sapiente",
-    "cnpj": "quae",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
     "perfis": [
         {
             "id": 1,
@@ -345,7 +345,7 @@ payload = {
         }
     ],
     "senha": "5&amp;bnaC#f",
-    "senha_confirmation": "quibusdam"
+    "senha_confirmation": "5&amp;bnaC#f"
 }
 headers = {
   'Content-Type': 'application/json',
@@ -357,7 +357,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom","estado":"AM","tipo_pessoa":"pf","cpf":"sapiente","cnpj":"quae","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&amp;bnaC#f","senha_confirmation":"quibusdam"}'
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
 </code></pre>
 <blockquote>
 <p>Example response (201):</p>
@@ -453,7 +453,7 @@ response.json()</code></pre>
 <td><code>cpf</code></td>
 <td>string</td>
 <td>optional</td>
-<td>Número do CPF do usuário (obrigatório se não houver CNPJ). Example:</td>
+<td>Número do CPF do usuário (obrigatório se não houver CNPJ).</td>
 </tr>
 <tr>
 <td><code>cnpj</code></td>
@@ -495,7 +495,7 @@ response.json()</code></pre>
 <td><code>senha_confirmation</code></td>
 <td>string</td>
 <td>required</td>
-<td>Confirmação de senha de usuário. Example:</td>
+<td>Confirmação de senha de usuário.</td>
 </tr>
 </tbody>
 </table>
@@ -652,7 +652,7 @@ let headers = {
 };
 
 let body = {
-    "token": "eveniet",
+    "token": "libero",
     "email": "fulano@fulano.com",
     "senha": "5&amp;bnaC#f",
     "senha_confirmation": "5&amp;bnaC#f"
@@ -675,7 +675,7 @@ $response = $client-&gt;post(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'token' =&gt; 'eveniet',
+            'token' =&gt; 'libero',
             'email' =&gt; 'fulano@fulano.com',
             'senha' =&gt; '5&amp;bnaC#f',
             'senha_confirmation' =&gt; '5&amp;bnaC#f',
@@ -689,7 +689,7 @@ import json
 
 url = 'http://localhost/api/v1/auth/confirm-password-reset'
 payload = {
-    "token": "eveniet",
+    "token": "libero",
     "email": "fulano@fulano.com",
     "senha": "5&amp;bnaC#f",
     "senha_confirmation": "5&amp;bnaC#f"
@@ -704,7 +704,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/auth/confirm-password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"token":"eveniet","email":"fulano@fulano.com","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
+    -d '{"token":"libero","email":"fulano@fulano.com","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
 </code></pre>
 <blockquote>
 <p>Example response (200):</p>
