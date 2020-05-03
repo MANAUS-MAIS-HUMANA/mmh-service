@@ -601,7 +601,7 @@ let headers = {
 };
 
 let body = {
-    "token": "libero",
+    "token": "sit",
     "email": "fulano@fulano.com",
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
@@ -627,7 +627,7 @@ $response = $client->post(
             'Accept' => 'application/json',
         ],
         'json' => [
-            'token' => 'libero',
+            'token' => 'sit',
             'email' => 'fulano@fulano.com',
             'senha' => '5&bnaC#f',
             'senha_confirmation' => '5&bnaC#f',
@@ -644,7 +644,7 @@ import json
 
 url = 'http://localhost/api/v1/auth/confirm-password-reset'
 payload = {
-    "token": "libero",
+    "token": "sit",
     "email": "fulano@fulano.com",
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
@@ -662,7 +662,7 @@ curl -X POST \
     "http://localhost/api/v1/auth/confirm-password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"token":"libero","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
+    -d '{"token":"sit","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
 
 ```
 
@@ -827,6 +827,7 @@ curl -X POST \
         }
     ],
     "message": "Usuários encontrados!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
     "success": true,
     "url": "http:\/\/back.localhost\/api\/v1\/usuario"
 }

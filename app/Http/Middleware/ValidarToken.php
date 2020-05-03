@@ -20,19 +20,17 @@ class ValidarToken
     public function handle($request, Closure $next)
     {
         try {
-            throw_if(!$request->header('Authorization'), \Exception::class, 'Não autorizado', 401);
+            throw_if(!Str::contains($request->headers, ['authorization', 'Authorization']), \Exception::class, 'Não autorizado', 401);
 
-            $token = Str::replaceFirst('Bearer ', '', $request->header('Authorization'));
-
-            $payload = auth()->setToken($token)->getPayload();
+            $payload = auth()->setRequest($request)->getPayload();
 
             throw_if($payload['user']->status !== 'Ativo', \Exception::class, 'Não autorizado', 401);
 
             return $next($request);
         } catch (\Throwable $e) {
-            return (new MiddlewareResource(null, false, $e->getMessage()))
+            return (new MiddlewareResource(null, false, 'Não autorizado'))
                 ->response()
-                ->setStatusCode($e->getCode());
+                ->setStatusCode(401);
         }
     }
 }

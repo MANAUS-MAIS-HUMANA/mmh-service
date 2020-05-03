@@ -652,7 +652,7 @@ let headers = {
 };
 
 let body = {
-    "token": "libero",
+    "token": "sit",
     "email": "fulano@fulano.com",
     "senha": "5&amp;bnaC#f",
     "senha_confirmation": "5&amp;bnaC#f"
@@ -675,7 +675,7 @@ $response = $client-&gt;post(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'token' =&gt; 'libero',
+            'token' =&gt; 'sit',
             'email' =&gt; 'fulano@fulano.com',
             'senha' =&gt; '5&amp;bnaC#f',
             'senha_confirmation' =&gt; '5&amp;bnaC#f',
@@ -689,7 +689,7 @@ import json
 
 url = 'http://localhost/api/v1/auth/confirm-password-reset'
 payload = {
-    "token": "libero",
+    "token": "sit",
     "email": "fulano@fulano.com",
     "senha": "5&amp;bnaC#f",
     "senha_confirmation": "5&amp;bnaC#f"
@@ -704,7 +704,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/auth/confirm-password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"token":"libero","email":"fulano@fulano.com","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
+    -d '{"token":"sit","email":"fulano@fulano.com","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
 </code></pre>
 <blockquote>
 <p>Example response (200):</p>
@@ -873,6 +873,7 @@ response.json()</code></pre>
         }
     ],
     "message": "Usuários encontrados!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
     "success": true,
     "url": "http:\/\/back.localhost\/api\/v1\/usuario"
 }</code></pre>
