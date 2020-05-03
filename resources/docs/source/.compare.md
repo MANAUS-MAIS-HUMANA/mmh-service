@@ -232,8 +232,7 @@ curl -X POST \
 {
     "data": [],
     "message": "Não autorizado",
-    "success": false,
-    "url": "http:\/\/back.localhost\/api\/v1\/auth\/logout"
+    "success": false
 }
 ```
 
@@ -266,8 +265,8 @@ let body = {
     "endereco": "Rua Dom",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "quia",
-    "cnpj": "quia",
+    "cpf": "vel",
+    "cnpj": "omnis",
     "perfis": [
         {
             "id": 1,
@@ -278,7 +277,7 @@ let body = {
         }
     ],
     "senha": "5&bnaC#f",
-    "senha_confirmation": "est"
+    "senha_confirmation": "consectetur"
 }
 
 fetch(url, {
@@ -306,8 +305,8 @@ $response = $client->post(
             'endereco' => 'Rua Dom',
             'estado' => 'AM',
             'tipo_pessoa' => 'pf',
-            'cpf' => 'quia',
-            'cnpj' => 'quia',
+            'cpf' => 'vel',
+            'cnpj' => 'omnis',
             'perfis' => [
                 [
                     'id' => 1,
@@ -318,7 +317,7 @@ $response = $client->post(
                 ],
             ],
             'senha' => '5&bnaC#f',
-            'senha_confirmation' => 'est',
+            'senha_confirmation' => 'consectetur',
         ],
     ]
 );
@@ -337,8 +336,8 @@ payload = {
     "endereco": "Rua Dom",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "quia",
-    "cnpj": "quia",
+    "cpf": "vel",
+    "cnpj": "omnis",
     "perfis": [
         {
             "id": 1,
@@ -349,7 +348,7 @@ payload = {
         }
     ],
     "senha": "5&bnaC#f",
-    "senha_confirmation": "est"
+    "senha_confirmation": "consectetur"
 }
 headers = {
   'Content-Type': 'application/json',
@@ -364,7 +363,7 @@ curl -X POST \
     "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom","estado":"AM","tipo_pessoa":"pf","cpf":"quia","cnpj":"quia","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&bnaC#f","senha_confirmation":"est"}'
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom","estado":"AM","tipo_pessoa":"pf","cpf":"vel","cnpj":"omnis","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&bnaC#f","senha_confirmation":"consectetur"}'
 
 ```
 
@@ -602,7 +601,7 @@ let headers = {
 };
 
 let body = {
-    "token": "ipsam",
+    "token": "reiciendis",
     "email": "fulano@fulano.com",
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
@@ -628,7 +627,7 @@ $response = $client->post(
             'Accept' => 'application/json',
         ],
         'json' => [
-            'token' => 'ipsam',
+            'token' => 'reiciendis',
             'email' => 'fulano@fulano.com',
             'senha' => '5&bnaC#f',
             'senha_confirmation' => '5&bnaC#f',
@@ -645,7 +644,7 @@ import json
 
 url = 'http://localhost/api/v1/auth/confirm-password-reset'
 payload = {
-    "token": "ipsam",
+    "token": "reiciendis",
     "email": "fulano@fulano.com",
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
@@ -663,7 +662,7 @@ curl -X POST \
     "http://localhost/api/v1/auth/confirm-password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"token":"ipsam","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
+    -d '{"token":"reiciendis","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
 
 ```
 

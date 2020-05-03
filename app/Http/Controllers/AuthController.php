@@ -77,7 +77,7 @@ class AuthController extends Controller
      * @authenticated
      *
      * @responseFile 200 responses/AuthController/logout.200.json
-     * @responseFile 401 responses/AuthController/logout.401.json
+     * @responseFile 401 responses/Middleware/unauthorized.401.json
      *
      * @return JsonResponse
      */
