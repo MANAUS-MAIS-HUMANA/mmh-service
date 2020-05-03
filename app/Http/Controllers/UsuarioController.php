@@ -16,21 +16,42 @@ use Illuminate\Http\JsonResponse;
 class UsuarioController extends Controller
 {
     /**
-     * @var UsuarioService
+     * GetAll
+     *
+     * Endpoint que retorna todos os usuários.
+     *
+     * @authenticated
+     *
+     * @responseFile 200 responses/UsuarioController/getAll.200.json
+     * @responseFile 401 responses/Middleware/unauthorized.401.json
+     * @responseFile 404 responses/UsuarioController/getAll.404.json
+     *
+     * @return JsonResponse
      */
-    private UsuarioService $usuarioService;
-
-    public function __construct(UsuarioService $usuarioService)
-    {
-        $this->usuarioService = $usuarioService;
-    }
-
     public function getAll(): JsonResponse
     {
         $result = $this->usuarioService->getAll();
 
-        return (new UsuarioResource($result['data'] ??= null, $result['success'], $result['message']))
+        return (new UsuarioResource(
+            $result['data'] ??= null, $result['success'], $result['message']
+        ))
             ->response()
             ->setStatusCode($result['code']);
+    }
+
+    /**
+     * @var UsuarioService
+     */
+    private UsuarioService $usuarioService;
+
+    /**
+     * UsuarioController constructor.
+     * @param UsuarioService $usuarioService
+     */
+    public function __construct(UsuarioService $usuarioService)
+    {
+        $this->middleware(['auth:api', 'validarToken']);
+
+        $this->usuarioService = $usuarioService;
     }
 }

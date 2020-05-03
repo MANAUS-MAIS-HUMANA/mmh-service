@@ -37,7 +37,7 @@ class User extends Authenticatable implements JWTSubject
             'user' => [
                 'nome' => $this->pessoa->nome,
                 'email' => $this->email,
-                'status' => self::STATUS_USUARIO[$this->status],
+                'status' => $this->statusParse,
                 'criado' => $this->created_at->format('d/m/Y'),
             ]
         ];
@@ -51,5 +51,10 @@ class User extends Authenticatable implements JWTSubject
     public function perfis()
     {
         return $this->belongsToMany(Perfil::class, 'users_perfis', 'user_id', 'perfil_id');
+    }
+
+    public function getStatusParseAttribute()
+    {
+        return self::STATUS_USUARIO[$this->status];
     }
 }

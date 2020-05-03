@@ -1,0 +1,6 @@
+{
+    "data": [],
+    "message": "Não foram encontrados usuários!",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}

@@ -268,8 +268,8 @@ let body = {
     "endereco": "Rua Dom",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "vel",
-    "cnpj": "omnis",
+    "cpf": "sapiente",
+    "cnpj": "quae",
     "perfis": [
         {
             "id": 1,
@@ -280,7 +280,7 @@ let body = {
         }
     ],
     "senha": "5&amp;bnaC#f",
-    "senha_confirmation": "consectetur"
+    "senha_confirmation": "quibusdam"
 }
 
 fetch(url, {
@@ -305,8 +305,8 @@ $response = $client-&gt;post(
             'endereco' =&gt; 'Rua Dom',
             'estado' =&gt; 'AM',
             'tipo_pessoa' =&gt; 'pf',
-            'cpf' =&gt; 'vel',
-            'cnpj' =&gt; 'omnis',
+            'cpf' =&gt; 'sapiente',
+            'cnpj' =&gt; 'quae',
             'perfis' =&gt; [
                 [
                     'id' =&gt; 1,
@@ -317,7 +317,7 @@ $response = $client-&gt;post(
                 ],
             ],
             'senha' =&gt; '5&amp;bnaC#f',
-            'senha_confirmation' =&gt; 'consectetur',
+            'senha_confirmation' =&gt; 'quibusdam',
         ],
     ]
 );
@@ -333,8 +333,8 @@ payload = {
     "endereco": "Rua Dom",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "vel",
-    "cnpj": "omnis",
+    "cpf": "sapiente",
+    "cnpj": "quae",
     "perfis": [
         {
             "id": 1,
@@ -345,7 +345,7 @@ payload = {
         }
     ],
     "senha": "5&amp;bnaC#f",
-    "senha_confirmation": "consectetur"
+    "senha_confirmation": "quibusdam"
 }
 headers = {
   'Content-Type': 'application/json',
@@ -357,7 +357,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom","estado":"AM","tipo_pessoa":"pf","cpf":"vel","cnpj":"omnis","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&amp;bnaC#f","senha_confirmation":"consectetur"}'
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom","estado":"AM","tipo_pessoa":"pf","cpf":"sapiente","cnpj":"quae","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&amp;bnaC#f","senha_confirmation":"quibusdam"}'
 </code></pre>
 <blockquote>
 <p>Example response (201):</p>
@@ -652,7 +652,7 @@ let headers = {
 };
 
 let body = {
-    "token": "reiciendis",
+    "token": "eveniet",
     "email": "fulano@fulano.com",
     "senha": "5&amp;bnaC#f",
     "senha_confirmation": "5&amp;bnaC#f"
@@ -675,7 +675,7 @@ $response = $client-&gt;post(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'token' =&gt; 'reiciendis',
+            'token' =&gt; 'eveniet',
             'email' =&gt; 'fulano@fulano.com',
             'senha' =&gt; '5&amp;bnaC#f',
             'senha_confirmation' =&gt; '5&amp;bnaC#f',
@@ -689,7 +689,7 @@ import json
 
 url = 'http://localhost/api/v1/auth/confirm-password-reset'
 payload = {
-    "token": "reiciendis",
+    "token": "eveniet",
     "email": "fulano@fulano.com",
     "senha": "5&amp;bnaC#f",
     "senha_confirmation": "5&amp;bnaC#f"
@@ -704,7 +704,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/auth/confirm-password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"token":"reiciendis","email":"fulano@fulano.com","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
+    -d '{"token":"eveniet","email":"fulano@fulano.com","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
 </code></pre>
 <blockquote>
 <p>Example response (200):</p>
@@ -790,7 +790,9 @@ response.json()</code></pre>
 <h1>UsuarioController</h1>
 <p>Controller responsável pelo gerenciamento de Usuários</p>
 <!-- START_f4118dbd959bf0da643fc902f2d8ba1b -->
-<h2>api/v1/usuario</h2>
+<h2>GetAll</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint que retorna todos os usuários.</p>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -836,6 +838,61 @@ response.json()</code></pre>
     "http://localhost/api/v1/usuario" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json"</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "id": 1,
+            "nome": "Manaus Mais Humana",
+            "email": "mmh@gmail.com",
+            "status": "Ativo",
+            "perfis": [
+                "admin"
+            ]
+        },
+        {
+            "id": 2,
+            "nome": "Fulano de Tal",
+            "email": "fulano@tal.com",
+            "status": "Inativo",
+            "perfis": [
+                "admin",
+                "codese"
+            ]
+        },
+        {
+            "id": 3,
+            "nome": "Cicrano de Tal",
+            "email": "cicrano@tal.com",
+            "status": "Bloqueado",
+            "perfis": [
+                "parceiro"
+            ]
+        }
+    ],
+    "message": "Usuários encontrados!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não foram encontrados usuários!",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}</code></pre>
 <h3>HTTP Request</h3>
 <p><code>POST api/v1/usuario</code></p>
 <!-- END_f4118dbd959bf0da643fc902f2d8ba1b -->

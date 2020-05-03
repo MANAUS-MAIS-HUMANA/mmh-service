@@ -265,8 +265,8 @@ let body = {
     "endereco": "Rua Dom",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "vel",
-    "cnpj": "omnis",
+    "cpf": "sapiente",
+    "cnpj": "quae",
     "perfis": [
         {
             "id": 1,
@@ -277,7 +277,7 @@ let body = {
         }
     ],
     "senha": "5&bnaC#f",
-    "senha_confirmation": "consectetur"
+    "senha_confirmation": "quibusdam"
 }
 
 fetch(url, {
@@ -305,8 +305,8 @@ $response = $client->post(
             'endereco' => 'Rua Dom',
             'estado' => 'AM',
             'tipo_pessoa' => 'pf',
-            'cpf' => 'vel',
-            'cnpj' => 'omnis',
+            'cpf' => 'sapiente',
+            'cnpj' => 'quae',
             'perfis' => [
                 [
                     'id' => 1,
@@ -317,7 +317,7 @@ $response = $client->post(
                 ],
             ],
             'senha' => '5&bnaC#f',
-            'senha_confirmation' => 'consectetur',
+            'senha_confirmation' => 'quibusdam',
         ],
     ]
 );
@@ -336,8 +336,8 @@ payload = {
     "endereco": "Rua Dom",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "vel",
-    "cnpj": "omnis",
+    "cpf": "sapiente",
+    "cnpj": "quae",
     "perfis": [
         {
             "id": 1,
@@ -348,7 +348,7 @@ payload = {
         }
     ],
     "senha": "5&bnaC#f",
-    "senha_confirmation": "consectetur"
+    "senha_confirmation": "quibusdam"
 }
 headers = {
   'Content-Type': 'application/json',
@@ -363,7 +363,7 @@ curl -X POST \
     "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom","estado":"AM","tipo_pessoa":"pf","cpf":"vel","cnpj":"omnis","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&bnaC#f","senha_confirmation":"consectetur"}'
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom","estado":"AM","tipo_pessoa":"pf","cpf":"sapiente","cnpj":"quae","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&bnaC#f","senha_confirmation":"quibusdam"}'
 
 ```
 
@@ -601,7 +601,7 @@ let headers = {
 };
 
 let body = {
-    "token": "reiciendis",
+    "token": "eveniet",
     "email": "fulano@fulano.com",
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
@@ -627,7 +627,7 @@ $response = $client->post(
             'Accept' => 'application/json',
         ],
         'json' => [
-            'token' => 'reiciendis',
+            'token' => 'eveniet',
             'email' => 'fulano@fulano.com',
             'senha' => '5&bnaC#f',
             'senha_confirmation' => '5&bnaC#f',
@@ -644,7 +644,7 @@ import json
 
 url = 'http://localhost/api/v1/auth/confirm-password-reset'
 payload = {
-    "token": "reiciendis",
+    "token": "eveniet",
     "email": "fulano@fulano.com",
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
@@ -662,7 +662,7 @@ curl -X POST \
     "http://localhost/api/v1/auth/confirm-password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"token":"reiciendis","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
+    -d '{"token":"eveniet","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
 
 ```
 
@@ -730,7 +730,11 @@ Parameter | Type | Status | Description
 
 Controller responsável pelo gerenciamento de Usuários
 <!-- START_f4118dbd959bf0da643fc902f2d8ba1b -->
-## api/v1/usuario
+## GetAll
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint que retorna todos os usuários.
+
 > Example request:
 
 ```javascript
@@ -788,6 +792,64 @@ curl -X POST \
 ```
 
 
+> Example response (200):
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "nome": "Manaus Mais Humana",
+            "email": "mmh@gmail.com",
+            "status": "Ativo",
+            "perfis": [
+                "admin"
+            ]
+        },
+        {
+            "id": 2,
+            "nome": "Fulano de Tal",
+            "email": "fulano@tal.com",
+            "status": "Inativo",
+            "perfis": [
+                "admin",
+                "codese"
+            ]
+        },
+        {
+            "id": 3,
+            "nome": "Cicrano de Tal",
+            "email": "cicrano@tal.com",
+            "status": "Bloqueado",
+            "perfis": [
+                "parceiro"
+            ]
+        }
+    ],
+    "message": "Usuários encontrados!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Não foram encontrados usuários!",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}
+```
 
 ### HTTP Request
 `POST api/v1/usuario`
