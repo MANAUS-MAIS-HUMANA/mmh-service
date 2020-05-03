@@ -141,6 +141,42 @@ class ParceiroService
         }
     }
 
+    public function delete(Request $request, string $parceiroId): array
+    {
+        $resultado = $this->find($parceiroId);
+        if (!$resultado['success']) {
+            return $resultado;
+        }
+
+        $parceiro = $resultado['data'];
+        DB::beginTransaction();
+
+        try {
+            $this->removerTelefones($parceiro);
+            $this->removerEnderecos($parceiro);
+            $tipoPessoaId = $parceiro->tipoPessoa->id;
+            $this->removerParceiro($parceiro);
+            $this->removerTipoPessoa($tipoPessoaId);
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => null,
+                'message' => 'Parceiro removido com sucesso!',
+                'code' => HttpStatus::OK,
+            ];
+        } catch (Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+            ];
+        }
+    }
+
     protected function validate(Request $request): array
     {
         $dadosValidados = $request->validate($this->regrasValidacao);
@@ -262,6 +298,28 @@ class ParceiroService
                 ApiError::falhaAtualizarTipoPessoa($tipoPessoa->id),
                 HttpStatus::INTERNAL_SERVER_ERROR,
             ],
+        );
+    }
+
+    private function removerParceiro(Parceiro $parceiro)
+    {
+        $resultado = $parceiro->delete();
+
+        throw_if(
+            !$resultado,
+            Exception::class,
+            [ApiError::falhaRemoverParceiro(), HttpStatus::INTERNAL_SERVER_ERROR],
+        );
+    }
+
+    private function removerTipoPessoa(int $tipoPessoaId)
+    {
+        $resultado = TipoPessoa::where('id', '=', $tipoPessoaId)->delete();
+
+        throw_if(
+            !$resultado,
+            Exception::class,
+            [ApiError::falhaRemoverTipoPessoa(), HttpStatus::INTERNAL_SERVER_ERROR],
         );
     }
 

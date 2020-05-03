@@ -14,6 +14,8 @@ class ApiError
     const CODIGO_ERRO_REMOVER_TELEFONE = 107;
     const CODIGO_ERRO_ATUALIZAR_PARCEIRO = 108;
     const CODIGO_ERRO_ATUALIZAR_TIPO_PESSOA = 109;
+    const CODIGO_ERRO_REMOVER_PARCEIRO = 110;
+    const CODIGO_ERRO_REMOVER_TIPO_PESSOA = 111;
 
     public static function cpfCnpjNaoEncontrado()
     {
@@ -92,6 +94,22 @@ class ApiError
         return self::setMessageAndCode(
             'Falha ao atualizar o tipo_pessoa ' . $tipoPessoaId,
             self::CODIGO_ERRO_ATUALIZAR_TIPO_PESSOA,
+        );
+    }
+
+    public static function falhaRemoverParceiro()
+    {
+        return self::setMessageAndCode(
+            'Falha ao remover o endereco do parceiro',
+            self::CODIGO_ERRO_REMOVER_PARCEIRO,
+        );
+    }
+
+    public static function falhaRemoverTipoPessoa()
+    {
+        return self::setMessageAndCode(
+            'Falha ao remover o endereco do parceiro',
+            self::CODIGO_ERRO_REMOVER_TIPO_PESSOA,
         );
     }
 

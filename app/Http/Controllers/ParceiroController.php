@@ -61,4 +61,16 @@ class ParceiroController extends Controller
 
         return response()->json($resultado['message'], $resultado['code']);
     }
+
+    public function delete(Request $request, string $id)
+    {
+        $resultado = $this->parceiroService->delete($request, $id);
+
+        if ($resultado['success']) {
+            $dado = ['data' => null];
+            return response()->json($dado, $resultado['code']);
+        }
+
+        return response()->json($resultado['message'], $resultado['code']);
+    }
 }
