@@ -290,7 +290,9 @@ class AuthService
     {
         $perfil = $this->perfilService->getByPerfil($perfil);
 
-        throw_if(!$perfil['success'], \Exception::class, $perfil['message'], $perfil['code']);
+        throw_if(
+            !$perfil['success'], \Exception::class, $perfil['message'], $perfil['code']
+        );
 
         $perfil = data_get($perfil, 'data');
 
