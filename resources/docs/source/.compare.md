@@ -262,22 +262,13 @@ let headers = {
 let body = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
-    "endereco": "Rua Dom",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "vel",
-    "cnpj": "omnis",
-    "perfis": [
-        {
-            "id": 1,
-            "descricao": "Master"
-        },
-        {
-            "id": 2
-        }
-    ],
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
     "senha": "5&bnaC#f",
-    "senha_confirmation": "consectetur"
+    "senha_confirmation": "5&bnaC#f"
 }
 
 fetch(url, {
@@ -302,22 +293,13 @@ $response = $client->post(
         'json' => [
             'nome' => 'Fulano de Tal',
             'email' => 'fulano@tal.com',
-            'endereco' => 'Rua Dom',
+            'endereco' => 'Rua Dom Pedro, S/N, Dom Pedro',
             'estado' => 'AM',
             'tipo_pessoa' => 'pf',
-            'cpf' => 'vel',
-            'cnpj' => 'omnis',
-            'perfis' => [
-                [
-                    'id' => 1,
-                    'descricao' => 'Master',
-                ],
-                [
-                    'id' => 2,
-                ],
-            ],
+            'cpf' => '111.111.111-11',
+            'cnpj' => '11.111.111/1111-11',
             'senha' => '5&bnaC#f',
-            'senha_confirmation' => 'consectetur',
+            'senha_confirmation' => '5&bnaC#f',
         ],
     ]
 );
@@ -333,22 +315,13 @@ url = 'http://localhost/api/v1/auth/create'
 payload = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
-    "endereco": "Rua Dom",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "vel",
-    "cnpj": "omnis",
-    "perfis": [
-        {
-            "id": 1,
-            "descricao": "Master"
-        },
-        {
-            "id": 2
-        }
-    ],
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
     "senha": "5&bnaC#f",
-    "senha_confirmation": "consectetur"
+    "senha_confirmation": "5&bnaC#f"
 }
 headers = {
   'Content-Type': 'application/json',
@@ -363,7 +336,7 @@ curl -X POST \
     "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom","estado":"AM","tipo_pessoa":"pf","cpf":"vel","cnpj":"omnis","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&bnaC#f","senha_confirmation":"consectetur"}'
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
 
 ```
 
@@ -377,8 +350,7 @@ curl -X POST \
         "nome": "Fulano de Tal",
         "email": "fulano@tal.com",
         "perfis": [
-            "admin",
-            "codese"
+            "parceiro"
         ]
     },
     "message": "Usuário criado com sucesso!",
@@ -399,8 +371,6 @@ curl -X POST \
         "O Endereço é obrigatório.",
         "O Estado é obrigatório.",
         "O Nome é obrigatório.",
-        "O Perfil de Usuário 'Master' é inválido.",
-        "O Perfil de Usuário é inválido.",
         "O Tipo de Pessoa é obrigatório."
     ],
     "message": "Existem campos inválidos.",
@@ -430,14 +400,10 @@ Parameter | Type | Status | Description
         `endereco` | string |  required  | Endereço residencial - (max. 255).
         `estado` | string |  required  | Estado - (tam. 2).
         `tipo_pessoa` | string |  required  | Tipo de Pessoa (PF ou PJ).
-        `cpf` | string |  optional  | Número do CPF do usuário (obrigatório se não houver CNPJ). Example:
+        `cpf` | string |  optional  | Número do CPF do usuário (obrigatório se não houver CNPJ).
         `cnpj` | string |  optional  | Número do CNPJ da instituição (obrigatório se não houver CPF).
-        `perfis` | array |  required  | Matriz de perfis
-        `perfis[0].id` | integer |  required  | ID do perfil.
-        `perfis[0].descricao` | string |  optional  | Descricao do perfil.
-        `perfis[1].id` | integer |  required  | ID do perfil.
         `senha` | string |  required  | Senha de usuário (min. 8).
-        `senha_confirmation` | string |  required  | Confirmação de senha de usuário. Example:
+        `senha_confirmation` | string |  required  | Confirmação de senha de usuário.
     
 <!-- END_a4a233f86d97c8deebe3bedaa936f967 -->
 
@@ -601,7 +567,7 @@ let headers = {
 };
 
 let body = {
-    "token": "reiciendis",
+    "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
     "email": "fulano@fulano.com",
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
@@ -627,7 +593,7 @@ $response = $client->post(
             'Accept' => 'application/json',
         ],
         'json' => [
-            'token' => 'reiciendis',
+            'token' => 'BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y',
             'email' => 'fulano@fulano.com',
             'senha' => '5&bnaC#f',
             'senha_confirmation' => '5&bnaC#f',
@@ -644,7 +610,7 @@ import json
 
 url = 'http://localhost/api/v1/auth/confirm-password-reset'
 payload = {
-    "token": "reiciendis",
+    "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
     "email": "fulano@fulano.com",
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
@@ -662,7 +628,7 @@ curl -X POST \
     "http://localhost/api/v1/auth/confirm-password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"token":"reiciendis","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
+    -d '{"token":"BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
 
 ```
 
@@ -718,81 +684,11 @@ curl -X POST \
 #### Body Parameters
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
-    `token` | string |  required  | Token de validação. Example:
+    `token` | string |  required  | Token de validação.
         `email` | string |  required  | Endereço de e-mail.
         `senha` | string |  required  | Nova senha (min. 8).
         `senha_confirmation` | string |  required  | Confirmação de nova senha.
     
 <!-- END_64744f99fcf3bece9ec84aee8c3b0cfc -->
-
-#UsuarioController
-
-
-Controller responsável pelo gerenciamento de Usuários
-<!-- START_f4118dbd959bf0da643fc902f2d8ba1b -->
-## api/v1/usuario
-> Example request:
-
-```javascript
-const url = new URL(
-    "http://localhost/api/v1/usuario"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-```php
-
-$client = new \GuzzleHttp\Client();
-$response = $client->post(
-    'http://localhost/api/v1/usuario',
-    [
-        'headers' => [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-        ],
-    ]
-);
-$body = $response->getBody();
-print_r(json_decode((string) $body));
-```
-
-```python
-import requests
-import json
-
-url = 'http://localhost/api/v1/usuario'
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-response = requests.request('POST', url, headers=headers)
-response.json()
-```
-
-```bash
-curl -X POST \
-    "http://localhost/api/v1/usuario" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json"
-```
-
-
-
-### HTTP Request
-`POST api/v1/usuario`
-
-
-<!-- END_f4118dbd959bf0da643fc902f2d8ba1b -->
 
 

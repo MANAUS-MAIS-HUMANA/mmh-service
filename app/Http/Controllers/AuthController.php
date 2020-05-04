@@ -99,21 +99,13 @@ class AuthController extends Controller
      *
      * @bodyParam nome string required Nome do novo usuário - (max. 255). Example: Fulano de Tal
      * @bodyParam email string required Endereço de e-mail - (max. 255). Example: fulano@tal.com
-     * @bodyParam endereco string required Endereço residencial - (max. 255). Example: Rua Dom
-     *     Pedro, S/N, Dom Pedro
+     * @bodyParam endereco string required Endereço residencial - (max. 255). Example: Rua Dom Pedro, S/N, Dom Pedro
      * @bodyParam estado string required Estado - (tam. 2). Example: AM
      * @bodyParam tipo_pessoa string required Tipo de Pessoa (PF ou PJ). Example: pf
-     * @bodyParam cpf string Número do CPF do usuário (obrigatório se não houver CNPJ). Example:
-     *     111.111.111-11
-     * @bodyParam cnpj string Número do CNPJ da instituição (obrigatório se não houver CPF).
-     *     Example: 11.111.111/1111-11
-     * @bodyParam perfis array required Matriz de perfis
-     * @bodyParam perfis[0].id int required ID do perfil. Example: 1
-     * @bodyParam perfis[0].descricao string Descricao do perfil. Example: Master
-     * @bodyParam perfis[1].id int required ID do perfil. Example: 2
+     * @bodyParam cpf string Número do CPF do usuário (obrigatório se não houver CNPJ). Example: 111.111.111-11
+     * @bodyParam cnpj string Número do CNPJ da instituição (obrigatório se não houver CPF). Example: 11.111.111/1111-11
      * @bodyParam senha string required Senha de usuário (min. 8). Example: 5&bnaC#f
-     * @bodyParam senha_confirmation string required Confirmação de senha de usuário. Example:
-     *     5&bnaC#f
+     * @bodyParam senha_confirmation string required Confirmação de senha de usuário. Example: 5&bnaC#f
      *
      * @responseFile 201 responses/AuthController/create.201.json
      * @responseFile 422 responses/AuthController/create.422.json
@@ -178,8 +170,7 @@ class AuthController extends Controller
      *
      * Endpoint para confirmar a solicitação de redefinição de senha.
      *
-     * @bodyParam token string required Token de validação. Example:
-     *     BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y
+     * @bodyParam token string required Token de validação. Example: BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y
      * @bodyParam email string required Endereço de e-mail. Example: fulano@fulano.com
      * @bodyParam senha string required Nova senha (min. 8). Example: 5&bnaC#f
      * @bodyParam senha_confirmation string required Confirmação de nova senha. Example: 5&bnaC#f

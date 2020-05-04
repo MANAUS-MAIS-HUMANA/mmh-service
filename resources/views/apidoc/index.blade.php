@@ -265,22 +265,13 @@ let headers = {
 let body = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
-    "endereco": "Rua Dom",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "vel",
-    "cnpj": "omnis",
-    "perfis": [
-        {
-            "id": 1,
-            "descricao": "Master"
-        },
-        {
-            "id": 2
-        }
-    ],
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
     "senha": "5&amp;bnaC#f",
-    "senha_confirmation": "consectetur"
+    "senha_confirmation": "5&amp;bnaC#f"
 }
 
 fetch(url, {
@@ -302,22 +293,13 @@ $response = $client-&gt;post(
         'json' =&gt; [
             'nome' =&gt; 'Fulano de Tal',
             'email' =&gt; 'fulano@tal.com',
-            'endereco' =&gt; 'Rua Dom',
+            'endereco' =&gt; 'Rua Dom Pedro, S/N, Dom Pedro',
             'estado' =&gt; 'AM',
             'tipo_pessoa' =&gt; 'pf',
-            'cpf' =&gt; 'vel',
-            'cnpj' =&gt; 'omnis',
-            'perfis' =&gt; [
-                [
-                    'id' =&gt; 1,
-                    'descricao' =&gt; 'Master',
-                ],
-                [
-                    'id' =&gt; 2,
-                ],
-            ],
+            'cpf' =&gt; '111.111.111-11',
+            'cnpj' =&gt; '11.111.111/1111-11',
             'senha' =&gt; '5&amp;bnaC#f',
-            'senha_confirmation' =&gt; 'consectetur',
+            'senha_confirmation' =&gt; '5&amp;bnaC#f',
         ],
     ]
 );
@@ -330,22 +312,13 @@ url = 'http://localhost/api/v1/auth/create'
 payload = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
-    "endereco": "Rua Dom",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
     "estado": "AM",
     "tipo_pessoa": "pf",
-    "cpf": "vel",
-    "cnpj": "omnis",
-    "perfis": [
-        {
-            "id": 1,
-            "descricao": "Master"
-        },
-        {
-            "id": 2
-        }
-    ],
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
     "senha": "5&amp;bnaC#f",
-    "senha_confirmation": "consectetur"
+    "senha_confirmation": "5&amp;bnaC#f"
 }
 headers = {
   'Content-Type': 'application/json',
@@ -357,7 +330,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom","estado":"AM","tipo_pessoa":"pf","cpf":"vel","cnpj":"omnis","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&amp;bnaC#f","senha_confirmation":"consectetur"}'
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
 </code></pre>
 <blockquote>
 <p>Example response (201):</p>
@@ -368,8 +341,7 @@ response.json()</code></pre>
         "nome": "Fulano de Tal",
         "email": "fulano@tal.com",
         "perfis": [
-            "admin",
-            "codese"
+            "parceiro"
         ]
     },
     "message": "Usuário criado com sucesso!",
@@ -389,8 +361,6 @@ response.json()</code></pre>
         "O Endereço é obrigatório.",
         "O Estado é obrigatório.",
         "O Nome é obrigatório.",
-        "O Perfil de Usuário 'Master' é inválido.",
-        "O Perfil de Usuário é inválido.",
         "O Tipo de Pessoa é obrigatório."
     ],
     "message": "Existem campos inválidos.",
@@ -453,37 +423,13 @@ response.json()</code></pre>
 <td><code>cpf</code></td>
 <td>string</td>
 <td>optional</td>
-<td>Número do CPF do usuário (obrigatório se não houver CNPJ). Example:</td>
+<td>Número do CPF do usuário (obrigatório se não houver CNPJ).</td>
 </tr>
 <tr>
 <td><code>cnpj</code></td>
 <td>string</td>
 <td>optional</td>
 <td>Número do CNPJ da instituição (obrigatório se não houver CPF).</td>
-</tr>
-<tr>
-<td><code>perfis</code></td>
-<td>array</td>
-<td>required</td>
-<td>Matriz de perfis</td>
-</tr>
-<tr>
-<td><code>perfis[0].id</code></td>
-<td>integer</td>
-<td>required</td>
-<td>ID do perfil.</td>
-</tr>
-<tr>
-<td><code>perfis[0].descricao</code></td>
-<td>string</td>
-<td>optional</td>
-<td>Descricao do perfil.</td>
-</tr>
-<tr>
-<td><code>perfis[1].id</code></td>
-<td>integer</td>
-<td>required</td>
-<td>ID do perfil.</td>
 </tr>
 <tr>
 <td><code>senha</code></td>
@@ -495,7 +441,7 @@ response.json()</code></pre>
 <td><code>senha_confirmation</code></td>
 <td>string</td>
 <td>required</td>
-<td>Confirmação de senha de usuário. Example:</td>
+<td>Confirmação de senha de usuário.</td>
 </tr>
 </tbody>
 </table>
@@ -652,7 +598,7 @@ let headers = {
 };
 
 let body = {
-    "token": "reiciendis",
+    "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
     "email": "fulano@fulano.com",
     "senha": "5&amp;bnaC#f",
     "senha_confirmation": "5&amp;bnaC#f"
@@ -675,7 +621,7 @@ $response = $client-&gt;post(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'token' =&gt; 'reiciendis',
+            'token' =&gt; 'BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y',
             'email' =&gt; 'fulano@fulano.com',
             'senha' =&gt; '5&amp;bnaC#f',
             'senha_confirmation' =&gt; '5&amp;bnaC#f',
@@ -689,7 +635,7 @@ import json
 
 url = 'http://localhost/api/v1/auth/confirm-password-reset'
 payload = {
-    "token": "reiciendis",
+    "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
     "email": "fulano@fulano.com",
     "senha": "5&amp;bnaC#f",
     "senha_confirmation": "5&amp;bnaC#f"
@@ -704,7 +650,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/auth/confirm-password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"token":"reiciendis","email":"fulano@fulano.com","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
+    -d '{"token":"BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y","email":"fulano@fulano.com","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
 </code></pre>
 <blockquote>
 <p>Example response (200):</p>
@@ -764,7 +710,7 @@ response.json()</code></pre>
 <td><code>token</code></td>
 <td>string</td>
 <td>required</td>
-<td>Token de validação. Example:</td>
+<td>Token de validação.</td>
 </tr>
 <tr>
 <td><code>email</code></td>
@@ -787,58 +733,6 @@ response.json()</code></pre>
 </tbody>
 </table>
 <!-- END_64744f99fcf3bece9ec84aee8c3b0cfc -->
-<h1>UsuarioController</h1>
-<p>Controller responsável pelo gerenciamento de Usuários</p>
-<!-- START_f4118dbd959bf0da643fc902f2d8ba1b -->
-<h2>api/v1/usuario</h2>
-<blockquote>
-<p>Example request:</p>
-</blockquote>
-<pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/usuario"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response =&gt; response.json())
-    .then(json =&gt; console.log(json));</code></pre>
-<pre><code class="language-php">
-$client = new \GuzzleHttp\Client();
-$response = $client-&gt;post(
-    'http://localhost/api/v1/usuario',
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre>
-<pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost/api/v1/usuario'
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-response = requests.request('POST', url, headers=headers)
-response.json()</code></pre>
-<pre><code class="language-bash">curl -X POST \
-    "http://localhost/api/v1/usuario" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json"</code></pre>
-<h3>HTTP Request</h3>
-<p><code>POST api/v1/usuario</code></p>
-<!-- END_f4118dbd959bf0da643fc902f2d8ba1b -->
       </div>
       <div class="dark-box">
                         <div class="lang-selector">

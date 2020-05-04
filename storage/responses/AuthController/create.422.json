@@ -8,8 +8,6 @@
     "O Endereço é obrigatório.",
     "O Estado é obrigatório.",
     "O Nome é obrigatório.",
-    "O Perfil de Usuário 'Master' é inválido.",
-    "O Perfil de Usuário é inválido.",
     "O Tipo de Pessoa é obrigatório."
   ],
   "message": "Existem campos inválidos.",

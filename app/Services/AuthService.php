@@ -20,14 +20,22 @@ class AuthService
      * @var PessoaService
      */
     private PessoaService $pessoaService;
+    /**
+     * @var PerfilService
+     */
+    private PerfilService $perfilService;
 
     /**
      * AuthService constructor.
      * @param PessoaService $pessoaService
+     * @param PerfilService $perfilService
      */
-    public function __construct(PessoaService $pessoaService)
-    {
+    public function __construct(
+        PessoaService $pessoaService,
+        PerfilService $perfilService
+    ) {
         $this->pessoaService = $pessoaService;
+        $this->perfilService = $perfilService;
     }
 
     /**
@@ -106,17 +114,15 @@ class AuthService
                 [
                     'pessoa_id' => $pessoa->id,
                     'email' => $request->email,
-                    'password' => Hash::make($request->senha),
+                    'senha' => Hash::make($request->senha),
                 ]
             );
 
             throw_if(!$usuario, \Exception::class, 'Não foi possível criar o usuaŕio!', 500);
 
-            $this->perfisAttach($usuario, $request->perfis);
+            $this->perfilAttach($usuario, 'parceiro');
 
             DB::commit();
-
-            auth()->login($usuario);
 
             return [
                 'success' => true,
@@ -277,11 +283,18 @@ class AuthService
      * Associa o usuário ao perfil
      *
      * @param User $user
-     * @param array $perfis
+     * @param string $perfil
+     * @throws \Throwable
      */
-    private function perfisAttach(User $user, array $perfis): void
+    private function perfilAttach(User $user, string $perfil): void
     {
-        $user->perfis()->attach(data_get($perfis, '*.id'));
+        $perfil = $this->perfilService->getByPerfil($perfil);
+
+        throw_if(!$perfil['success'], \Exception::class, $perfil['message'], $perfil['code']);
+
+        $perfil = data_get($perfil, 'data');
+
+        $user->perfis()->attach($perfil->id);
     }
 
     /**

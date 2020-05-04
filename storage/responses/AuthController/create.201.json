@@ -4,8 +4,7 @@
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
     "perfis": [
-      "admin",
-      "codese"
+      "parceiro"
     ]
   },
   "message": "Usuário criado com sucesso!",
