@@ -16,8 +16,9 @@ Route::prefix('v1')->group(function () {
 
     /** @api /api/v1/usuario */
     Route::prefix('usuario')->group(function () {
-        Route::post('/', 'UsuarioController@getAll')->name('usuario.getAll');
+        Route::get('/', 'UsuarioController@getAll')->name('usuario.getAll');
         Route::post('{id}', 'UsuarioController@getById')->name('usuario.getById');
+        Route::post('{id}/set-status', 'UsuarioController@setStatus')->name('usuario.setStatus');
     });
 
 });

@@ -82,4 +82,9 @@ class UsuarioController extends Controller
             ->response()
             ->setStatusCode($result['code']);
     }
+
+    public function setStatus(int $id)
+    {
+
+    }
 }

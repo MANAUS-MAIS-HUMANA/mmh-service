@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Usuario;
 
-use App\Http\Resources\Auth\RedefinirSenhaResource;
-use App\Rules\ValidarSeExisteRedefinirSenha;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class RedefinirSenhaRequest extends FormRequest
+class SetarStatusUsuarioRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +17,7 @@ class RedefinirSenhaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -30,7 +28,7 @@ class RedefinirSenhaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email" => ["required", "string", "email", "max:255", "exists:users,email", new ValidarSeExisteRedefinirSenha()],
+            //
         ];
     }
 
@@ -42,11 +40,7 @@ class RedefinirSenhaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "required" => "O :attribute é obrigatório.",
-            "string" => "O :attribute deve ser um texto.",
-            "max" => "O :attribute não pode ter mais que :max caracteres.",
-            "email" => "O :attribute deve ser um endereço de e-mail válido.",
-            "exists" => "O :attribute :input é inválido.",
+            //
         ];
     }
 
@@ -58,7 +52,7 @@ class RedefinirSenhaRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            "email" => "E-mail",
+            //
         ];
     }
 
@@ -72,7 +66,7 @@ class RedefinirSenhaRequest extends FormRequest
     protected function failedValidation(Validator $validator): void
     {
         throw new HttpResponseException(
-            (new RedefinirSenhaResource(null, false, "Existem campos inválidos.", $validator->errors()->unique()))
+            (new Resource(null, false, "Existem campos inválidos.", $validator->errors()->unique()))
                 ->response()
                 ->setStatusCode(422)
         );

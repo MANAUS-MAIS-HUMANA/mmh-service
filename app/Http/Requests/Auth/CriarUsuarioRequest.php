@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
-use App\Http\Resources\Usuario\CriarUsuarioResource;
+use App\Http\Resources\Auth\CriarUsuarioResource;
 use App\Models\TipoPessoa;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
