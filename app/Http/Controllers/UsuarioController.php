@@ -85,6 +85,6 @@ class UsuarioController extends Controller
 
     public function setStatus(int $id)
     {
-
+        //
     }
 }
