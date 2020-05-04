@@ -4,26 +4,28 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\User;
+use App\Models\Perfil;
 
-class UsuarioService
+class PerfilService
 {
     /**
-     * Retorna a lista de usuários
+     * Retorna os dados do perfil pelo nome de perfil
      *
+     * @param string $perfil
      * @return array
      */
-    public function getAll(): array
+    public function getByPerfil(string $perfil): array
     {
         try {
-            $usuarios = User::all();
+            $perfil = Perfil::wherePerfil($perfil)
+                ->first();
 
-            throw_if(!$usuarios, \Exception::class, 'Não foram encontrados usuários!', 404);
+            throw_if(!$perfil, \Exception::class, "Perfil {$perfil} não encontrado!", 404);
 
             return [
                 'success' => true,
-                'data' => $usuarios,
-                'message' => 'Usuários encontrados!',
+                'data' => $perfil,
+                'message' => "Perfil econtrado com sucesso!",
                 'code' => 200
             ];
         } catch (\Throwable $e) {

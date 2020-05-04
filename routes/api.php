@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 /** @api /api/v1/ */
-Route::prefix('v1')->middleware('api')->group(function () {
+Route::prefix('v1')->group(function () {
 
     /** @api /api/v1/auth */
     Route::prefix('auth')->group(function () {

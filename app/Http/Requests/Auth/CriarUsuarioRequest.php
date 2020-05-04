@@ -33,14 +33,12 @@ class CriarUsuarioRequest extends FormRequest
     {
         return [
             "nome" => "required|string|max:255",
-            "email" => "required|string|email|max:255|unique:users,email,{$this->getUserId()},id",
+            "email" => "required|string|email|max:255|unique:users,email",
             "endereco" => "required|string|max:255",
             "estado" => "required|string|size:2",
             "tipo_pessoa" => "required|string|in:{$this->getTiposPessoa()}",
-            "cpf" => "required_without:cnpj|cpf|size:11|unique:tipo_pessoas,cpf_cnpj,{$this->getUserId()},id",
-            "cnpj" => "required_without:cpf|cnpj|size:14|unique:tipo_pessoas,cpf_cnpj,{$this->getUserId()},id",
-            "perfis" => "required|array",
-            "perfis.*.id" => "required|numeric|exists:perfis,id",
+            "cpf" => "required_without:cnpj|cpf|size:11|unique:tipo_pessoas,cpf_cnpj",
+            "cnpj" => "required_without:cpf|cnpj|size:14|unique:tipo_pessoas,cpf_cnpj",
             "senha" => "required|string|min:8|confirmed",
         ];
     }
@@ -63,8 +61,6 @@ class CriarUsuarioRequest extends FormRequest
             "in" => "O :attribute é inválido (aceito: :values).",
             "cpf" => "O :attribute é inválido.",
             "cnpj" => "O :attribute é inválido.",
-            "array" => "O :attribute deve ser uma matriz.",
-            "numeric" => "O :attribute deve ser um numérico.",
             "exists" => "O :attribute '?' é inválido.",
 
             "senha.required" => "A :attribute é obrigatória.",
@@ -89,8 +85,6 @@ class CriarUsuarioRequest extends FormRequest
             "tipo_pessoa" => "Tipo de Pessoa",
             "cpf" => "CPF",
             "cnpj" => "CNPJ",
-            "perfis" => "Perfis de Usuário",
-            "perfis.*.id" => "Perfil de Usuário",
             "senha" => "Senha",
         ];
     }
@@ -133,19 +127,8 @@ class CriarUsuarioRequest extends FormRequest
     private function replaceErroPerfisAndTipoPessoa(Validator $validator): array
     {
         $errors = collect();
-        $perfis['perfis'] = $this->perfis;
         foreach ($validator->failed() as $key => $value) {
-            if (Arr::has($perfis, $key) && Arr::has($validator->errors()->messages(), $key)) {
-                $descricao = Arr::get($perfis, Str::replaceFirst('id', 'descricao', $key));
-
-                if ($descricao) {
-                    $message = Str::replaceFirst('?', $descricao, Arr::get($validator->errors()->messages(), $key)[0]);
-                } else {
-                    $message = preg_replace('/\s+/', ' ', Str::replaceFirst('\'?\'', null, Arr::get($validator->errors()->messages(), $key)[0]));
-                }
-
-                $errors->push($message);
-            } elseif (Arr::has($validator->errors()->messages(), 'tipo_pessoa') && Arr::has($value, 'In')) {
+            if (Arr::has($validator->errors()->messages(), 'tipo_pessoa') && Arr::has($value, 'In')) {
                 $in = implode(', ', $value['In']);
                 $message = Str::replaceFirst($in, collect(array_values(TipoPessoa::TIPO_PESSOA))->join(', ', ' ou '), Arr::get($validator->errors()->messages(), $key)[0]);
 
@@ -156,16 +139,6 @@ class CriarUsuarioRequest extends FormRequest
         }
 
         return $errors->toArray();
-    }
-
-    /**
-     * Retorna o Id do usuário logado ou nulo
-     *
-     * @return int|null
-     */
-    private function getUserId(): ?int
-    {
-        return $this->user()->id ?? null;
     }
 
     /**
