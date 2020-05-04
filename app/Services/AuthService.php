@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Mail\RedefinirSenha as RedefinirSenhaMail;
-use App\Models\Pessoa;
 use App\Models\RedefinirSenha;
 use App\Models\User;
+use App\Traints\Usuario as UsuarioTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,27 +16,7 @@ use Illuminate\Support\Str;
 
 class AuthService
 {
-    /**
-     * @var PessoaService
-     */
-    private PessoaService $pessoaService;
-    /**
-     * @var PerfilService
-     */
-    private PerfilService $perfilService;
-
-    /**
-     * AuthService constructor.
-     * @param PessoaService $pessoaService
-     * @param PerfilService $perfilService
-     */
-    public function __construct(
-        PessoaService $pessoaService,
-        PerfilService $perfilService
-    ) {
-        $this->pessoaService = $pessoaService;
-        $this->perfilService = $perfilService;
-    }
+    use UsuarioTrait;
 
     /**
      * Faz a autenticação do usuário
@@ -120,7 +100,7 @@ class AuthService
 
             throw_if(!$usuario, \Exception::class, 'Não foi possível criar o usuaŕio!', 500);
 
-            $this->perfilAttach($usuario, 'parceiro');
+            $this->perfilByNameAttach($usuario, 'parceiro');
 
             DB::commit();
 
@@ -259,64 +239,5 @@ class AuthService
             'token_type' => 'Bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
         ];
-    }
-
-    /**
-     * Solicita a criação de Pessoa
-     *
-     * @param Request $request
-     * @return Pessoa
-     * @throws \Throwable
-     */
-    private function createPessoa(Request $request): Pessoa
-    {
-        $pessoa = $this->pessoaService->create($request);
-
-        throw_if(
-            !$pessoa['success'] ??= [], \Exception::class, $pessoa['message'], $pessoa['code']
-        );
-
-        return $pessoa['data'];
-    }
-
-    /**
-     * Associa o usuário ao perfil
-     *
-     * @param User $user
-     * @param string $perfil
-     * @throws \Throwable
-     */
-    private function perfilAttach(User $user, string $perfil): void
-    {
-        $perfil = $this->perfilService->getByPerfil($perfil);
-
-        throw_if(
-            !$perfil['success'], \Exception::class, $perfil['message'], $perfil['code']
-        );
-
-        $perfil = data_get($perfil, 'data');
-
-        $user->perfis()->attach($perfil->id);
-    }
-
-    /**
-     * Retorna o usuário pelo E-mail
-     *
-     * @param Request $request
-     * @return User
-     * @throws \Exception
-     */
-    private function getUsuarioByEmail(Request $request): User
-    {
-        try {
-            $usuario = User::whereEmail($request->email)
-                ->first();
-
-            throw_if(!$usuario, \Exception::class, 'Usuário não encontrado!', 404);
-
-            return $usuario;
-        } catch (\Throwable $e) {
-            throw new \Exception($e->getMessage(), $e->getCode());
-        }
     }
 }

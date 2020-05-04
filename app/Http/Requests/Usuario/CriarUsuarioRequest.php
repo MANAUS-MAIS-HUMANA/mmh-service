@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Usuario;
 
-use App\Http\Resources\Auth\CriarUsuarioResource;
+use App\Http\Resources\Usuario\CriarUsuarioResource;
 use App\Models\TipoPessoa;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,7 +21,7 @@ class CriarUsuarioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -39,7 +39,8 @@ class CriarUsuarioRequest extends FormRequest
             "tipo_pessoa" => "required|string|in:{$this->getTiposPessoa()}",
             "cpf" => "required_without:cnpj|cpf|size:11|unique:tipo_pessoas,cpf_cnpj",
             "cnpj" => "required_without:cpf|cnpj|size:14|unique:tipo_pessoas,cpf_cnpj",
-            "senha" => "required|string|min:8|confirmed",
+            "perfis" => "required|array",
+            "perfis.*.id" => "required|numeric|exists:perfis,id",
         ];
     }
 
@@ -61,11 +62,9 @@ class CriarUsuarioRequest extends FormRequest
             "in" => "O :attribute é inválido (aceito: :values).",
             "cpf" => "O :attribute é inválido.",
             "cnpj" => "O :attribute é inválido.",
-
-            "senha.required" => "A :attribute é obrigatória.",
-            "senha.string" => "A :attribute deve ser um texto.",
-            "senha.min" => "A :attribute não pode ter menos de :min caracteres.",
-            "senha.confirmed" => "A confirmação da :attribute não corresponde.",
+            "array" => "O :attribute deve ser uma matriz.",
+            "numeric" => "O :attribute deve ser um numérico.",
+            "exists" => "O :attribute '?' é inválido.",
         ];
     }
 
@@ -84,7 +83,8 @@ class CriarUsuarioRequest extends FormRequest
             "tipo_pessoa" => "Tipo de Pessoa",
             "cpf" => "CPF",
             "cnpj" => "CNPJ",
-            "senha" => "Senha",
+            "perfis" => "Perfil de Usuário",
+            "perfis.*.id" => "ID do Perfil de Usuário",
         ];
     }
 
@@ -111,23 +111,34 @@ class CriarUsuarioRequest extends FormRequest
     protected function failedValidation(Validator $validator): void
     {
         throw new HttpResponseException(
-            (new CriarUsuarioResource(null, false, "Existem campos inválidos.", $this->replaceErroTipoPessoa($validator)))
+            (new CriarUsuarioResource(null, false, "Existem campos inválidos.", $this->replaceErroPerfisAndTipoPessoa($validator)))
                 ->response()
                 ->setStatusCode(422)
         );
     }
 
     /**
-     * Substitui parãmetro de erro da mensagem de tipo de pessoa
+     * Substitui parãmetro de erro da mensagem de perfil e tipo de pessoa
      *
      * @param Validator $validator
      * @return array
      */
-    private function replaceErroTipoPessoa(Validator $validator): array
+    private function replaceErroPerfisAndTipoPessoa(Validator $validator): array
     {
         $errors = collect();
+        $perfis['perfis'] = $this->perfis;
         foreach ($validator->failed() as $key => $value) {
-            if (Arr::has($validator->errors()->messages(), 'tipo_pessoa') && Arr::has($value, 'In')) {
+            if (Arr::has($perfis, $key) && Arr::has($validator->errors()->messages(), $key)) {
+                $descricao = Arr::get($perfis, Str::replaceFirst('id', 'perfil', $key));
+
+                if ($descricao) {
+                    $message = Str::replaceFirst('?', $descricao, Arr::get($validator->errors()->messages(), $key)[0]);
+                } else {
+                    $message = preg_replace('/\s+/', ' ', Str::replaceFirst('\'?\'', null, Arr::get($validator->errors()->messages(), $key)[0]));
+                }
+
+                $errors->push($message);
+            } elseif (Arr::has($validator->errors()->messages(), 'tipo_pessoa') && Arr::has($value, 'In')) {
                 $in = implode(', ', $value['In']);
                 $message = Str::replaceFirst($in, collect(array_values(TipoPessoa::TIPO_PESSOA))->join(', ', ' ou '), Arr::get($validator->errors()->messages(), $key)[0]);
 

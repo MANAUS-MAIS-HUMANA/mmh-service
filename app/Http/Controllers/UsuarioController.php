@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Usuario\CriarUsuarioRequest;
+use App\Http\Resources\Usuario\CriarUsuarioResource;
 use App\Http\Resources\Usuario\UsuarioResource;
 use App\Http\Resources\Usuario\UsuariosResource;
 use App\Services\UsuarioService;
@@ -33,7 +35,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * GetAll
+     * Index
      *
      * Endpoint que retorna todos os usuários.
      *
@@ -45,7 +47,7 @@ class UsuarioController extends Controller
      *
      * @return JsonResponse
      */
-    public function getAll(): JsonResponse
+    public function index(): JsonResponse
     {
         $result = $this->usuarioService->getAll();
 
@@ -56,25 +58,36 @@ class UsuarioController extends Controller
             ->setStatusCode($result['code']);
     }
 
+    public function store(CriarUsuarioRequest $request): JsonResponse
+    {
+        $result = $this->usuarioService->create($request);
+
+        return (new CriarUsuarioResource(
+            $result['data'] ??= null, $result['success'], $result['message']
+        ))
+            ->response()
+            ->setStatusCode($result['code']);
+    }
+
     /**
-     * GetById
+     * Show
      *
      * Endpoint que retorna o usuário pelo id.
      *
      * @authenticated
      *
-     * @urlParam id required ID do usuário. Example: 1
+     * @urlParam usuario required ID do usuário. Example: 1
      *
      * @responseFile 200 responses/UsuarioController/getById.200.json
      * @responseFile 401 responses/Middleware/unauthorized.401.json
      * @responseFile 404 responses/UsuarioController/getById.404.json
      *
-     * @param int $id
+     * @param int $usuario
      * @return JsonResponse
      */
-    public function getById(int $id): JsonResponse
+    public function show(int $usuario): JsonResponse
     {
-        $result = $this->usuarioService->getById($id);
+        $result = $this->usuarioService->getById($usuario);
 
         return (new UsuarioResource(
             $result['data'] ??= null, $result['success'], $result['message']
