@@ -43,7 +43,7 @@ class ResourceBase extends JsonResource
         ];
 
         $this->setErrors($response);
-//        $this->setRefreshToken($response);
+        $this->setRefreshToken($response);
 
         return Arr::sortRecursive($response);
     }
