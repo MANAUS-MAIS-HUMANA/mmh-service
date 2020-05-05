@@ -19,7 +19,7 @@ use Illuminate\Http\JsonResponse;
 /**
  * @group AuthController
  *
- * Controller responsável pela autenticação do usuário
+ * Controller responsável pelo gerenciamento de Usuários do lado público.
  */
 class AuthController extends Controller
 {

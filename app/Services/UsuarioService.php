@@ -43,6 +43,12 @@ class UsuarioService
         }
     }
 
+    /**
+     * Cria um novo usuário
+     *
+     * @param Request $request
+     * @return array
+     */
     public function create(Request $request): array
     {
         DB::beginTransaction();
@@ -57,7 +63,7 @@ class UsuarioService
                 'status' => 'I'
             ]);
 
-            throw_if(!$usuario, \Exception::class, 'Não foi criar o usuário!', 500);
+            throw_if(!$usuario, \Exception::class, 'Não foi possível criar o usuário!', 500);
 
             $this->perfilByIdsAttach($usuario, $request->perfis);
 
@@ -104,6 +110,54 @@ class UsuarioService
                 'code' => 200
             ];
         } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ];
+        }
+    }
+
+    /**
+     * Atualiza os dados do usuário.
+     *
+     * @param int $id
+     * @param Request $request
+     * @return array
+     */
+    public function update(int $id, Request $request): array
+    {
+        DB::beginTransaction();
+
+        try {
+            $usuario = User::find($id);
+
+            throw_if(
+                !$usuario, \Exception::class, 'Usuário não encontrado!', 404
+            );
+
+            $pessoa = $usuario->pessoa;
+
+            $this->updatePessoa($pessoa->id, $request);
+
+            $usuario = tap($usuario)->update([
+                'email' => $request->email ??= $usuario->email,
+                'status' => $request->status ??= $usuario->status
+            ])->fresh();
+
+            $this->perfilByIdsSync($usuario, $request->perfis ??= $usuario->perfis->toArray());
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => $usuario,
+                'message' => 'Usuário atualizado com sucesso!',
+                'code' => 200
+            ];
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
             return [
                 'success' => false,
                 'message' => $e->getMessage(),

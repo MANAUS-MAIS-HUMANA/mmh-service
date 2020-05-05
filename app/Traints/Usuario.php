@@ -35,7 +35,7 @@ trait Usuario
     }
 
     /**
-     * Solicita a criação de Pessoa
+     * Solicita a criação da pessoa.
      *
      * @param Request $request
      * @return Pessoa
@@ -53,7 +53,23 @@ trait Usuario
     }
 
     /**
-     * Associa o usuário ao perfil pelo nome do perfil
+     * Solicita a atualização da pessoa.
+     *
+     * @param int $id
+     * @param Request $request
+     * @throws \Throwable
+     */
+    protected function updatePessoa(int $id, Request $request): void
+    {
+        $pessoa = $this->pessoaService->update($id, $request);
+
+        throw_if(
+            !$pessoa['success'] ??= [], \Exception::class, $pessoa['message'], $pessoa['code']
+        );
+    }
+
+    /**
+     * Associa o usuário ao perfil pelo nome do perfil.
      *
      * @param User $user
      * @param string $perfil
@@ -73,7 +89,7 @@ trait Usuario
     }
 
     /**
-     * Associa o usuário ao perfil pelo id
+     * Associa o usuário ao perfil pelo id.
      *
      * @param User $user
      * @param array $perfis
@@ -84,7 +100,18 @@ trait Usuario
     }
 
     /**
-     * Retorna o usuário pelo E-mail
+     * Sincroniza o usuário ao perfil pelo id.
+     *
+     * @param User $user
+     * @param array $perfis
+     */
+    protected function perfilByIdsSync(User $user, array $perfis): void
+    {
+        $user->perfis()->sync(data_get($perfis, '*.id'));
+    }
+
+    /**
+     * Retorna o usuário pelo e-mail.
      *
      * @param Request $request
      * @return User
@@ -96,7 +123,9 @@ trait Usuario
             $usuario = User::whereEmail($request->email)
                 ->first();
 
-            throw_if(!$usuario, \Exception::class, 'Usuário não encontrado!', 404);
+            throw_if(
+                !$usuario, \Exception::class, 'Usuário não encontrado!', 404
+            );
 
             return $usuario;
         } catch (\Throwable $e) {

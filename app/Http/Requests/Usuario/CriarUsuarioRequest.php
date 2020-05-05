@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Http\Requests\Usuario;
 
 use App\Http\Resources\Usuario\CriarUsuarioResource;
-use App\Models\TipoPessoa;
+use App\Traints\FormRequest as FormRequestTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class CriarUsuarioRequest extends FormRequest
 {
+    use FormRequestTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -37,8 +37,8 @@ class CriarUsuarioRequest extends FormRequest
             "endereco" => "required|string|max:255",
             "estado" => "required|string|size:2",
             "tipo_pessoa" => "required|string|in:{$this->getTiposPessoa()}",
-            "cpf" => "required_without:cnpj|cpf|size:11|unique:tipo_pessoas,cpf_cnpj",
-            "cnpj" => "required_without:cpf|cnpj|size:14|unique:tipo_pessoas,cpf_cnpj",
+            "cpf" => "required_without:cnpj|cpf|size:11|unique:tipos_pessoa,cpf_cnpj",
+            "cnpj" => "required_without:cpf|cnpj|size:14|unique:tipos_pessoa,cpf_cnpj",
             "perfis" => "required|array",
             "perfis.*.id" => "required|numeric|exists:perfis,id",
         ];
@@ -95,10 +95,7 @@ class CriarUsuarioRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $this->merge([
-            'cpf' => preg_replace('/[^0-9]/', '', $this->cpf),
-            'cnpj' => preg_replace('/[^0-9]/', '', $this->cnpj),
-        ]);
+        $this->mergeExistsCpfOrCnpj($this);
     }
 
     /**
@@ -110,54 +107,17 @@ class CriarUsuarioRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator): void
     {
+        $errors = collect([
+            ...$this->replaceErroPerfis($validator, $this->perfis),
+            ...$this->replaceErroTipoPessoa($validator)
+        ])
+            ->unique()
+            ->toArray();
+
         throw new HttpResponseException(
-            (new CriarUsuarioResource(null, false, "Existem campos inválidos.", $this->replaceErroPerfisAndTipoPessoa($validator)))
+            (new CriarUsuarioResource(null, false, "Existem campos inválidos.", $errors))
                 ->response()
                 ->setStatusCode(422)
         );
-    }
-
-    /**
-     * Substitui parãmetro de erro da mensagem de perfil e tipo de pessoa
-     *
-     * @param Validator $validator
-     * @return array
-     */
-    private function replaceErroPerfisAndTipoPessoa(Validator $validator): array
-    {
-        $errors = collect();
-        $perfis['perfis'] = $this->perfis;
-        foreach ($validator->failed() as $key => $value) {
-            if (Arr::has($perfis, $key) && Arr::has($validator->errors()->messages(), $key)) {
-                $descricao = Arr::get($perfis, Str::replaceFirst('id', 'perfil', $key));
-
-                if ($descricao) {
-                    $message = Str::replaceFirst('?', $descricao, Arr::get($validator->errors()->messages(), $key)[0]);
-                } else {
-                    $message = preg_replace('/\s+/', ' ', Str::replaceFirst('\'?\'', null, Arr::get($validator->errors()->messages(), $key)[0]));
-                }
-
-                $errors->push($message);
-            } elseif (Arr::has($validator->errors()->messages(), 'tipo_pessoa') && Arr::has($value, 'In')) {
-                $in = implode(', ', $value['In']);
-                $message = Str::replaceFirst($in, collect(array_values(TipoPessoa::TIPO_PESSOA))->join(', ', ' ou '), Arr::get($validator->errors()->messages(), $key)[0]);
-
-                $errors->push($message);
-            } else {
-                $errors->push(Arr::get($validator->errors()->messages(), $key)[0]);
-            }
-        }
-
-        return $errors->toArray();
-    }
-
-    /**
-     * Retorna os tipos de pessoa
-     *
-     * @return string
-     */
-    private function getTiposPessoa(): string
-    {
-        return implode(',', array_keys(TipoPessoa::TIPO_PESSOA));
     }
 }

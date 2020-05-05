@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class TipoPessoaService
 {
     /**
-     * Cria o tipo de pessoa
+     * Cria o tipo de pessoa.
      *
      * @param Request $request
      * @return array
@@ -23,10 +23,12 @@ class TipoPessoaService
         try {
             $tipoPessoa = TipoPessoa::create([
                 'tipo_pessoa' => $request->tipo_pessoa,
-                'cpf_cnpj' => $request->cpf ?? $request->cnpj,
+                'cpf_cnpj' => $request->cpf ??= $request->cnpj,
             ]);
 
-            throw_if(!$tipoPessoa, \Exception::class, 'Não foi possível criar o Tipo de Pessoa!', 500);
+            throw_if(
+                !$tipoPessoa, \Exception::class, 'Não foi possível criar o Tipo de Pessoa!', 500
+            );
 
             DB::commit();
 
@@ -35,6 +37,48 @@ class TipoPessoaService
                 'data' => $tipoPessoa,
                 'message' => 'Tipo de Pessoa criado com sucesso!',
                 'code' => 201,
+            ];
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+            ];
+        }
+    }
+
+    /**
+     * Atualiza o tipo de pessoa.
+     *
+     * @param int $id
+     * @param Request $request
+     * @return array
+     */
+    public function update(int $id, Request $request): array
+    {
+        DB::beginTransaction();
+
+        try {
+            $tipoPessoa = TipoPessoa::find($id);
+
+            throw_if(
+                !$tipoPessoa, \Exception::class, 'Tipo de Pessoa não encontrado!', 404
+            );
+
+            $tipoPessoa = tap($tipoPessoa)->update([
+                'tipo_pessoa' => $request->tipo_pessoa,
+                'cpf_cnpj' => $request->cpf ??= $request->cnpj,
+            ])->fresh();
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => $tipoPessoa,
+                'message' => 'Tipo de Pessoa atualizada com sucesso!',
+                'code' => 200,
             ];
         } catch (\Throwable $e) {
             DB::rollBack();

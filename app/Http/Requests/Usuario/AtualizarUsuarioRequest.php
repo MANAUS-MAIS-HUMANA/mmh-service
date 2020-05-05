@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Usuario;
 
-use App\Http\Resources\Auth\CriarUsuarioResource;
+use App\Http\Resources\Usuario\AtualizarUsuarioResource;
 use App\Traints\FormRequest as FormRequestTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CriarUsuarioRequest extends FormRequest
+class AtualizarUsuarioRequest extends FormRequest
 {
     use FormRequestTrait;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -21,7 +20,7 @@ class CriarUsuarioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -32,14 +31,16 @@ class CriarUsuarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nome" => "required|string|max:255",
-            "email" => "required|string|email|max:255|unique:users,email",
-            "endereco" => "required|string|max:255",
-            "estado" => "required|string|size:2",
-            "tipo_pessoa" => "required|string|in:{$this->getTiposPessoa()}",
-            "cpf" => "required_without:cnpj|cpf|size:11|unique:tipos_pessoa,cpf_cnpj",
-            "cnpj" => "required_without:cpf|cnpj|size:14|unique:tipos_pessoa,cpf_cnpj",
-            "senha" => "required|string|min:8|confirmed",
+            "nome" => "string|max:255",
+            "email" => "string|email|max:255|unique:users,email,{$this->usuario},id",
+            "endereco" => "string|max:255",
+            "estado" => "string|size:2",
+            "tipo_pessoa" => "string|in:{$this->getTiposPessoa()}",
+            "cpf" => "cpf|size:11|unique:tipos_pessoa,cpf_cnpj,{$this->usuario},id",
+            "cnpj" => "cnpj|size:14|unique:tipos_pessoa,cpf_cnpj,{$this->usuario},id",
+            "perfis" => "array",
+            "perfis.*.id" => "numeric|exists:perfis,id",
+            "status" => "string|in:{$this->getStatus()}",
         ];
     }
 
@@ -51,8 +52,6 @@ class CriarUsuarioRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "required" => "O :attribute é obrigatório.",
-            "required_without" => "O :attribute é obrigatório quando :values não foi informado.",
             "string" => "O :attribute deve ser um texto.",
             "max" => "O :attribute não pode ter mais que :max caracteres.",
             "size" => "O :attribute deve ter :size caracteres.",
@@ -61,11 +60,9 @@ class CriarUsuarioRequest extends FormRequest
             "in" => "O :attribute é inválido (aceito: :values).",
             "cpf" => "O :attribute é inválido.",
             "cnpj" => "O :attribute é inválido.",
-
-            "senha.required" => "A :attribute é obrigatória.",
-            "senha.string" => "A :attribute deve ser um texto.",
-            "senha.min" => "A :attribute não pode ter menos de :min caracteres.",
-            "senha.confirmed" => "A confirmação da :attribute não corresponde.",
+            "array" => "O :attribute deve ser uma matriz.",
+            "numeric" => "O :attribute deve ser um numérico.",
+            "exists" => "O :attribute '?' é inválido.",
         ];
     }
 
@@ -84,7 +81,9 @@ class CriarUsuarioRequest extends FormRequest
             "tipo_pessoa" => "Tipo de Pessoa",
             "cpf" => "CPF",
             "cnpj" => "CNPJ",
-            "senha" => "Senha",
+            "perfis" => "Perfil de Usuário",
+            "perfis.*.id" => "ID do Perfil de Usuário",
+            "status" => "Status de Usuário",
         ];
     }
 
@@ -96,6 +95,7 @@ class CriarUsuarioRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->mergeExistsCpfOrCnpj($this);
+        $this->mergeExistsStatus($this);
     }
 
     /**
@@ -107,8 +107,15 @@ class CriarUsuarioRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator): void
     {
+        $errors = collect([
+            ...$this->replaceErroPerfis($validator, $this->perfis),
+            ...$this->replaceErroTipoPessoa($validator)
+        ])
+            ->unique()
+            ->toArray();
+
         throw new HttpResponseException(
-            (new CriarUsuarioResource(null, false, "Existem campos inválidos.", $this->replaceErroTipoPessoa($validator)))
+            (new AtualizarUsuarioResource(null, false, "Existem campos inválidos.", $errors))
                 ->response()
                 ->setStatusCode(422)
         );

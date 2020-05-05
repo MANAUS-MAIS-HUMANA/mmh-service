@@ -16,8 +16,11 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'pessoa_id', 'email', 'senha', 'status'
     ];
+    protected $guarded = [
+        'id'
+    ];
     protected $hidden = [
-        'senha'
+        'pessoa_id', 'senha', 'created_at', 'updated_at'
     ];
 
     const STATUS_USUARIO = [

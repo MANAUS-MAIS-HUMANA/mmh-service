@@ -3,9 +3,8 @@
 namespace App\Http\Resources\Usuario;
 
 use App\Http\Resources\ResourceBase;
-use App\Models\User;
 
-class UsuarioResource extends ResourceBase
+class AtualizarUsuarioResource extends ResourceBase
 {
     /**
      * Transform the resource into an array.
@@ -22,7 +21,6 @@ class UsuarioResource extends ResourceBase
                 'email' => $this->email,
                 'status' => $this->statusParse,
                 'perfis' => $this->perfis()
-                    ->get(['perfil'])
                     ->pluck('perfil')
             ];
         }

@@ -50,7 +50,7 @@
 <p>Documentação dos endpoints da API Manaus Mais Humana.</p>
 <!-- END_INFO -->
 <h1>AuthController</h1>
-<p>Controller responsável pela autenticação do usuário</p>
+<p>Controller responsável pelo gerenciamento de Usuários do lado público.</p>
 <!-- START_2be1f0e022faf424f18f30275e61416e -->
 <h2>Login</h2>
 <p>Endpoint para autenticar o usuário.</p>
@@ -734,7 +734,7 @@ response.json()</code></pre>
 </table>
 <!-- END_64744f99fcf3bece9ec84aee8c3b0cfc -->
 <h1>UsuarioController</h1>
-<p>Controller responsável pelo gerenciamento de Usuários</p>
+<p>Controller responsável pelo gerenciamento de Usuários do lado privado.</p>
 <!-- START_94b9e39c9179e6826963c4293a458c30 -->
 <h2>Index</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
@@ -843,6 +843,227 @@ response.json()</code></pre>
 <h3>HTTP Request</h3>
 <p><code>GET api/v1/usuario</code></p>
 <!-- END_94b9e39c9179e6826963c4293a458c30 -->
+<!-- START_f4118dbd959bf0da643fc902f2d8ba1b -->
+<h2>Create</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para criação de novo usuário.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/usuario"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "nome": "Fulano de Tal",
+    "email": "fulano@tal.com",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
+    "estado": "AM",
+    "tipo_pessoa": "pf",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
+    "perfis": [
+        {
+            "id": 3,
+            "perfil": "parceiro",
+            "descricao": "Igreja ou ONG."
+        }
+    ]
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;post(
+    'http://localhost/api/v1/usuario',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'nome' =&gt; 'Fulano de Tal',
+            'email' =&gt; 'fulano@tal.com',
+            'endereco' =&gt; 'Rua Dom Pedro, S/N, Dom Pedro',
+            'estado' =&gt; 'AM',
+            'tipo_pessoa' =&gt; 'pf',
+            'cpf' =&gt; '111.111.111-11',
+            'cnpj' =&gt; '11.111.111/1111-11',
+            'perfis' =&gt; [
+                [
+                    'id' =&gt; 3,
+                    'perfil' =&gt; 'parceiro',
+                    'descricao' =&gt; 'Igreja ou ONG.',
+                ],
+            ],
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/usuario'
+payload = {
+    "nome": "Fulano de Tal",
+    "email": "fulano@tal.com",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
+    "estado": "AM",
+    "tipo_pessoa": "pf",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
+    "perfis": [
+        {
+            "id": 3,
+            "perfil": "parceiro",
+            "descricao": "Igreja ou ONG."
+        }
+    ]
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X POST \
+    "http://localhost/api/v1/usuario" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":3,"perfil":"parceiro","descricao":"Igreja ou ONG."}]}'
+</code></pre>
+<blockquote>
+<p>Example response (201):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "id": 2,
+        "nome": "Fulano de Tal",
+        "email": "fulano@tal.com",
+        "status": "Inativo",
+        "perfis": [
+            "admin",
+            "codese",
+            "parceiro"
+        ]
+    },
+    "message": "Usuário criado com sucesso!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não foi possível criar o usuário!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v1/usuario</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nome</code></td>
+<td>string</td>
+<td>required</td>
+<td>Nome do novo usuário - (max. 255).</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>string</td>
+<td>required</td>
+<td>Endereço de e-mail - (max. 255).</td>
+</tr>
+<tr>
+<td><code>endereco</code></td>
+<td>string</td>
+<td>required</td>
+<td>Endereço residencial - (max. 255).</td>
+</tr>
+<tr>
+<td><code>estado</code></td>
+<td>string</td>
+<td>required</td>
+<td>Estado - (tam. 2).</td>
+</tr>
+<tr>
+<td><code>tipo_pessoa</code></td>
+<td>string</td>
+<td>required</td>
+<td>Tipo de Pessoa (PF ou PJ).</td>
+</tr>
+<tr>
+<td><code>cpf</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Número do CPF do usuário (obrigatório se não houver CNPJ).</td>
+</tr>
+<tr>
+<td><code>cnpj</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Número do CNPJ da instituição (obrigatório se não houver CPF).</td>
+</tr>
+<tr>
+<td><code>perfis</code></td>
+<td>array</td>
+<td>required</td>
+<td>Matriz de perfis.</td>
+</tr>
+<tr>
+<td><code>perfis[0].id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>ID do perfil.</td>
+</tr>
+<tr>
+<td><code>perfis[0].perfil</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Nome do perfil.</td>
+</tr>
+<tr>
+<td><code>perfis[0].descricao</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Descrição do perfil.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_f4118dbd959bf0da643fc902f2d8ba1b -->
 <!-- START_2242609c5c80c579ddffd8c33fb6db0a -->
 <h2>Show</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
@@ -948,6 +1169,252 @@ response.json()</code></pre>
 </tbody>
 </table>
 <!-- END_2242609c5c80c579ddffd8c33fb6db0a -->
+<!-- START_c02e1a4265c5705efafba684b78f89df -->
+<h2>Update</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint que atualiza os dados do usuário.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/usuario/2"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "nome": "Fulano de Tal",
+    "email": "fulano@tal.com",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
+    "estado": "AM",
+    "tipo_pessoa": "pf",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
+    "perfis": [
+        {
+            "id": 3,
+            "perfil": "parceiro",
+            "descricao": "Igreja ou ONG."
+        }
+    ],
+    "status": "A"
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;put(
+    'http://localhost/api/v1/usuario/2',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'nome' =&gt; 'Fulano de Tal',
+            'email' =&gt; 'fulano@tal.com',
+            'endereco' =&gt; 'Rua Dom Pedro, S/N, Dom Pedro',
+            'estado' =&gt; 'AM',
+            'tipo_pessoa' =&gt; 'pf',
+            'cpf' =&gt; '111.111.111-11',
+            'cnpj' =&gt; '11.111.111/1111-11',
+            'perfis' =&gt; [
+                [
+                    'id' =&gt; 3,
+                    'perfil' =&gt; 'parceiro',
+                    'descricao' =&gt; 'Igreja ou ONG.',
+                ],
+            ],
+            'status' =&gt; 'A',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/usuario/2'
+payload = {
+    "nome": "Fulano de Tal",
+    "email": "fulano@tal.com",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
+    "estado": "AM",
+    "tipo_pessoa": "pf",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
+    "perfis": [
+        {
+            "id": 3,
+            "perfil": "parceiro",
+            "descricao": "Igreja ou ONG."
+        }
+    ],
+    "status": "A"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X PUT \
+    "http://localhost/api/v1/usuario/2" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":3,"perfil":"parceiro","descricao":"Igreja ou ONG."}],"status":"A"}'
+</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "id": 2,
+        "nome": "Fulano de Tal",
+        "email": "fulano@tal.com",
+        "status": "Ativo",
+        "perfis": [
+            "parceiro"
+        ]
+    },
+    "message": "Usuário atualizado com sucesso!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Usuário não encontrado!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PUT api/v1/usuario/{usuario}</code></p>
+<p><code>PATCH api/v1/usuario/{usuario}</code></p>
+<h4>URL Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>usuario</code></td>
+<td>required</td>
+<td>ID do usuário.</td>
+</tr>
+</tbody>
+</table>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nome</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Nome do novo usuário - (max. 255).</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Endereço de e-mail - (max. 255).</td>
+</tr>
+<tr>
+<td><code>endereco</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Endereço residencial - (max. 255).</td>
+</tr>
+<tr>
+<td><code>estado</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Estado - (tam. 2).</td>
+</tr>
+<tr>
+<td><code>tipo_pessoa</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Tipo de Pessoa (PF ou PJ).</td>
+</tr>
+<tr>
+<td><code>cpf</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Número do CPF do usuário.</td>
+</tr>
+<tr>
+<td><code>cnpj</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Número do CNPJ da instituição.</td>
+</tr>
+<tr>
+<td><code>perfis</code></td>
+<td>array</td>
+<td>optional</td>
+<td>Matriz de perfis.</td>
+</tr>
+<tr>
+<td><code>perfis[0].id</code></td>
+<td>integer</td>
+<td>optional</td>
+<td>ID do perfil.</td>
+</tr>
+<tr>
+<td><code>perfis[0].perfil</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Nome do perfil.</td>
+</tr>
+<tr>
+<td><code>perfis[0].descricao</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Descrição do perfil.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Status de usuário (A, I ou B).</td>
+</tr>
+</tbody>
+</table>
+<!-- END_c02e1a4265c5705efafba684b78f89df -->
       </div>
       <div class="dark-box">
                         <div class="lang-selector">

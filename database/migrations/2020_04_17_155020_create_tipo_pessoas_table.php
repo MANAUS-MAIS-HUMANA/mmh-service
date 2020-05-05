@@ -13,7 +13,7 @@ class CreateTipoPessoasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_pessoas', function (Blueprint $table) {
+        Schema::create('tipos_pessoa', function (Blueprint $table) {
             $table->id();
             $table->enum('tipo_pessoa', array_keys(\App\Models\TipoPessoa::TIPO_PESSOA))->default('pf')->comment("pf - Pessoa Física;\npj - Pessoa Jurídica.");
             $table->string('cpf_cnpj', 14)->unique();
@@ -28,6 +28,6 @@ class CreateTipoPessoasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_pessoas');
+        Schema::dropIfExists('tipos_pessoa');
     }
 }
