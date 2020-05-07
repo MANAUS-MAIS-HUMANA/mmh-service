@@ -13,6 +13,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 class AtualizarUsuarioRequest extends FormRequest
 {
     use FormRequestTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -32,12 +33,12 @@ class AtualizarUsuarioRequest extends FormRequest
     {
         return [
             "nome" => "string|max:255",
-            "email" => "string|email|max:255|unique:users,email,{$this->usuario},id",
+            "email" => "string|email|max:255|unique:users,email,{$this->id},id",
             "endereco" => "string|max:255",
             "estado" => "string|size:2",
             "tipo_pessoa" => "string|in:{$this->getTiposPessoa()}",
-            "cpf" => "cpf|size:11|unique:tipos_pessoa,cpf_cnpj,{$this->usuario},id",
-            "cnpj" => "cnpj|size:14|unique:tipos_pessoa,cpf_cnpj,{$this->usuario},id",
+            "cpf" => "cpf|size:11|unique:tipos_pessoa,cpf_cnpj,{$this->id},id",
+            "cnpj" => "cnpj|size:14|unique:tipos_pessoa,cpf_cnpj,{$this->id},id",
             "perfis" => "array",
             "perfis.*.id" => "numeric|exists:perfis,id",
             "status" => "string|in:{$this->getStatus()}",

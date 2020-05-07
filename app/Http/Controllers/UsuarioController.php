@@ -11,7 +11,6 @@ use App\Http\Resources\Usuario\UsuarioResource;
 use App\Http\Resources\Usuario\UsuariosResource;
 use App\Services\UsuarioService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /**
  * @group UsuarioController
@@ -51,7 +50,7 @@ class UsuarioController extends Controller
      */
     public function index(): JsonResponse
     {
-        $result = $this->usuarioService->getAll();
+        $result = $this->usuarioService->findAll();
 
         return (new UsuariosResource(
             $result['data'] ??= null, $result['success'], $result['message']
@@ -110,12 +109,12 @@ class UsuarioController extends Controller
      * @responseFile 401 responses/Middleware/unauthorized.401.json
      * @responseFile 404 responses/UsuarioController/show.404.json
      *
-     * @param int $usuario
+     * @param int $id
      * @return JsonResponse
      */
-    public function show(int $usuario): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        $result = $this->usuarioService->getById($usuario);
+        $result = $this->usuarioService->findById($id);
 
         return (new UsuarioResource(
             $result['data'] ??= null, $result['success'], $result['message']
@@ -149,13 +148,13 @@ class UsuarioController extends Controller
      * @responseFile 401 responses/Middleware/unauthorized.401.json
      * @responseFile 404 responses/UsuarioController/update.404.json
      *
-     * @param int $usuario
+     * @param int $id
      * @param AtualizarUsuarioRequest $request
      * @return JsonResponse
      */
-    public function update(int $usuario, AtualizarUsuarioRequest $request): JsonResponse
+    public function update(int $id, AtualizarUsuarioRequest $request): JsonResponse
     {
-        $result = $this->usuarioService->update($usuario, $request);
+        $result = $this->usuarioService->update($id, $request);
 
         return (new UsuarioResource(
             $result['data'] ??= null, $result['success'], $result['message']

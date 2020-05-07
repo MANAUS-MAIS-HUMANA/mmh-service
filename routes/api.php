@@ -15,12 +15,9 @@ Route::prefix('v1')->group(function () {
     });
 
     /** @api /api/v1/usuario */
-    Route::apiResource('usuario', 'UsuarioController');
-//    Route::prefix('usuario')->group(function () {
-//        Route::get('/', 'UsuarioController@getAll')->name('usuario.getAll');
-//        Route::get('{id}', 'UsuarioController@getById')->name('usuario.getById');
-//        Route::put('{id}', 'UsuarioController@update')->name('usuario.update');
-//        Route::delete('{id}', 'UsuarioController@delete')->name('usuario.delete');
-//    });
+    Route::apiResource('usuario', 'UsuarioController')->parameter('usuario', 'id')->except('destroy');
+    Route::prefix('usuario')->group(function () {
+        Route::put('{id}/set-status', 'UsuarioController@setStatus')->name('usuario.setStatus');
+    });
 
 });

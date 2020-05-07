@@ -21,7 +21,7 @@ class UsuarioService
      *
      * @return array
      */
-    public function getAll(): array
+    public function findAll(): array
     {
         try {
             $usuarios = User::all();
@@ -96,7 +96,7 @@ class UsuarioService
      * @param int $id
      * @return array
      */
-    public function getById(int $id): array
+    public function findById(int $id): array
     {
         try {
             $usuario = User::find($id);
