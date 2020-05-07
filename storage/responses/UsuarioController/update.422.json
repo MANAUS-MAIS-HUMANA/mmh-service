@@ -1,0 +1,14 @@
+{
+    "data": [],
+    "errors": [
+        "O CPF deve ter 11 caracteres.",
+        "O CPF é inválido.",
+        "O ID do Perfil de Usuário é inválido.",
+        "O Nome deve ser um texto.",
+        "O Tipo de Pessoa é inválido (aceito: pf, pj)."
+    ],
+    "message": "Existem campos inválidos.",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2"
+}

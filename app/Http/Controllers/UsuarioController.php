@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Usuario\AtualizarStatusUsuarioRequest;
 use App\Http\Requests\Usuario\AtualizarUsuarioRequest;
 use App\Http\Requests\Usuario\CriarUsuarioRequest;
+use App\Http\Requests\Usuario\DefinirSenhaUsuarioRequest;
+use App\Http\Resources\Usuario\AtualizarStatusUsuarioResource;
 use App\Http\Resources\Usuario\CriarUsuarioResource;
+use App\Http\Resources\Usuario\DefinirSenhaUsuarioResource;
 use App\Http\Resources\Usuario\UsuarioResource;
 use App\Http\Resources\Usuario\UsuariosResource;
 use App\Services\UsuarioService;
@@ -30,7 +34,9 @@ class UsuarioController extends Controller
      */
     public function __construct(UsuarioService $usuarioService)
     {
-        $this->middleware(['auth:api', 'validarToken']);
+        $this->middleware(['auth:api', 'validarToken'])->except([
+            'setPassword'
+        ]);
 
         $this->usuarioService = $usuarioService;
     }
@@ -60,9 +66,23 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Create
+     * Store
      *
      * Endpoint para criação de novo usuário.
+     * <p>
+     * <strong>Obs.:</strong> Será enviado um link por e-mail para o usuário,
+     * ao clicar no link, o mesmo será redirecionado para página de definição de senha
+     * na aplicação frontend, no corpo do link, terá o <u>ID de usuário, endereço
+     * de e-mail e o token condificado em base64</u>.<br>
+     * Para separação do e-mail e token, foi colocado <strong>&&</strong>.
+     *  <p>
+     *      <strong>Exemplos:</strong>
+     *      <ul>
+     *          <li><strong>Codificado</strong>: ZnVsYW5vQGZ1bGFuby5jb20mJkJGS1NkaGw2Q05TOUNaZk1O</li>
+     *          <li><strong>Decodificado</strong>: 2&&fulano@fulano.com&&BFKSdhl6CNS9CZfMN</li>
+     *      </ul>
+     *  </p>
+     *</p>
      *
      * @authenticated
      *
@@ -80,6 +100,8 @@ class UsuarioController extends Controller
      *
      * @responseFile 201 responses/UsuarioController/store.201.json
      * @responseFile 401 responses/Middleware/unauthorized.401.json
+     * @responseFile 403 responses/Forbidden/forbidden.403.json
+     * @responseFile 422 responses/UsuarioController/store.422.json
      * @responseFile 500 responses/UsuarioController/store.500.json
      *
      * @param CriarUsuarioRequest $request
@@ -146,7 +168,9 @@ class UsuarioController extends Controller
      *
      * @responseFile 200 responses/UsuarioController/update.200.json
      * @responseFile 401 responses/Middleware/unauthorized.401.json
+     * @responseFile 403 responses/Forbidden/forbidden.403.json
      * @responseFile 404 responses/UsuarioController/update.404.json
+     * @responseFile 422 responses/UsuarioController/update.422.json
      *
      * @param int $id
      * @param AtualizarUsuarioRequest $request
@@ -163,8 +187,65 @@ class UsuarioController extends Controller
             ->setStatusCode($result['code']);
     }
 
-    public function setStatus(int $id)
+    /**
+     * SetStatus
+     *
+     * Endpoint que atualiza o status do usuário.
+     *
+     * @authenticated
+     *
+     * @bodyParam status string Status de usuário (A, I ou B). Example: A
+     *
+     * @responseFile 200 responses/UsuarioController/setStatus.200.json
+     * @responseFile 401 responses/Middleware/unauthorized.401.json
+     * @responseFile 403 responses/Forbidden/forbidden.403.json
+     * @responseFile 404 responses/UsuarioController/setStatus.404.json
+     * @responseFile 422 responses/UsuarioController/setStatus.422.json
+     *
+     * @param int $id
+     * @param AtualizarStatusUsuarioRequest $request
+     * @return JsonResponse|object
+     */
+    public function setStatus(int $id, AtualizarStatusUsuarioRequest $request)
     {
-        //
+        $result = $this->usuarioService->setStatus($id, $request);
+
+        return (new AtualizarStatusUsuarioResource(
+            $result['data'] ??= null, $result['success'], $result['message']
+        ))
+            ->response()
+            ->setStatusCode($result['code']);
+    }
+
+    /**
+     * SetPassword
+     *
+     * Endpoint que define a senha do usuário.
+     *
+     * @urlParam usuario required ID do usuário. Example: 2
+     * @bodyParam email string required Endereço de e-mail - (max. 255). Example: fulano@tal.com
+     * @bodyParam token string required Token de validação - (max. 255). Example: BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y
+     * @bodyParam senha string required Nova senha (min. 8). Example: 5&bnaC#f
+     * @bodyParam senha_confirmation string required Confirmação de nova senha. Example: 5&bnaC#f
+     *
+     * @responseFile 200 responses/UsuarioController/setPassword.200.json
+     * @responseFile 401 responses/Middleware/unauthorized.401.json
+     * @responseFile 403 responses/Forbidden/forbidden.403.json
+     * @responseFile 404 responses/UsuarioController/setPassword.404.json
+     * @responseFile 422 responses/UsuarioController/setPassword.422.json
+     *
+     * @param int $id
+     * @param DefinirSenhaUsuarioRequest $request
+     * @return JsonResponse
+     */
+    public function setPassword(int $id, DefinirSenhaUsuarioRequest $request): JsonResponse
+    {
+        $result = $this->usuarioService->setPassword($id, $request);
+
+        return (new DefinirSenhaUsuarioResource(
+            $result['data'] ??= null, $result['success'], $result['message']
+        ))
+            ->response()
+            ->setStatusCode($result['code']);
     }
 }

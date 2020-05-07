@@ -6,76 +6,11 @@ namespace App\Traints;
 
 use App\Models\TipoPessoa;
 use App\Models\User;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest as FormRequestBase;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 trait FormRequest
 {
-    /**
-     * Substitui parãmetro de erro da mensagem de perfil
-     *
-     * @param Validator $validator
-     * @param array $perfis
-     * @return array
-     */
-    protected function replaceErroPerfis(Validator $validator, array $perfis): array
-    {
-        $errorsPerfis = collect();
-        $perfis['perfis'] = $perfis;
-        foreach ($validator->failed() as $key => $value) {
-            if (Arr::has($perfis, $key) && Arr::has($validator->errors()->messages(), $key)) {
-                $descricao = Arr::get($perfis, Str::replaceFirst('id', 'perfil', $key));
-
-                if ($descricao) {
-                    $message = Str::replaceFirst(
-                        '?', $descricao, Arr::get($validator->errors()->messages(), $key)[0]
-                    );
-                } else {
-                    $message = preg_replace(
-                        '/\s+/', ' ',
-                        Str::replaceFirst(
-                            '\'?\'',null, Arr::get($validator->errors()->messages(), $key)[0]
-                        )
-                    );
-                }
-
-                $errorsPerfis->push($message);
-            } else {
-                $errorsPerfis->push(Arr::get($validator->errors()->messages(), $key)[0]);
-            }
-        }
-
-        return $errorsPerfis->unique()->toArray();
-    }
-
-    /**
-     * Substitui parãmetro de erro da mensagem do tipo de pessoa
-     *
-     * @param Validator $validator
-     * @return array
-     */
-    protected function replaceErroTipoPessoa(Validator $validator): array
-    {
-        $errorsTipoPessoa = collect();
-        foreach ($validator->failed() as $key => $value) {
-            if (Arr::has($validator->errors()->messages(), 'tipo_pessoa') && Arr::has($value, 'In')) {
-                $in = implode(', ', $value['In']);
-                $message = Str::replaceFirst(
-                    $in, collect(array_values(TipoPessoa::TIPO_PESSOA))->join(', ', ' ou '),
-                    Arr::get($validator->errors()->messages(), $key)[0]
-                );
-
-                $errorsTipoPessoa->push($message);
-            } else {
-                $errorsTipoPessoa->push(Arr::get($validator->errors()->messages(), $key)[0]);
-            }
-        }
-
-        return $errorsTipoPessoa->unique()->toArray();
-    }
-
     /**
      * Retorna os tipos de pessoa
      *
@@ -127,5 +62,19 @@ trait FormRequest
                 'status' => Str::upper($formRequest->status)
             ]);
         }
+    }
+
+    /**
+     * Valida se o e-mail pertence ao Id.
+     *
+     * @param FormRequestBase $formRequest
+     * @return bool
+     */
+    protected function validateEmailBelongsToId(FormRequestBase $formRequest): bool
+    {
+        $usuario = User::whereEmail($formRequest->email)
+            ->find($formRequest->id);
+
+        return $usuario->exists ?? false;
     }
 }

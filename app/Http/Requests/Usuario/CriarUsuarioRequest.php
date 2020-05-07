@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Usuario;
 
-use App\Http\Resources\Usuario\CriarUsuarioResource;
+use App\Http\Resources\FormRequest\FailedResource;
 use App\Traints\FormRequest as FormRequestTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -64,7 +64,7 @@ class CriarUsuarioRequest extends FormRequest
             "cnpj" => "O :attribute é inválido.",
             "array" => "O :attribute deve ser uma matriz.",
             "numeric" => "O :attribute deve ser um numérico.",
-            "exists" => "O :attribute '?' é inválido.",
+            "exists" => "O :attribute é inválido.",
         ];
     }
 
@@ -107,17 +107,24 @@ class CriarUsuarioRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator): void
     {
-        $errors = collect([
-            ...$this->replaceErroPerfis($validator, $this->perfis),
-            ...$this->replaceErroTipoPessoa($validator)
-        ])
-            ->unique()
-            ->toArray();
-
         throw new HttpResponseException(
-            (new CriarUsuarioResource(null, false, "Existem campos inválidos.", $errors))
+            (new FailedResource(null, false, "Existem campos inválidos.", $validator->errors()->unique()))
                 ->response()
                 ->setStatusCode(422)
+        );
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     *
+     * @return void
+     */
+    public function failedAuthorization(): void
+    {
+        throw new HttpResponseException(
+            (new FailedResource(null, false, "Está ação não é autorizada."))
+                ->response()
+                ->setStatusCode(403)
         );
     }
 }

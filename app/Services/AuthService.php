@@ -90,13 +90,12 @@ class AuthService
         try {
             $pessoa = $this->createPessoa($request);
 
-            $usuario = User::create(
-                [
-                    'pessoa_id' => $pessoa->id,
-                    'email' => $request->email,
-                    'senha' => Hash::make($request->senha),
-                ]
-            );
+            $usuario = User::create([
+                'pessoa_id' => $pessoa->id,
+                'email' => $request->email,
+                'senha' => Hash::make($request->senha),
+                'status' => 'I'
+            ]);
 
             throw_if(!$usuario, \Exception::class, 'Não foi possível criar o usuaŕio!', 500);
 
@@ -134,14 +133,12 @@ class AuthService
         try {
             $usuario = $this->getUsuarioByEmail($request);
 
-            $pwdReset = RedefinirSenha::create(
-                [
-                    'user_id' => $usuario->id,
-                    'email' => $usuario->email,
-                    'token' => Str::random(60),
-                    'validade' => now()->addDay()
-                ]
-            );
+            $pwdReset = RedefinirSenha::create([
+                'user_id' => $usuario->id,
+                'email' => $usuario->email,
+                'token' => Str::random(60),
+                'validade' => now()->addDay()
+            ]);
 
             throw_if(
                 !$pwdReset, \Exception::class, 'Não foi possível solicitador a recuperação da senha!', 500
@@ -191,23 +188,17 @@ class AuthService
                 !$pwdReset, \Exception::class, 'Não foi possível redefinir a senha do usuaŕio!', 500
             );
 
-            $pwdReset->update(
-                [
-                    'status' => 'I'
-                ]
-            );
+            $pwdReset = tap($pwdReset)->update([
+                'status' => 'I'
+            ])->fresh();
 
             $usuario = $pwdReset->usuario;
 
-            $usuario->update(
-                [
-                    'password' => Hash::make($request->senha)
-                ]
-            );
+            $usuario = tap($usuario)->update([
+                'password' => Hash::make($request->senha)
+            ])->fresh();
 
             DB::commit();
-
-            auth()->login($usuario);
 
             return [
                 'success' => true,

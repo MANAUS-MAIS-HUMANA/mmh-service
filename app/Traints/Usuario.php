@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Traints;
 
 use App\Models\Pessoa;
+use App\Models\RedefinirSenha;
 use App\Models\User;
 use App\Services\PerfilService;
 use App\Services\PessoaService;
@@ -131,5 +132,20 @@ trait Usuario
         } catch (\Throwable $e) {
             throw new \Exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    /**
+     * Valida se o e-mail e token pertencem ao usuário.
+     *
+     * @param User $user
+     * @param Request $request
+     * @throws \Throwable
+     */
+    protected function validateEmailAndToken(User $user, Request $request): void
+    {
+        throw_if(
+            $user->email !== $request->email || $user->senha !== $request->token,
+            \Exception::class, "O e-mail ou token não pertencem ao usuário!", 500
+        );
     }
 }

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Traints\Usuario as UsuarioTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -153,6 +154,91 @@ class UsuarioService
                 'success' => true,
                 'data' => $usuario,
                 'message' => 'Usuário atualizado com sucesso!',
+                'code' => 200
+            ];
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ];
+        }
+    }
+
+    /**
+     * Define a senha do usuário.
+     *
+     * @param int $id
+     * @param Request $request
+     * @return array
+     */
+    public function setPassword(int $id, Request $request): array
+    {
+        DB::beginTransaction();
+
+        try {
+            $usuario = User::find($id);
+
+            throw_if(
+                !$usuario, \Exception::class, 'Usuário não encontrado!', 404
+            );
+
+            $this->validateEmailAndToken($usuario, $request);
+
+            $usuario = tap($usuario)->update([
+                'senha' => Hash::make($request->senha),
+                'status' => 'A'
+            ])->fresh();
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => $usuario,
+                'message' => 'Senha de usuário definida com sucesso!',
+                'code' => 200
+            ];
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ];
+        }
+    }
+
+    /**
+     * Atualiza o status do usuário.
+     *
+     * @param int $id
+     * @param Request $request
+     * @return array
+     */
+    public function setStatus(int $id, Request $request): array
+    {
+        DB::beginTransaction();
+
+        try {
+            $usuario = User::find($id);
+
+            throw_if(
+                !$usuario, \Exception::class, 'Usuário não encontrado!', 404
+            );
+
+            $usuario = tap($usuario)->update([
+                'status' => $request->status
+            ])->fresh();
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => $usuario,
+                'message' => 'Status de usuário atualizado com sucesso!',
                 'code' => 200
             ];
         } catch (\Throwable $e) {

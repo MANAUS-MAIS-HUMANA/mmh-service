@@ -844,9 +844,23 @@ response.json()</code></pre>
 <p><code>GET api/v1/usuario</code></p>
 <!-- END_94b9e39c9179e6826963c4293a458c30 -->
 <!-- START_f4118dbd959bf0da643fc902f2d8ba1b -->
-<h2>Create</h2>
+<h2>Store</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 Endpoint para criação de novo usuário.</p>
+<p>
+<strong>Obs.:</strong> Será enviado um link por e-mail para o usuário,
+ao clicar no link, o mesmo será redirecionado para página de definição de senha
+na aplicação frontend, no corpo do link, terá o <u>ID de usuário, endereço
+de e-mail e o token condificado em base64</u>.<br>
+Para separação do e-mail e token, foi colocado <strong>&&</strong>.
+ <p>
+     <strong>Exemplos:</strong>
+     <ul>
+         <li><strong>Codificado</strong>: ZnVsYW5vQGZ1bGFuby5jb20mJkJGS1NkaGw2Q05TOUNaZk1O</li>
+         <li><strong>Decodificado</strong>: 2&&fulano@fulano.com&&BFKSdhl6CNS9CZfMN</li>
+     </ul>
+ </p>
+</p>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -973,6 +987,34 @@ response.json()</code></pre>
     "success": false
 }</code></pre>
 <blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Está ação não é autorizada.",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "errors": [
+        "O CNPJ é obrigatório quando CPF não foi informado.",
+        "O CPF é obrigatório quando CNPJ não foi informado.",
+        "O E-mail é obrigatório.",
+        "O Endereço é obrigatório.",
+        "O Estado é obrigatório.",
+        "O Nome é obrigatório.",
+        "O Perfil de Usuário é obrigatório.",
+        "O Tipo de Pessoa é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}</code></pre>
+<blockquote>
 <p>Example response (500):</p>
 </blockquote>
 <pre><code class="language-json">{
@@ -1064,7 +1106,7 @@ response.json()</code></pre>
 </tbody>
 </table>
 <!-- END_f4118dbd959bf0da643fc902f2d8ba1b -->
-<!-- START_2242609c5c80c579ddffd8c33fb6db0a -->
+<!-- START_33b204ea4b1df799847e39ea5600738b -->
 <h2>Show</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 Endpoint que retorna o usuário pelo id.</p>
@@ -1150,7 +1192,7 @@ response.json()</code></pre>
     "url": "http:\/\/back.localhost\/api\/v1\/usuario\/1"
 }</code></pre>
 <h3>HTTP Request</h3>
-<p><code>GET api/v1/usuario/{usuario}</code></p>
+<p><code>GET api/v1/usuario/{id}</code></p>
 <h4>URL Parameters</h4>
 <table>
 <thead>
@@ -1168,8 +1210,8 @@ response.json()</code></pre>
 </tr>
 </tbody>
 </table>
-<!-- END_2242609c5c80c579ddffd8c33fb6db0a -->
-<!-- START_c02e1a4265c5705efafba684b78f89df -->
+<!-- END_33b204ea4b1df799847e39ea5600738b -->
+<!-- START_6a759fafba79060dfb4b8762a07e4c23 -->
 <h2>Update</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
 Endpoint que atualiza os dados do usuário.</p>
@@ -1177,7 +1219,7 @@ Endpoint que atualiza os dados do usuário.</p>
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/usuario/2"
+    "http://localhost/api/v1/usuario/1"
 );
 
 let headers = {
@@ -1213,7 +1255,7 @@ fetch(url, {
 <pre><code class="language-php">
 $client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost/api/v1/usuario/2',
+    'http://localhost/api/v1/usuario/1',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -1243,7 +1285,7 @@ print_r(json_decode((string) $body));</code></pre>
 <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost/api/v1/usuario/2'
+url = 'http://localhost/api/v1/usuario/1'
 payload = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
@@ -1268,7 +1310,7 @@ headers = {
 response = requests.request('PUT', url, headers=headers, json=payload)
 response.json()</code></pre>
 <pre><code class="language-bash">curl -X PUT \
-    "http://localhost/api/v1/usuario/2" \
+    "http://localhost/api/v1/usuario/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":3,"perfil":"parceiro","descricao":"Igreja ou ONG."}],"status":"A"}'
@@ -1300,6 +1342,14 @@ response.json()</code></pre>
     "success": false
 }</code></pre>
 <blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Está ação não é autorizada.",
+    "success": false
+}</code></pre>
+<blockquote>
 <p>Example response (404):</p>
 </blockquote>
 <pre><code class="language-json">{
@@ -1309,9 +1359,26 @@ response.json()</code></pre>
     "success": false,
     "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2"
 }</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "errors": [
+        "O CPF deve ter 11 caracteres.",
+        "O CPF é inválido.",
+        "O ID do Perfil de Usuário é inválido.",
+        "O Nome deve ser um texto.",
+        "O Tipo de Pessoa é inválido (aceito: pf, pj)."
+    ],
+    "message": "Existem campos inválidos.",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2"
+}</code></pre>
 <h3>HTTP Request</h3>
-<p><code>PUT api/v1/usuario/{usuario}</code></p>
-<p><code>PATCH api/v1/usuario/{usuario}</code></p>
+<p><code>PUT api/v1/usuario/{id}</code></p>
+<p><code>PATCH api/v1/usuario/{id}</code></p>
 <h4>URL Parameters</h4>
 <table>
 <thead>
@@ -1414,7 +1481,330 @@ response.json()</code></pre>
 </tr>
 </tbody>
 </table>
-<!-- END_c02e1a4265c5705efafba684b78f89df -->
+<!-- END_6a759fafba79060dfb4b8762a07e4c23 -->
+<!-- START_c72d2f99606a3aefdfc00ac95b31d8d1 -->
+<h2>SetStatus</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint que atualiza o status do usuário.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/usuario/1/set-status"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "status": "A"
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;put(
+    'http://localhost/api/v1/usuario/1/set-status',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'status' =&gt; 'A',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/usuario/1/set-status'
+payload = {
+    "status": "A"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X PUT \
+    "http://localhost/api/v1/usuario/1/set-status" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"status":"A"}'
+</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "id": 2,
+        "nome": "Fulano de Tal",
+        "email": "fulano@tal.com",
+        "status": "Ativo",
+        "perfis": [
+            "parceiro"
+        ]
+    },
+    "message": "Status de usuário atualizado com sucesso!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-status"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Está ação não é autorizada.",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Usuário não encontrado!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-status"
+}</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "errors": [
+        "O Status de Usuário é inválido (aceito: A, I, B)."
+    ],
+    "message": "Existem campos inválidos.",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-status"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PUT api/v1/usuario/{id}/set-status</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Status de usuário (A, I ou B).</td>
+</tr>
+</tbody>
+</table>
+<!-- END_c72d2f99606a3aefdfc00ac95b31d8d1 -->
+<!-- START_af574b0c80b0d9c34cb32ac5d2367e41 -->
+<h2>SetPassword</h2>
+<p>Endpoint que define a senha do usuário.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/usuario/1/set-password"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "email": "fulano@tal.com",
+    "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
+    "senha": "5&amp;bnaC#f",
+    "senha_confirmation": "5&amp;bnaC#f"
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;put(
+    'http://localhost/api/v1/usuario/1/set-password',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'email' =&gt; 'fulano@tal.com',
+            'token' =&gt; 'BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y',
+            'senha' =&gt; '5&amp;bnaC#f',
+            'senha_confirmation' =&gt; '5&amp;bnaC#f',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/usuario/1/set-password'
+payload = {
+    "email": "fulano@tal.com",
+    "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
+    "senha": "5&amp;bnaC#f",
+    "senha_confirmation": "5&amp;bnaC#f"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X PUT \
+    "http://localhost/api/v1/usuario/1/set-password" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"email":"fulano@tal.com","token":"BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y","senha":"5&amp;bnaC#f","senha_confirmation":"5&amp;bnaC#f"}'
+</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "id": 2,
+        "nome": "Fulano de Tal",
+        "email": "fulano@tal.com",
+        "status": "Ativo",
+        "perfis": [
+            "parceiro"
+        ]
+    },
+    "message": "Senha de usuário definida com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-password"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (403):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Está ação não é autorizada.",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Usuário não encontrado!",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-password"
+}</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "errors": [
+        "A confirmação da Senha não corresponde.",
+        "O Token é inválido."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-password"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PUT api/v1/usuario/{id}/set-password</code></p>
+<h4>URL Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>usuario</code></td>
+<td>required</td>
+<td>ID do usuário.</td>
+</tr>
+</tbody>
+</table>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>email</code></td>
+<td>string</td>
+<td>required</td>
+<td>Endereço de e-mail - (max. 255).</td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td>string</td>
+<td>required</td>
+<td>Token de validação - (max. 255).</td>
+</tr>
+<tr>
+<td><code>senha</code></td>
+<td>string</td>
+<td>required</td>
+<td>Nova senha (min. 8).</td>
+</tr>
+<tr>
+<td><code>senha_confirmation</code></td>
+<td>string</td>
+<td>required</td>
+<td>Confirmação de nova senha.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_af574b0c80b0d9c34cb32ac5d2367e41 -->
       </div>
       <div class="dark-box">
                         <div class="lang-selector">

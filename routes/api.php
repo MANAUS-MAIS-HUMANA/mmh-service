@@ -18,6 +18,7 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('usuario', 'UsuarioController')->parameter('usuario', 'id')->except('destroy');
     Route::prefix('usuario')->group(function () {
         Route::put('{id}/set-status', 'UsuarioController@setStatus')->name('usuario.setStatus');
+        Route::put('{id}/set-password', 'UsuarioController@setPassword')->name('usuario.setPassword');
     });
 
 });

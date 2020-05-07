@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Usuario;
 
 use App\Http\Resources\FormRequest\FailedResource;
-use App\Rules\ValidarTokenRedefinirSenha;
+use App\Traints\FormRequest as FormRequestTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ConfirmarRedefinirSenhaRequest extends FormRequest
+class DefinirSenhaUsuarioRequest extends FormRequest
 {
+    use FormRequestTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -19,7 +21,7 @@ class ConfirmarRedefinirSenhaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->validateEmailBelongsToId($this);
     }
 
     /**
@@ -30,8 +32,8 @@ class ConfirmarRedefinirSenhaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "token" => ["required", "string", "exists:redefinir_senha,token", new ValidarTokenRedefinirSenha()],
-            "email" => "required|string|email|max:255|exists:redefinir_senha,email",
+            "email" => "required|string|email|max:255|exists:users,email",
+            "token" => "required|string|exists:users,senha",
             "senha" => "required|string|min:8|confirmed",
         ];
     }

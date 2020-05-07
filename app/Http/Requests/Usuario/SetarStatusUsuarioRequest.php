@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Usuario;
 
+use App\Http\Resources\FormRequest\FailedResource;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -66,9 +67,23 @@ class SetarStatusUsuarioRequest extends FormRequest
     protected function failedValidation(Validator $validator): void
     {
         throw new HttpResponseException(
-            (new Resource(null, false, "Existem campos inválidos.", $validator->errors()->unique()))
+            (new FailedResource(null, false, "Existem campos inválidos.", $validator->errors()->unique()))
                 ->response()
                 ->setStatusCode(422)
+        );
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     *
+     * @return void
+     */
+    public function failedAuthorization(): void
+    {
+        throw new HttpResponseException(
+            (new FailedResource(null, false, "Está ação não é autorizada."))
+                ->response()
+                ->setStatusCode(403)
         );
     }
 }

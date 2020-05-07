@@ -38,7 +38,7 @@ class DefinirSenha extends Mailable implements ShouldQueue
             ->markdown('emails.definir_senha')
             ->with([
                 'user' => $this->user,
-                'token' => base64_encode("{$this->user->email}&&{$this->user->senha}")
+                'token' => base64_encode("{$this->user->id}&&{$this->user->email}&&{$this->user->senha}")
             ]);
     }
 }

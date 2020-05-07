@@ -67,7 +67,7 @@ class ResourceBase extends JsonResource
      */
     private function setRefreshToken(array &$response): void
     {
-        if (!Str::contains(url()->full(), 'auth') && auth()->check()) {
+        if (!Str::contains(url()->full(), ['auth', 'set-password']) && auth()->check()) {
             $response['refreshToken'] = auth()->refresh();
         }
     }

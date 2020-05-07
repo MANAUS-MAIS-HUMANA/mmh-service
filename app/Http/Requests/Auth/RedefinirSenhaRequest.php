@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
-use App\Http\Resources\Auth\RedefinirSenhaResource;
+use App\Http\Resources\FormRequest\FailedResource;
 use App\Rules\ValidarSeExisteRedefinirSenha;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -72,9 +72,23 @@ class RedefinirSenhaRequest extends FormRequest
     protected function failedValidation(Validator $validator): void
     {
         throw new HttpResponseException(
-            (new RedefinirSenhaResource(null, false, "Existem campos inválidos.", $validator->errors()->unique()))
+            (new FailedResource(null, false, "Existem campos inválidos.", $validator->errors()->unique()))
                 ->response()
                 ->setStatusCode(422)
+        );
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     *
+     * @return void
+     */
+    public function failedAuthorization(): void
+    {
+        throw new HttpResponseException(
+            (new FailedResource(null, false, "Está ação não é autorizada."))
+                ->response()
+                ->setStatusCode(403)
         );
     }
 }
