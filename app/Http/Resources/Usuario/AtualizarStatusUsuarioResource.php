@@ -4,10 +4,10 @@ namespace App\Http\Resources\Usuario;
 
 use App\Http\Resources\ResourceBase;
 
-class RedefinirSenhaResource extends ResourceBase
+class AtualizarStatusUsuarioResource extends ResourceBase
 {
     /**
-     * Transform the resource collection into an array.
+     * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
@@ -16,10 +16,12 @@ class RedefinirSenhaResource extends ResourceBase
     {
         if ($this->resource) {
             return [
+                'id' => $this->id,
+                'nome' => $this->pessoa->nome,
                 'email' => $this->email,
-                'nome' => $this->usuario->pessoa->nome,
-                'token' => $this->token,
-                'validade' => $this->validade,
+                'status' => $this->statusParse,
+                'perfis' => $this->perfis()
+                    ->pluck('perfil')
             ];
         }
     }

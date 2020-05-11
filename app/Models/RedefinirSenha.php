@@ -13,6 +13,12 @@ class RedefinirSenha extends Model
     protected $fillable = [
         'user_id', 'email', 'token', 'validade', 'status'
     ];
+    protected $guarded = [
+        'id'
+    ];
+    protected $hidden = [
+        'user_id', 'created_at', 'updated_at'
+    ];
 
     const TIPO_STATUS = [
         'A' => 'Ativo',

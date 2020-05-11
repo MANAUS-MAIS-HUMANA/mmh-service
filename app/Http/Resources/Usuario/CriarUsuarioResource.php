@@ -7,7 +7,7 @@ use App\Http\Resources\ResourceBase;
 class CriarUsuarioResource extends ResourceBase
 {
     /**
-     * Transform the resource collection into an array.
+     * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
@@ -19,8 +19,8 @@ class CriarUsuarioResource extends ResourceBase
                 'id' => $this->id,
                 'nome' => $this->pessoa->nome,
                 'email' => $this->email,
+                'status' => $this->statusParse,
                 'perfis' => $this->perfis()
-                    ->get(['perfil'])
                     ->pluck('perfil')
             ];
         }

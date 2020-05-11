@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Usuario;
 
-use App\Http\Resources\Usuario\CriarUsuarioResource;
-use App\Models\TipoPessoa;
+use App\Http\Resources\FormRequest\FailedResource;
+use App\Traits\FormRequest as FormRequestTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class CriarUsuarioRequest extends FormRequest
 {
+    use FormRequestTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -21,7 +21,7 @@ class CriarUsuarioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -33,15 +33,14 @@ class CriarUsuarioRequest extends FormRequest
     {
         return [
             "nome" => "required|string|max:255",
-            "email" => "required|string|email|max:255|unique:users,email,{$this->getUserId()},id",
+            "email" => "required|string|email|max:255|unique:users,email",
             "endereco" => "required|string|max:255",
             "estado" => "required|string|size:2",
             "tipo_pessoa" => "required|string|in:{$this->getTiposPessoa()}",
-            "cpf" => "required_without:cnpj|cpf|size:11|unique:tipo_pessoas,cpf_cnpj,{$this->getUserId()},id",
-            "cnpj" => "required_without:cpf|cnpj|size:14|unique:tipo_pessoas,cpf_cnpj,{$this->getUserId()},id",
+            "cpf" => "required_without:cnpj|cpf|size:11|unique:tipos_pessoa,cpf_cnpj",
+            "cnpj" => "required_without:cpf|cnpj|size:14|unique:tipos_pessoa,cpf_cnpj",
             "perfis" => "required|array",
             "perfis.*.id" => "required|numeric|exists:perfis,id",
-            "senha" => "required|string|min:8|confirmed",
         ];
     }
 
@@ -65,12 +64,7 @@ class CriarUsuarioRequest extends FormRequest
             "cnpj" => "O :attribute é inválido.",
             "array" => "O :attribute deve ser uma matriz.",
             "numeric" => "O :attribute deve ser um numérico.",
-            "exists" => "O :attribute '?' é inválido.",
-
-            "senha.required" => "A :attribute é obrigatória.",
-            "senha.string" => "A :attribute deve ser um texto.",
-            "senha.min" => "A :attribute não pode ter menos de :min caracteres.",
-            "senha.confirmed" => "A confirmação da :attribute não corresponde.",
+            "exists" => "O :attribute é inválido.",
         ];
     }
 
@@ -89,9 +83,8 @@ class CriarUsuarioRequest extends FormRequest
             "tipo_pessoa" => "Tipo de Pessoa",
             "cpf" => "CPF",
             "cnpj" => "CNPJ",
-            "perfis" => "Perfis de Usuário",
-            "perfis.*.id" => "Perfil de Usuário",
-            "senha" => "Senha",
+            "perfis" => "Perfil de Usuário",
+            "perfis.*.id" => "ID do Perfil de Usuário",
         ];
     }
 
@@ -102,10 +95,7 @@ class CriarUsuarioRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $this->merge([
-            'cpf' => preg_replace('/[^0-9]/', '', $this->cpf),
-            'cnpj' => preg_replace('/[^0-9]/', '', $this->cnpj),
-        ]);
+        $this->mergeExistsCpfOrCnpj($this);
     }
 
     /**
@@ -118,63 +108,23 @@ class CriarUsuarioRequest extends FormRequest
     protected function failedValidation(Validator $validator): void
     {
         throw new HttpResponseException(
-            (new CriarUsuarioResource(null, false, "Existem campos inválidos.", $this->replaceErroPerfisAndTipoPessoa($validator)))
+            (new FailedResource(null, false, "Existem campos inválidos.", $validator->errors()->unique()))
                 ->response()
                 ->setStatusCode(422)
         );
     }
 
     /**
-     * Substitui parãmetro de erro da mensagem de perfil e tipo de pessoa
+     * Handle a failed authorization attempt.
      *
-     * @param Validator $validator
-     * @return array
+     * @return void
      */
-    private function replaceErroPerfisAndTipoPessoa(Validator $validator): array
+    public function failedAuthorization(): void
     {
-        $errors = collect();
-        $perfis['perfis'] = $this->perfis;
-        foreach ($validator->failed() as $key => $value) {
-            if (Arr::has($perfis, $key) && Arr::has($validator->errors()->messages(), $key)) {
-                $descricao = Arr::get($perfis, Str::replaceFirst('id', 'descricao', $key));
-
-                if ($descricao) {
-                    $message = Str::replaceFirst('?', $descricao, Arr::get($validator->errors()->messages(), $key)[0]);
-                } else {
-                    $message = preg_replace('/\s+/', ' ', Str::replaceFirst('\'?\'', null, Arr::get($validator->errors()->messages(), $key)[0]));
-                }
-
-                $errors->push($message);
-            } elseif (Arr::has($validator->errors()->messages(), 'tipo_pessoa') && Arr::has($value, 'In')) {
-                $in = implode(', ', $value['In']);
-                $message = Str::replaceFirst($in, collect(array_values(TipoPessoa::TIPO_PESSOA))->join(', ', ' ou '), Arr::get($validator->errors()->messages(), $key)[0]);
-
-                $errors->push($message);
-            } else {
-                $errors->push(Arr::get($validator->errors()->messages(), $key)[0]);
-            }
-        }
-
-        return $errors->toArray();
-    }
-
-    /**
-     * Retorna o Id do usuário logado ou nulo
-     *
-     * @return int|null
-     */
-    private function getUserId(): ?int
-    {
-        return $this->user()->id ?? null;
-    }
-
-    /**
-     * Retorna os tipos de pessoa
-     *
-     * @return string
-     */
-    private function getTiposPessoa(): string
-    {
-        return implode(',', array_keys(TipoPessoa::TIPO_PESSOA));
+        throw new HttpResponseException(
+            (new FailedResource(null, false, "Está ação não é autorizada."))
+                ->response()
+                ->setStatusCode(403)
+        );
     }
 }

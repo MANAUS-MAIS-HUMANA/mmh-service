@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class ResourceBase extends JsonResource
 {
@@ -29,7 +31,7 @@ class ResourceBase extends JsonResource
     /**
      * Get any additional data that should be returned with the resource array.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function with($request): array
@@ -40,10 +42,33 @@ class ResourceBase extends JsonResource
             'url' => url()->full(),
         ];
 
+        $this->setErrors($response);
+        $this->setRefreshToken($response);
+
+        return Arr::sortRecursive($response);
+    }
+
+    /**
+     * Inclui os erros ao response
+     *
+     * @param array $response
+     */
+    private function setErrors(array &$response): void
+    {
         if (!empty($this->errors)) {
             $response['errors'] = $this->errors;
         }
+    }
 
-        return Arr::sortRecursive($response);
+    /**
+     * Inclui o refreshToken ao response
+     *
+     * @param array $response
+     */
+    private function setRefreshToken(array &$response): void
+    {
+        if (!Str::contains(url()->full(), ['auth', 'set-password']) && auth()->check()) {
+            $response['refreshToken'] = auth()->refresh();
+        }
     }
 }

@@ -8,10 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoPessoa extends Model
 {
-    protected $table = 'tipo_pessoas';
+    protected $table = 'tipos_pessoa';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'tipo', 'cpf_cnpj'
+        'tipo_pessoa', 'cpf_cnpj'
+    ];
+    protected $guarded = [
+        'id'
+    ];
+    protected $hidden = [
+        'created_at', 'updated_at'
     ];
 
     const TIPO_PESSOA = [

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Usuario;
+namespace App\Http\Resources\Auth;
 
 use App\Http\Resources\ResourceBase;
 

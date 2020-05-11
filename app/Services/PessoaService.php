@@ -6,11 +6,14 @@ namespace App\Services;
 
 use App\Models\Pessoa;
 use App\Models\TipoPessoa;
+use App\Traits\Pessoa as PessoaTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PessoaService
 {
+    use PessoaTrait;
+
     /**
      * @var TipoPessoaService
      */
@@ -45,7 +48,9 @@ class PessoaService
                 'tipo_pessoa_id' => $tipoPessoa->id,
             ]);
 
-            throw_if(!$pessoa, \Exception::class, 'Não foi possível criar a Pessoa!', 500);
+            throw_if(
+                !$pessoa, \Exception::class, 'Não foi possível criar a Pessoa!', 500
+            );
 
             DB::commit();
 
@@ -67,18 +72,49 @@ class PessoaService
     }
 
     /**
-     * Solicita a criação do Tipo de Pessoa
+     * Atualiza a pessoa.
      *
+     * @param int $id
      * @param Request $request
-     * @return TipoPessoa
-     * @throws \Throwable
+     * @return array
      */
-    private function createTipoPessoa(Request $request): TipoPessoa
+    public function update(int $id, Request $request): array
     {
-        $tipoPessoa = $this->tipoPessoaService->create($request);
+        DB::beginTransaction();
 
-        throw_if(!$tipoPessoa['success'], \Exception::class, $tipoPessoa['message'], $tipoPessoa['code']);
+        try {
+            $pessoa = Pessoa::find($id);
 
-        return $tipoPessoa['data'];
+            throw_if(
+                !$pessoa, \Exception::class, 'Pessoa não encontrada!', 404
+            );
+
+            $tipoPessoa = $pessoa->tipoPessoa;
+
+            $this->updateTipoPessoa($tipoPessoa->id, $request);
+
+            $pessoa = tap($pessoa)->update([
+                'nome' => $request->nome,
+                'endereco' => $request->endereco,
+                'estado' => $request->estado
+            ])->fresh();
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => $pessoa,
+                'message' => 'Pessoa atualizada com sucesso!',
+                'code' => 200
+            ];
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+            ];
+        }
     }
 }

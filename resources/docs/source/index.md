@@ -24,7 +24,7 @@ Documentação dos endpoints da API Manaus Mais Humana.
 #AuthController
 
 
-Controller responsável pela autenticação do usuário
+Controller responsável pelo gerenciamento de Usuários do lado público.
 <!-- START_2be1f0e022faf424f18f30275e61416e -->
 ## Login
 
@@ -232,8 +232,7 @@ curl -X POST \
 {
     "data": [],
     "message": "Não autorizado",
-    "success": false,
-    "url": "http:\/\/back.localhost\/api\/v1\/auth\/logout"
+    "success": false
 }
 ```
 
@@ -243,11 +242,7 @@ curl -X POST \
 
 <!-- END_a68ff660ea3d08198e527df659b17963 -->
 
-#UsuarioController
-
-
-Controller responsável pelo gerenciamento de Usuários
-<!-- START_e537001c03249d775c40d124d8a2c0ea -->
+<!-- START_a4a233f86d97c8deebe3bedaa936f967 -->
 ## Create
 
 Endpoint para criação de um novo usuário.
@@ -256,7 +251,7 @@ Endpoint para criação de um novo usuário.
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/v1/usuario/create"
+    "http://localhost/api/v1/auth/create"
 );
 
 let headers = {
@@ -272,15 +267,6 @@ let body = {
     "tipo_pessoa": "pf",
     "cpf": "111.111.111-11",
     "cnpj": "11.111.111\/1111-11",
-    "perfis": [
-        {
-            "id": 1,
-            "descricao": "Master"
-        },
-        {
-            "id": 2
-        }
-    ],
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
 }
@@ -298,7 +284,7 @@ fetch(url, {
 
 $client = new \GuzzleHttp\Client();
 $response = $client->post(
-    'http://localhost/api/v1/usuario/create',
+    'http://localhost/api/v1/auth/create',
     [
         'headers' => [
             'Content-Type' => 'application/json',
@@ -312,15 +298,6 @@ $response = $client->post(
             'tipo_pessoa' => 'pf',
             'cpf' => '111.111.111-11',
             'cnpj' => '11.111.111/1111-11',
-            'perfis' => [
-                [
-                    'id' => 1,
-                    'descricao' => 'Master',
-                ],
-                [
-                    'id' => 2,
-                ],
-            ],
             'senha' => '5&bnaC#f',
             'senha_confirmation' => '5&bnaC#f',
         ],
@@ -334,7 +311,7 @@ print_r(json_decode((string) $body));
 import requests
 import json
 
-url = 'http://localhost/api/v1/usuario/create'
+url = 'http://localhost/api/v1/auth/create'
 payload = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
@@ -343,15 +320,6 @@ payload = {
     "tipo_pessoa": "pf",
     "cpf": "111.111.111-11",
     "cnpj": "11.111.111\/1111-11",
-    "perfis": [
-        {
-            "id": 1,
-            "descricao": "Master"
-        },
-        {
-            "id": 2
-        }
-    ],
     "senha": "5&bnaC#f",
     "senha_confirmation": "5&bnaC#f"
 }
@@ -365,10 +333,10 @@ response.json()
 
 ```bash
 curl -X POST \
-    "http://localhost/api/v1/usuario/create" \
+    "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":1,"descricao":"Master"},{"id":2}],"senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
 
 ```
 
@@ -382,8 +350,7 @@ curl -X POST \
         "nome": "Fulano de Tal",
         "email": "fulano@tal.com",
         "perfis": [
-            "admin",
-            "codese"
+            "parceiro"
         ]
     },
     "message": "Usuário criado com sucesso!",
@@ -404,8 +371,6 @@ curl -X POST \
         "O Endereço é obrigatório.",
         "O Estado é obrigatório.",
         "O Nome é obrigatório.",
-        "O Perfil de Usuário 'Master' é inválido.",
-        "O Perfil de Usuário é inválido.",
         "O Tipo de Pessoa é obrigatório."
     ],
     "message": "Existem campos inválidos.",
@@ -425,7 +390,7 @@ curl -X POST \
 ```
 
 ### HTTP Request
-`POST api/v1/usuario/create`
+`POST api/v1/auth/create`
 
 #### Body Parameters
 Parameter | Type | Status | Description
@@ -437,16 +402,12 @@ Parameter | Type | Status | Description
         `tipo_pessoa` | string |  required  | Tipo de Pessoa (PF ou PJ).
         `cpf` | string |  optional  | Número do CPF do usuário (obrigatório se não houver CNPJ).
         `cnpj` | string |  optional  | Número do CNPJ da instituição (obrigatório se não houver CPF).
-        `perfis` | array |  required  | Matriz de perfis
-        `perfis[0].id` | integer |  required  | ID do perfil.
-        `perfis[0].descricao` | string |  optional  | Descricao do perfil.
-        `perfis[1].id` | integer |  required  | ID do perfil.
         `senha` | string |  required  | Senha de usuário (min. 8).
         `senha_confirmation` | string |  required  | Confirmação de senha de usuário.
     
-<!-- END_e537001c03249d775c40d124d8a2c0ea -->
+<!-- END_a4a233f86d97c8deebe3bedaa936f967 -->
 
-<!-- START_adb9d0eef21949ebed86bafb7f7818a5 -->
+<!-- START_758d1bc327f18e2d4dbb9b0a22083976 -->
 ## Password Reset
 
 Endpoint para solicitação de redefinição de senha do usuário.
@@ -459,7 +420,8 @@ Para separação do e-mail e token, foi colocado <strong>&&</strong>.
  <p>
      <strong>Exemplos:</strong>
      <ul>
-         <li><strong>Codificado</strong>: ZnVsYW5vQGZ1bGFuby5jb20mJkJGS1NkaGw2Q05TOUNaZk1O</li>
+         <li><strong>Codificado</strong>:
+ZnVsYW5vQGZ1bGFuby5jb20mJkJGS1NkaGw2Q05TOUNaZk1O</li>
          <li><strong>Decodificado</strong>: fulano@fulano.com&&BFKSdhl6CNS9CZfMN</li>
      </ul>
  </p>
@@ -469,7 +431,7 @@ Para separação do e-mail e token, foi colocado <strong>&&</strong>.
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/v1/usuario/password-reset"
+    "http://localhost/api/v1/auth/password-reset"
 );
 
 let headers = {
@@ -494,7 +456,7 @@ fetch(url, {
 
 $client = new \GuzzleHttp\Client();
 $response = $client->post(
-    'http://localhost/api/v1/usuario/password-reset',
+    'http://localhost/api/v1/auth/password-reset',
     [
         'headers' => [
             'Content-Type' => 'application/json',
@@ -513,7 +475,7 @@ print_r(json_decode((string) $body));
 import requests
 import json
 
-url = 'http://localhost/api/v1/usuario/password-reset'
+url = 'http://localhost/api/v1/auth/password-reset'
 payload = {
     "email": "fulano@fulano.com"
 }
@@ -527,7 +489,7 @@ response.json()
 
 ```bash
 curl -X POST \
-    "http://localhost/api/v1/usuario/password-reset" \
+    "http://localhost/api/v1/auth/password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -d '{"email":"fulano@fulano.com"}'
@@ -578,16 +540,16 @@ curl -X POST \
 ```
 
 ### HTTP Request
-`POST api/v1/usuario/password-reset`
+`POST api/v1/auth/password-reset`
 
 #### Body Parameters
 Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
     `email` | string |  required  | Endereço de e-mail.
     
-<!-- END_adb9d0eef21949ebed86bafb7f7818a5 -->
+<!-- END_758d1bc327f18e2d4dbb9b0a22083976 -->
 
-<!-- START_f84dd14d1c9563f51715efcf717768a9 -->
+<!-- START_64744f99fcf3bece9ec84aee8c3b0cfc -->
 ## Confirm Password Reset
 
 Endpoint para confirmar a solicitação de redefinição de senha.
@@ -596,7 +558,7 @@ Endpoint para confirmar a solicitação de redefinição de senha.
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/v1/usuario/confirm-password-reset"
+    "http://localhost/api/v1/auth/confirm-password-reset"
 );
 
 let headers = {
@@ -624,7 +586,7 @@ fetch(url, {
 
 $client = new \GuzzleHttp\Client();
 $response = $client->post(
-    'http://localhost/api/v1/usuario/confirm-password-reset',
+    'http://localhost/api/v1/auth/confirm-password-reset',
     [
         'headers' => [
             'Content-Type' => 'application/json',
@@ -646,7 +608,7 @@ print_r(json_decode((string) $body));
 import requests
 import json
 
-url = 'http://localhost/api/v1/usuario/confirm-password-reset'
+url = 'http://localhost/api/v1/auth/confirm-password-reset'
 payload = {
     "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
     "email": "fulano@fulano.com",
@@ -663,7 +625,7 @@ response.json()
 
 ```bash
 curl -X POST \
-    "http://localhost/api/v1/usuario/confirm-password-reset" \
+    "http://localhost/api/v1/auth/confirm-password-reset" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -d '{"token":"BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y","email":"fulano@fulano.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
@@ -717,7 +679,7 @@ curl -X POST \
 ```
 
 ### HTTP Request
-`POST api/v1/usuario/confirm-password-reset`
+`POST api/v1/auth/confirm-password-reset`
 
 #### Body Parameters
 Parameter | Type | Status | Description
@@ -727,6 +689,999 @@ Parameter | Type | Status | Description
         `senha` | string |  required  | Nova senha (min. 8).
         `senha_confirmation` | string |  required  | Confirmação de nova senha.
     
-<!-- END_f84dd14d1c9563f51715efcf717768a9 -->
+<!-- END_64744f99fcf3bece9ec84aee8c3b0cfc -->
+
+#UsuarioController
+
+
+Controller responsável pelo gerenciamento de Usuários do lado privado.
+<!-- START_94b9e39c9179e6826963c4293a458c30 -->
+## Index
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint que retorna todos os usuários.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/usuario"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get(
+    'http://localhost/api/v1/usuario',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/usuario'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers)
+response.json()
+```
+
+```bash
+curl -X GET \
+    -G "http://localhost/api/v1/usuario" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "nome": "Manaus Mais Humana",
+            "email": "mmh@gmail.com",
+            "status": "Ativo",
+            "perfis": [
+                "admin"
+            ]
+        },
+        {
+            "id": 2,
+            "nome": "Fulano de Tal",
+            "email": "fulano@tal.com",
+            "status": "Inativo",
+            "perfis": [
+                "admin",
+                "codese"
+            ]
+        },
+        {
+            "id": 3,
+            "nome": "Cicrano de Tal",
+            "email": "cicrano@tal.com",
+            "status": "Bloqueado",
+            "perfis": [
+                "parceiro"
+            ]
+        }
+    ],
+    "message": "Usuários encontrados!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Não foram encontrados usuários!",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}
+```
+
+### HTTP Request
+`GET api/v1/usuario`
+
+
+<!-- END_94b9e39c9179e6826963c4293a458c30 -->
+
+<!-- START_f4118dbd959bf0da643fc902f2d8ba1b -->
+## Store
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para criação de novo usuário.
+<p>
+<strong>Obs.:</strong> Será enviado um link por e-mail para o usuário,
+ao clicar no link, o mesmo será redirecionado para página de definição de senha
+na aplicação frontend, no corpo do link, terá o <u>ID de usuário, endereço
+de e-mail e o token condificado em base64</u>.<br>
+Para separação do e-mail e token, foi colocado <strong>&&</strong>.
+ <p>
+     <strong>Exemplos:</strong>
+     <ul>
+         <li><strong>Codificado</strong>: ZnVsYW5vQGZ1bGFuby5jb20mJkJGS1NkaGw2Q05TOUNaZk1O</li>
+         <li><strong>Decodificado</strong>: 2&&fulano@fulano.com&&BFKSdhl6CNS9CZfMN</li>
+     </ul>
+ </p>
+</p>
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/usuario"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "nome": "Fulano de Tal",
+    "email": "fulano@tal.com",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
+    "estado": "AM",
+    "tipo_pessoa": "pf",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
+    "perfis": [
+        {
+            "id": 3,
+            "perfil": "parceiro",
+            "descricao": "Igreja ou ONG."
+        }
+    ]
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->post(
+    'http://localhost/api/v1/usuario',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'json' => [
+            'nome' => 'Fulano de Tal',
+            'email' => 'fulano@tal.com',
+            'endereco' => 'Rua Dom Pedro, S/N, Dom Pedro',
+            'estado' => 'AM',
+            'tipo_pessoa' => 'pf',
+            'cpf' => '111.111.111-11',
+            'cnpj' => '11.111.111/1111-11',
+            'perfis' => [
+                [
+                    'id' => 3,
+                    'perfil' => 'parceiro',
+                    'descricao' => 'Igreja ou ONG.',
+                ],
+            ],
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/usuario'
+payload = {
+    "nome": "Fulano de Tal",
+    "email": "fulano@tal.com",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
+    "estado": "AM",
+    "tipo_pessoa": "pf",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
+    "perfis": [
+        {
+            "id": 3,
+            "perfil": "parceiro",
+            "descricao": "Igreja ou ONG."
+        }
+    ]
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()
+```
+
+```bash
+curl -X POST \
+    "http://localhost/api/v1/usuario" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":3,"perfil":"parceiro","descricao":"Igreja ou ONG."}]}'
+
+```
+
+
+> Example response (201):
+
+```json
+{
+    "data": {
+        "id": 2,
+        "nome": "Fulano de Tal",
+        "email": "fulano@tal.com",
+        "status": "Inativo",
+        "perfis": [
+            "admin",
+            "codese",
+            "parceiro"
+        ]
+    },
+    "message": "Usuário criado com sucesso!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (403):
+
+```json
+{
+    "data": [],
+    "message": "Está ação não é autorizada.",
+    "success": false
+}
+```
+> Example response (422):
+
+```json
+{
+    "data": [],
+    "errors": [
+        "O CNPJ é obrigatório quando CPF não foi informado.",
+        "O CPF é obrigatório quando CNPJ não foi informado.",
+        "O E-mail é obrigatório.",
+        "O Endereço é obrigatório.",
+        "O Estado é obrigatório.",
+        "O Nome é obrigatório.",
+        "O Perfil de Usuário é obrigatório.",
+        "O Tipo de Pessoa é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Não foi possível criar o usuário!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}
+```
+
+### HTTP Request
+`POST api/v1/usuario`
+
+#### Body Parameters
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    `nome` | string |  required  | Nome do novo usuário - (max. 255).
+        `email` | string |  required  | Endereço de e-mail - (max. 255).
+        `endereco` | string |  required  | Endereço residencial - (max. 255).
+        `estado` | string |  required  | Estado - (tam. 2).
+        `tipo_pessoa` | string |  required  | Tipo de Pessoa (PF ou PJ).
+        `cpf` | string |  optional  | Número do CPF do usuário (obrigatório se não houver CNPJ).
+        `cnpj` | string |  optional  | Número do CNPJ da instituição (obrigatório se não houver CPF).
+        `perfis` | array |  required  | Matriz de perfis.
+        `perfis[0].id` | integer |  required  | ID do perfil.
+        `perfis[0].perfil` | string |  optional  | Nome do perfil.
+        `perfis[0].descricao` | string |  optional  | Descrição do perfil.
+    
+<!-- END_f4118dbd959bf0da643fc902f2d8ba1b -->
+
+<!-- START_33b204ea4b1df799847e39ea5600738b -->
+## Show
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint que retorna o usuário pelo id.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/usuario/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get(
+    'http://localhost/api/v1/usuario/1',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/usuario/1'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers)
+response.json()
+```
+
+```bash
+curl -X GET \
+    -G "http://localhost/api/v1/usuario/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": {
+        "id": 1,
+        "nome": "Manaus Mais Humana",
+        "email": "mmh@gmail.com",
+        "status": "Ativo",
+        "perfis": [
+            "admin"
+        ]
+    },
+    "message": "Usuário encontrado!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/1"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Usuário não encontrado!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/1"
+}
+```
+
+### HTTP Request
+`GET api/v1/usuario/{id}`
+
+#### URL Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -------
+    `usuario` |  required  | ID do usuário.
+
+<!-- END_33b204ea4b1df799847e39ea5600738b -->
+
+<!-- START_6a759fafba79060dfb4b8762a07e4c23 -->
+## Update
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint que atualiza os dados do usuário.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/usuario/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "nome": "Fulano de Tal",
+    "email": "fulano@tal.com",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
+    "estado": "AM",
+    "tipo_pessoa": "pf",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
+    "perfis": [
+        {
+            "id": 3,
+            "perfil": "parceiro",
+            "descricao": "Igreja ou ONG."
+        }
+    ],
+    "status": "A"
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->put(
+    'http://localhost/api/v1/usuario/1',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'json' => [
+            'nome' => 'Fulano de Tal',
+            'email' => 'fulano@tal.com',
+            'endereco' => 'Rua Dom Pedro, S/N, Dom Pedro',
+            'estado' => 'AM',
+            'tipo_pessoa' => 'pf',
+            'cpf' => '111.111.111-11',
+            'cnpj' => '11.111.111/1111-11',
+            'perfis' => [
+                [
+                    'id' => 3,
+                    'perfil' => 'parceiro',
+                    'descricao' => 'Igreja ou ONG.',
+                ],
+            ],
+            'status' => 'A',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/usuario/1'
+payload = {
+    "nome": "Fulano de Tal",
+    "email": "fulano@tal.com",
+    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
+    "estado": "AM",
+    "tipo_pessoa": "pf",
+    "cpf": "111.111.111-11",
+    "cnpj": "11.111.111\/1111-11",
+    "perfis": [
+        {
+            "id": 3,
+            "perfil": "parceiro",
+            "descricao": "Igreja ou ONG."
+        }
+    ],
+    "status": "A"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()
+```
+
+```bash
+curl -X PUT \
+    "http://localhost/api/v1/usuario/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","perfis":[{"id":3,"perfil":"parceiro","descricao":"Igreja ou ONG."}],"status":"A"}'
+
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": {
+        "id": 2,
+        "nome": "Fulano de Tal",
+        "email": "fulano@tal.com",
+        "status": "Ativo",
+        "perfis": [
+            "parceiro"
+        ]
+    },
+    "message": "Usuário atualizado com sucesso!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (403):
+
+```json
+{
+    "data": [],
+    "message": "Está ação não é autorizada.",
+    "success": false
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Usuário não encontrado!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2"
+}
+```
+> Example response (422):
+
+```json
+{
+    "data": [],
+    "errors": [
+        "O CPF deve ter 11 caracteres.",
+        "O CPF é inválido.",
+        "O ID do Perfil de Usuário é inválido.",
+        "O Nome deve ser um texto.",
+        "O Tipo de Pessoa é inválido (aceito: pf, pj)."
+    ],
+    "message": "Existem campos inválidos.",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2"
+}
+```
+
+### HTTP Request
+`PUT api/v1/usuario/{id}`
+
+`PATCH api/v1/usuario/{id}`
+
+#### URL Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -------
+    `usuario` |  required  | ID do usuário.
+#### Body Parameters
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    `nome` | string |  optional  | Nome do novo usuário - (max. 255).
+        `email` | string |  optional  | Endereço de e-mail - (max. 255).
+        `endereco` | string |  optional  | Endereço residencial - (max. 255).
+        `estado` | string |  optional  | Estado - (tam. 2).
+        `tipo_pessoa` | string |  optional  | Tipo de Pessoa (PF ou PJ).
+        `cpf` | string |  optional  | Número do CPF do usuário.
+        `cnpj` | string |  optional  | Número do CNPJ da instituição.
+        `perfis` | array |  optional  | Matriz de perfis.
+        `perfis[0].id` | integer |  optional  | ID do perfil.
+        `perfis[0].perfil` | string |  optional  | Nome do perfil.
+        `perfis[0].descricao` | string |  optional  | Descrição do perfil.
+        `status` | string |  optional  | Status de usuário (A, I ou B).
+    
+<!-- END_6a759fafba79060dfb4b8762a07e4c23 -->
+
+<!-- START_c72d2f99606a3aefdfc00ac95b31d8d1 -->
+## SetStatus
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint que atualiza o status do usuário.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/usuario/1/set-status"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "status": "A"
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->put(
+    'http://localhost/api/v1/usuario/1/set-status',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'json' => [
+            'status' => 'A',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/usuario/1/set-status'
+payload = {
+    "status": "A"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()
+```
+
+```bash
+curl -X PUT \
+    "http://localhost/api/v1/usuario/1/set-status" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"status":"A"}'
+
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": {
+        "id": 2,
+        "nome": "Fulano de Tal",
+        "email": "fulano@tal.com",
+        "status": "Ativo",
+        "perfis": [
+            "parceiro"
+        ]
+    },
+    "message": "Status de usuário atualizado com sucesso!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-status"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (403):
+
+```json
+{
+    "data": [],
+    "message": "Está ação não é autorizada.",
+    "success": false
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Usuário não encontrado!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-status"
+}
+```
+> Example response (422):
+
+```json
+{
+    "data": [],
+    "errors": [
+        "O Status de Usuário é inválido (aceito: A, I, B)."
+    ],
+    "message": "Existem campos inválidos.",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-status"
+}
+```
+
+### HTTP Request
+`PUT api/v1/usuario/{id}/set-status`
+
+#### Body Parameters
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    `status` | string |  optional  | Status de usuário (A, I ou B).
+    
+<!-- END_c72d2f99606a3aefdfc00ac95b31d8d1 -->
+
+<!-- START_af574b0c80b0d9c34cb32ac5d2367e41 -->
+## SetPassword
+
+Endpoint que define a senha do usuário.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/usuario/1/set-password"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "email": "fulano@tal.com",
+    "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
+    "senha": "5&bnaC#f",
+    "senha_confirmation": "5&bnaC#f"
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->put(
+    'http://localhost/api/v1/usuario/1/set-password',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'json' => [
+            'email' => 'fulano@tal.com',
+            'token' => 'BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y',
+            'senha' => '5&bnaC#f',
+            'senha_confirmation' => '5&bnaC#f',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/usuario/1/set-password'
+payload = {
+    "email": "fulano@tal.com",
+    "token": "BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y",
+    "senha": "5&bnaC#f",
+    "senha_confirmation": "5&bnaC#f"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()
+```
+
+```bash
+curl -X PUT \
+    "http://localhost/api/v1/usuario/1/set-password" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"email":"fulano@tal.com","token":"BFKSdhl6CNS9CZfMNxRei0C7KTa10e84AxeML1XzWBdRrF2Beug5e2nK2X3Y","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
+
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": {
+        "id": 2,
+        "nome": "Fulano de Tal",
+        "email": "fulano@tal.com",
+        "status": "Ativo",
+        "perfis": [
+            "parceiro"
+        ]
+    },
+    "message": "Senha de usuário definida com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-password"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (403):
+
+```json
+{
+    "data": [],
+    "message": "Está ação não é autorizada.",
+    "success": false
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Usuário não encontrado!",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-password"
+}
+```
+> Example response (422):
+
+```json
+{
+    "data": [],
+    "errors": [
+        "A confirmação da Senha não corresponde.",
+        "O Token é inválido."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/2\/set-password"
+}
+```
+
+### HTTP Request
+`PUT api/v1/usuario/{id}/set-password`
+
+#### URL Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -------
+    `usuario` |  required  | ID do usuário.
+#### Body Parameters
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    `email` | string |  required  | Endereço de e-mail - (max. 255).
+        `token` | string |  required  | Token de validação - (max. 255).
+        `senha` | string |  required  | Nova senha (min. 8).
+        `senha_confirmation` | string |  required  | Confirmação de nova senha.
+    
+<!-- END_af574b0c80b0d9c34cb32ac5d2367e41 -->
 
 

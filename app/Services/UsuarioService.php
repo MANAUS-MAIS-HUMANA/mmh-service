@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Mail\RedefinirSenha as RedefinirSenhaMail;
-use App\Models\Pessoa;
-use App\Models\RedefinirSenha;
+use App\Mail\DefinirSenha;
 use App\Models\User;
+use App\Traits\Usuario as UsuarioTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,27 +15,42 @@ use Illuminate\Support\Str;
 
 class UsuarioService
 {
-    /**
-     * @var PessoaService
-     */
-    private PessoaService $pessoaService;
+    use UsuarioTrait;
 
     /**
-     * AuthService constructor.
-     * @param PessoaService $pessoaService
+     * Retorna a lista de usuários
+     *
+     * @return array
      */
-    public function __construct(PessoaService $pessoaService)
+    public function findAll(): array
     {
-        $this->pessoaService = $pessoaService;
+        try {
+            $usuarios = User::all();
+
+            throw_if(!$usuarios, \Exception::class, 'Não foram encontrados usuários!', 404);
+
+            return [
+                'success' => true,
+                'data' => $usuarios,
+                'message' => 'Usuários encontrados!',
+                'code' => 200
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ];
+        }
     }
 
     /**
-     * Cria o usuário
+     * Cria um novo usuário
      *
      * @param Request $request
      * @return array
      */
-    public function create(Request $request)
+    public function create(Request $request): array
     {
         DB::beginTransaction();
 
@@ -46,16 +60,19 @@ class UsuarioService
             $usuario = User::create([
                 'pessoa_id' => $pessoa->id,
                 'email' => $request->email,
-                'password' => Hash::make($request->senha),
+                'senha' => Str::random(60),
+                'status' => 'I'
             ]);
 
-            throw_if($usuario, \Exception::class, 'Não foi possível criar o usuaŕio!', 500);
+            throw_if(!$usuario, \Exception::class, 'Não foi possível criar o usuário!', 500);
 
-            $this->perfisAttach($usuario, $request->perfis);
+            $this->perfilByIdsAttach($usuario, $request->perfis);
+
+            Mail::to($usuario->email)
+                ->locale('pt-BR')
+                ->send(new DefinirSenha($usuario));
 
             DB::commit();
-
-            auth()->login($usuario);
 
             return [
                 'success' => true,
@@ -69,91 +86,74 @@ class UsuarioService
             return [
                 'success' => false,
                 'message' => $e->getMessage(),
-                'code' => $e->getCode(),
+                'code' => $e->getCode()
             ];
         }
     }
 
     /**
-     * Registra a solicitação de recuperação de senha
+     * Retorna o usuário pelo Id.
      *
-     * @param Request $request
+     * @param int $id
      * @return array
      */
-    public function passwordReset(Request $request): array
+    public function findById(int $id): array
     {
-        DB::beginTransaction();
-
         try {
-            $usuario = $this->getUsuarioByEmail($request);
+            $usuario = User::find($id);
 
-            $pwdReset = RedefinirSenha::create([
-                'user_id' => $usuario->id,
-                'email' => $usuario->email,
-                'token' => Str::random(60),
-                'validade' => now()->addDay()
-            ]);
-
-            throw_if(!$pwdReset, \Exception::class, 'Não foi possível solicitador a recuperação da senha!', 500);
-
-            Mail::to($pwdReset->email)->locale('pt-BR')->send(new RedefinirSenhaMail($usuario, $pwdReset));
-
-            DB::commit();
-
-            return [
-                'success' => true,
-                'data' => $pwdReset,
-                'message' => 'Recuperação de Senha solicitada com sucesso!',
-                'code' => 200,
-            ];
-        } catch (\Throwable $e) {
-            DB::rollBack();
-
-            return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'code' => $e->getCode(),
-            ];
-        }
-    }
-
-    /**
-     * Redefine a senha de usuário
-     *
-     * @param Request $request
-     * @return array
-     */
-    public function confirmPasswordReset(Request $request): array
-    {
-        DB::beginTransaction();
-
-        try {
-            $pwdReset = RedefinirSenha::whereToken($request->token)
-                ->whereDate('validade', '>', now())
-                ->whereStatus('A')
-                ->latest()
-                ->first();
-
-            throw_if(!$pwdReset, \Exception::class, 'Não foi possível redefinir a senha do usuaŕio!', 500);
-
-            $pwdReset->update([
-                'status' => 'I'
-            ]);
-
-            $usuario = $pwdReset->usuario;
-
-            $usuario->update([
-                'password' => Hash::make($request->senha)
-            ]);
-
-            DB::commit();
-
-            auth()->login($usuario);
+            throw_if(!$usuario, \Exception::class, 'Usuário não encontrado!', 404);
 
             return [
                 'success' => true,
                 'data' => $usuario,
-                'message' => 'Senha de usuário redefinida com sucesso!',
+                'message' => 'Usuário encontrado!',
+                'code' => 200
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ];
+        }
+    }
+
+    /**
+     * Atualiza os dados do usuário.
+     *
+     * @param int $id
+     * @param Request $request
+     * @return array
+     */
+    public function update(int $id, Request $request): array
+    {
+        DB::beginTransaction();
+
+        try {
+            $usuario = User::find($id);
+
+            throw_if(
+                !$usuario, \Exception::class, 'Usuário não encontrado!', 404
+            );
+
+            $pessoa = $usuario->pessoa;
+
+            $this->updatePessoa($pessoa->id, $request);
+
+            $usuario = tap($usuario)->update([
+                'email' => $request->email ??= $usuario->email,
+                'status' => $request->status ??= $usuario->status
+            ])->fresh();
+
+            $this->perfilByIdsSync($usuario, $request->perfis ??= $usuario->perfis->toArray());
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => $usuario,
+                'message' => 'Usuário atualizado com sucesso!',
                 'code' => 200
             ];
         } catch (\Throwable $e) {
@@ -168,50 +168,87 @@ class UsuarioService
     }
 
     /**
-     * Solicita a criação de Pessoa
+     * Define a senha do usuário.
      *
+     * @param int $id
      * @param Request $request
-     * @return Pessoa
-     * @throws \Throwable
+     * @return array
      */
-    private function createPessoa(Request $request): Pessoa
+    public function setPassword(int $id, Request $request): array
     {
-        $pessoa = $this->pessoaService->create($request);
+        DB::beginTransaction();
 
-        throw_if(!$pessoa['success'] ??= [], \Exception::class, $pessoa['message'], $pessoa['code']);
-
-        return $pessoa['data'];
-    }
-
-    /**
-     * Associa o usuário ao perfil
-     *
-     * @param User $user
-     * @param array $perfis
-     */
-    private function perfisAttach(User $user, array $perfis): void
-    {
-        $user->perfis()->attach(data_get($perfis, '*.id'));
-    }
-
-    /**
-     * Retorna o usuário pelo E-mail
-     *
-     * @param Request $request
-     * @return User
-     * @throws \Exception
-     */
-    private function getUsuarioByEmail(Request $request): User
-    {
         try {
-            $usuario = User::whereEmail($request->email)
-                ->first();
+            $usuario = User::find($id);
 
-            throw_if(!$usuario, \Exception::class, 'Usuário não encontrado!', 404);
+            throw_if(
+                !$usuario, \Exception::class, 'Usuário não encontrado!', 404
+            );
 
-            return $usuario;
+            $this->validateEmailAndToken($usuario, $request);
+
+            $usuario = tap($usuario)->update([
+                'senha' => Hash::make($request->senha),
+                'status' => 'A'
+            ])->fresh();
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => $usuario,
+                'message' => 'Senha de usuário definida com sucesso!',
+                'code' => 200
+            ];
         } catch (\Throwable $e) {
-            throw new \Exception($e->getMessage(), $e->getCode());
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ];
+        }
+    }
+
+    /**
+     * Atualiza o status do usuário.
+     *
+     * @param int $id
+     * @param Request $request
+     * @return array
+     */
+    public function setStatus(int $id, Request $request): array
+    {
+        DB::beginTransaction();
+
+        try {
+            $usuario = User::find($id);
+
+            throw_if(
+                !$usuario, \Exception::class, 'Usuário não encontrado!', 404
+            );
+
+            $usuario = tap($usuario)->update([
+                'status' => $request->status
+            ])->fresh();
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => $usuario,
+                'message' => 'Status de usuário atualizado com sucesso!',
+                'code' => 200
+            ];
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode()
+            ];
         }
     }
 }

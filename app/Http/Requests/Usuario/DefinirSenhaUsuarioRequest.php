@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Usuario;
 
-use App\Http\Resources\Usuario\RedefinirSenhaResource;
-use App\Rules\ValidarSeExisteRedefinirSenha;
+use App\Http\Resources\FormRequest\FailedResource;
+use App\Traits\FormRequest as FormRequestTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class RedefinirSenhaRequest extends FormRequest
+class DefinirSenhaUsuarioRequest extends FormRequest
 {
+    use FormRequestTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -19,7 +21,7 @@ class RedefinirSenhaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->validateEmailBelongsToId($this);
     }
 
     /**
@@ -30,7 +32,9 @@ class RedefinirSenhaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email" => ["required", "string", "email", "max:255", "exists:users,email", new ValidarSeExisteRedefinirSenha()],
+            "email" => "required|string|email|max:255|exists:users,email",
+            "token" => "required|string|exists:users,senha",
+            "senha" => "required|string|min:8|confirmed",
         ];
     }
 
@@ -44,9 +48,16 @@ class RedefinirSenhaRequest extends FormRequest
         return [
             "required" => "O :attribute é obrigatório.",
             "string" => "O :attribute deve ser um texto.",
-            "max" => "O :attribute não pode ter mais que :max caracteres.",
             "email" => "O :attribute deve ser um endereço de e-mail válido.",
-            "exists" => "O :attribute :input é inválido.",
+            "max" => "O :attribute não pode ter mais que :max caracteres.",
+            "exists" => "O :attribute é inválido.",
+
+            "senha.required" => "A :attribute é obrigatória.",
+            "senha.string" => "A :attribute deve ser um texto.",
+            "senha.min" => "A :attribute não pode ter menos de :min caracteres.",
+            "senha.confirmed" => "A confirmação da :attribute não corresponde.",
+
+            "email.exists" => "O :attribute :input é inválido.",
         ];
     }
 
@@ -58,7 +69,9 @@ class RedefinirSenhaRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            "token" => "Token",
             "email" => "E-mail",
+            "senha" => "Senha",
         ];
     }
 
@@ -72,9 +85,23 @@ class RedefinirSenhaRequest extends FormRequest
     protected function failedValidation(Validator $validator): void
     {
         throw new HttpResponseException(
-            (new RedefinirSenhaResource(null, false, "Existem campos inválidos.", $validator->errors()->unique()))
+            (new FailedResource(null, false, "Existem campos inválidos.", $validator->errors()->unique()))
                 ->response()
                 ->setStatusCode(422)
+        );
+    }
+
+    /**
+     * Handle a failed authorization attempt.
+     *
+     * @return void
+     */
+    public function failedAuthorization(): void
+    {
+        throw new HttpResponseException(
+            (new FailedResource(null, false, "Está ação não é autorizada."))
+                ->response()
+                ->setStatusCode(403)
         );
     }
 }

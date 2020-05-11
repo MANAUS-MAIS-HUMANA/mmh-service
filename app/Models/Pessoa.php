@@ -11,6 +11,12 @@ class Pessoa extends Model
     protected $fillable = [
         'tipo_pessoa_id', 'nome', 'endereco', 'estado'
     ];
+    protected $guarded = [
+        'id'
+    ];
+    protected $hidden = [
+        'tipo_pessoa_id', 'created_at', 'updated_at'
+    ];
 
     public function tipoPessoa()
     {

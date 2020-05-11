@@ -1,0 +1,17 @@
+{
+    "data": {
+        "id": 2,
+        "nome": "Fulano de Tal",
+        "email": "fulano@tal.com",
+        "status": "Inativo",
+        "perfis": [
+            "admin",
+            "codese",
+            "parceiro"
+        ]
+    },
+    "message": "Usuário criado com sucesso!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}
