@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Traints;
+namespace App\Traits;
 
 use App\Models\TipoPessoa;
 use App\Services\TipoPessoaService;

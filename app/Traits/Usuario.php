@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Traints;
+namespace App\Traits;
 
 use App\Models\Pessoa;
-use App\Models\RedefinirSenha;
 use App\Models\User;
 use App\Services\PerfilService;
 use App\Services\PessoaService;

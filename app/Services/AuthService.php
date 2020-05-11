@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Mail\RedefinirSenha as RedefinirSenhaMail;
 use App\Models\RedefinirSenha;
 use App\Models\User;
-use App\Traints\Usuario as UsuarioTrait;
+use App\Traits\Usuario as UsuarioTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;

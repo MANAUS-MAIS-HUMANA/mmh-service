@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Usuario;
 
 use App\Http\Resources\FormRequest\FailedResource;
-use App\Traints\FormRequest as FormRequestTrait;
+use App\Traits\FormRequest as FormRequestTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;

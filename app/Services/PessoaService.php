@@ -6,7 +6,7 @@ namespace App\Services;
 
 use App\Models\Pessoa;
 use App\Models\TipoPessoa;
-use App\Traints\Pessoa as PessoaTrait;
+use App\Traits\Pessoa as PessoaTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
