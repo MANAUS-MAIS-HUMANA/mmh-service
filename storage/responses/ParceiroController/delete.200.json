@@ -1,0 +1,6 @@
+{
+    "data": [],
+    "message": "Parceiro removido com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/1"
+}

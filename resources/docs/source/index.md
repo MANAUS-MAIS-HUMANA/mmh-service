@@ -691,6 +691,872 @@ Parameter | Type | Status | Description
     
 <!-- END_64744f99fcf3bece9ec84aee8c3b0cfc -->
 
+#ParceiroController
+
+
+Controller responsável pelo CRUD de instituições parceiras.
+<!-- START_0d4dfb28e77c127afb29ac9f5077f22f -->
+## Listar
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para buscar uma lista de parceiros.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/parceiros"
+);
+
+let params = {
+    "page": ""1"",
+    "limit": ""6"",
+};
+Object.keys(params)
+    .forEach(key => url.searchParams.append(key, params[key]));
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get(
+    'http://localhost/api/v1/parceiros',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'query' => [
+            'page'=> '"1"',
+            'limit'=> '"6"',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/parceiros'
+params = {
+  'page': '"1"',
+  'limit': '"6"',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()
+```
+
+```bash
+curl -X GET \
+    -G "http://localhost/api/v1/parceiros?page=%221%22&limit=%226%22" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 8,
+            "nome": "Boa Ação",
+            "email": "contato@boacao.com.br",
+            "tipo_pessoa": {
+                "id": 9,
+                "tipo_pessoa": "pj",
+                "cpf_cnpj": "38797937000102"
+            },
+            "telefones": [
+                {
+                    "id": 1,
+                    "telefone": "9236445874",
+                    "tipo": 2
+                }
+            ],
+            "enderecos": [
+                {
+                    "id": 3,
+                    "endereco": "Rua Açaí",
+                    "ponto_referencia": null,
+                    "cep": "69068447",
+                    "cidade": {
+                        "nome": "Manaus",
+                        "estado": {
+                            "uf": "AM",
+                            "nome": "Amazonas"
+                        }
+                    },
+                    "bairro": {
+                        "nome": "Raiz"
+                    }
+                }
+            ]
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/parceiros",
+    "from": null,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/parceiros",
+    "next_page_url": null,
+    "path": "http:\/\/back.localhost\/api\/v1\/parceiros",
+    "per_page": 6,
+    "prev_page_url": "http:\/\/back.localhost\/api\/v1\/parceiros",
+    "to": null,
+    "total": 0,
+    "message": "Parceiro obtido com sucesso!",
+    "success": true
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}
+```
+
+### HTTP Request
+`GET api/v1/parceiros`
+
+#### Query Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -----------
+    `page` |  optional  | Número da página para retornar os dados.
+    `limit` |  optional  | Total de elementos por página para retornar.
+
+<!-- END_0d4dfb28e77c127afb29ac9f5077f22f -->
+
+<!-- START_a072594af821ade9e7ce15d71dbe9460 -->
+## Buscar
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para obter os dados de um parceiro específico.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/parceiros/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get(
+    'http://localhost/api/v1/parceiros/1',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/parceiros/1'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers)
+response.json()
+```
+
+```bash
+curl -X GET \
+    -G "http://localhost/api/v1/parceiros/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "nome": "Boa Ação",
+            "email": "contato@boacao.com.br",
+            "tipo_pessoa": {
+                "id": 9,
+                "tipo_pessoa": "pj",
+                "cpf_cnpj": "38797937000102"
+            },
+            "telefones": [
+                {
+                    "id": 1,
+                    "telefone": "9236445874",
+                    "tipo": 2
+                }
+            ],
+            "enderecos": [
+                {
+                    "id": 3,
+                    "endereco": "Rua Açaí",
+                    "ponto_referencia": null,
+                    "cep": "69068447",
+                    "cidade": {
+                        "nome": "Manaus",
+                        "estado": {
+                            "uf": "AM",
+                            "nome": "Amazonas"
+                        }
+                    },
+                    "bairro": {
+                        "nome": "Raiz"
+                    }
+                }
+            ]
+        }
+    ],
+    "message": "Parceiro encontrado!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/1"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Erro #105: Parceiro 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/1"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}
+```
+
+### HTTP Request
+`GET api/v1/parceiros/{id}`
+
+#### URL Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -------
+    `parceiro` |  required  | ID do parceiro.
+
+<!-- END_a072594af821ade9e7ce15d71dbe9460 -->
+
+<!-- START_543d37f5ea560f7ea10b487b2b15671f -->
+## Criar
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para inserir uma nova instituição parceira no sistema.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/parceiros"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "nome": "Manaus+Humana",
+    "email": "fulano@tal.com",
+    "cnpj": "13245678901234",
+    "cpf": "12345678901",
+    "telefones": [
+        {
+            "telefone": 92991234567,
+            "tipo": "itaque"
+        }
+    ],
+    "enderecos": [
+        {
+            "endereco": "Rua da paz, 150",
+            "bairro_id": 1,
+            "cep": "\"69061000\"",
+            "ponto_referencia": "\"INPA\"",
+            "cidade_id": 1
+        }
+    ]
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->post(
+    'http://localhost/api/v1/parceiros',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'json' => [
+            'nome' => 'Manaus+Humana',
+            'email' => 'fulano@tal.com',
+            'cnpj' => '13245678901234',
+            'cpf' => '12345678901',
+            'telefones' => [
+                [
+                    'telefone' => 92991234567,
+                    'tipo' => 'itaque',
+                ],
+            ],
+            'enderecos' => [
+                [
+                    'endereco' => 'Rua da paz, 150',
+                    'bairro_id' => 1,
+                    'cep' => '"69061000"',
+                    'ponto_referencia' => '"INPA"',
+                    'cidade_id' => 1,
+                ],
+            ],
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/parceiros'
+payload = {
+    "nome": "Manaus+Humana",
+    "email": "fulano@tal.com",
+    "cnpj": "13245678901234",
+    "cpf": "12345678901",
+    "telefones": [
+        {
+            "telefone": 92991234567,
+            "tipo": "itaque"
+        }
+    ],
+    "enderecos": [
+        {
+            "endereco": "Rua da paz, 150",
+            "bairro_id": 1,
+            "cep": "\"69061000\"",
+            "ponto_referencia": "\"INPA\"",
+            "cidade_id": 1
+        }
+    ]
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()
+```
+
+```bash
+curl -X POST \
+    "http://localhost/api/v1/parceiros" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"itaque"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+
+```
+
+
+> Example response (201):
+
+```json
+{
+    "data": {
+        "id": 2
+    },
+    "message": "Parceiro criado com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (422):
+
+```json
+{
+    "data": [],
+    "errors": [
+        "O Nome é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}
+```
+
+### HTTP Request
+`POST api/v1/parceiros`
+
+#### Body Parameters
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    `nome` | string |  required  | Nome do novo parceiro - (max. 255).
+        `email` | string |  required  | Endereço de e-mail do parceiro - (max. 255).
+        `cnpj` | string |  optional  | Número do CNPJ da instituição (obrigatório se não houver CPF).
+        `cpf` | string |  optional  | Número do CPF da instituição (obrigatório se não houver CNPJ).
+        `telefones` | array |  required  | Lista de telefones.
+        `telefones[0].telefone` | integer |  required  | Número de telefone com DDD.
+        `telefones[0].tipo` | string |  required  | Tipo do telefone: "Fixo" ou "Celular"
+        `enderecos` | array |  required  | Lista de enderecos.
+        `enderecos[0].endereco` | string |  required  | Nome da rua, com número e complemento.
+        `enderecos[0].bairro_id` | integer |  required  | ID do bairro.
+        `enderecos[0].cep` | string |  required  | CEP da rua.
+        `enderecos[0].ponto_referencia` | string |  optional  | Ponto de referência.
+        `enderecos[0].cidade_id` | integer |  required  | ID da cidade.
+    
+<!-- END_543d37f5ea560f7ea10b487b2b15671f -->
+
+<!-- START_5aaa67f3f0225463d7c25473608a7464 -->
+## Atualizar
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para atualizar os dados de um parceiro.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/parceiros/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "nome": "Manaus+Humana",
+    "email": "fulano@tal.com",
+    "cnpj": "13245678901234",
+    "cpf": "12345678901",
+    "telefones": [
+        {
+            "telefone": 92991234567,
+            "tipo": "nisi"
+        }
+    ],
+    "enderecos": [
+        {
+            "endereco": "Rua da paz, 150",
+            "bairro_id": 1,
+            "cep": "\"69061000\"",
+            "ponto_referencia": "\"INPA\"",
+            "cidade_id": 1
+        }
+    ]
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->put(
+    'http://localhost/api/v1/parceiros/1',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'json' => [
+            'nome' => 'Manaus+Humana',
+            'email' => 'fulano@tal.com',
+            'cnpj' => '13245678901234',
+            'cpf' => '12345678901',
+            'telefones' => [
+                [
+                    'telefone' => 92991234567,
+                    'tipo' => 'nisi',
+                ],
+            ],
+            'enderecos' => [
+                [
+                    'endereco' => 'Rua da paz, 150',
+                    'bairro_id' => 1,
+                    'cep' => '"69061000"',
+                    'ponto_referencia' => '"INPA"',
+                    'cidade_id' => 1,
+                ],
+            ],
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/parceiros/1'
+payload = {
+    "nome": "Manaus+Humana",
+    "email": "fulano@tal.com",
+    "cnpj": "13245678901234",
+    "cpf": "12345678901",
+    "telefones": [
+        {
+            "telefone": 92991234567,
+            "tipo": "nisi"
+        }
+    ],
+    "enderecos": [
+        {
+            "endereco": "Rua da paz, 150",
+            "bairro_id": 1,
+            "cep": "\"69061000\"",
+            "ponto_referencia": "\"INPA\"",
+            "cidade_id": 1
+        }
+    ]
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()
+```
+
+```bash
+curl -X PUT \
+    "http://localhost/api/v1/parceiros/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"nisi"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": {
+        "id": 1,
+        "nome": "Ação de Graças",
+        "email": "contato@gracas.com.br",
+        "tipo_pessoa": {
+            "id": 9,
+            "tipo_pessoa": "pj",
+            "cpf_cnpj": "09627659000147"
+        },
+        "telefones": [
+            {
+                "id": 9,
+                "telefone": "92991475871",
+                "tipo": 1
+            }
+        ],
+        "enderecos": [
+            {
+                "id": 11,
+                "endereco": "Rua da Onça",
+                "ponto_referencia": null,
+                "cep": "69068748",
+                "cidade": {
+                    "nome": "Manaus",
+                    "estado": {
+                        "uf": "AM",
+                        "nome": "Amazonas"
+                    }
+                },
+                "bairro": {
+                    "nome": "Raiz"
+                }
+            }
+        ]
+    },
+    "message": "Parceiro atualizado com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/1"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Erro #105: Parceiro 2 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/2"
+}
+```
+> Example response (422):
+
+```json
+{
+    "data": [],
+    "errors": [
+        "O Nome é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/1"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}
+```
+
+### HTTP Request
+`PUT api/v1/parceiros/{id}`
+
+#### URL Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -------
+    `parceiro` |  required  | ID do parceiro.
+#### Body Parameters
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    `nome` | string |  required  | Nome do novo parceiro - (max. 255).
+        `email` | string |  required  | Endereço de e-mail do parceiro - (max. 255).
+        `cnpj` | string |  optional  | Número do CNPJ da instituição (obrigatório se não houver CPF).
+        `cpf` | string |  optional  | Número do CPF da instituição (obrigatório se não houver CNPJ).
+        `telefones` | array |  required  | Lista de telefones.
+        `telefones[0].telefone` | integer |  required  | Número de telefone com DDD.
+        `telefones[0].tipo` | string |  required  | Tipo do telefone: "Fixo" ou "Celular"
+        `enderecos` | array |  required  | Lista de enderecos
+        `enderecos[0].endereco` | string |  required  | Nome da rua, com número e complemento.
+        `enderecos[0].bairro_id` | integer |  required  | ID do bairro.
+        `enderecos[0].cep` | string |  required  | CEP da rua.
+        `enderecos[0].ponto_referencia` | string |  optional  | Ponto de referência.
+        `enderecos[0].cidade_id` | integer |  required  | ID da cidade.
+    
+<!-- END_5aaa67f3f0225463d7c25473608a7464 -->
+
+<!-- START_ce8ca1fc55cd829a93844b4be19d491a -->
+## Remover
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para remover um parceiro do sistema.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/parceiros/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->delete(
+    'http://localhost/api/v1/parceiros/1',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/parceiros/1'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('DELETE', url, headers=headers)
+response.json()
+```
+
+```bash
+curl -X DELETE \
+    "http://localhost/api/v1/parceiros/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": [],
+    "message": "Parceiro removido com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/1"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Erro #105: Parceiro 2 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/2"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}
+```
+
+### HTTP Request
+`DELETE api/v1/parceiros/{id}`
+
+#### URL Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -------
+    `parceiro` |  required  | ID do parceiro.
+
+<!-- END_ce8ca1fc55cd829a93844b4be19d491a -->
+
 #UsuarioController
 
 

@@ -19,21 +19,40 @@ use App\Services\TelefoneService;
 
 class ParceiroService
 {
-    private array $regrasValidacao = [
-        'nome' => 'required|min:2',
-        'email' => 'required|email',
-        'cpf' => 'nullable|digits:11',
-        'cnpj' => 'nullable|digits:14',
-        'telefones' => 'required|array|min:1',
-        'telefones.*.telefone' => 'required|numeric|min:10',
-        'telefones.*.tipo' => 'required|in:Celular,Fixo',
-        'enderecos' => 'required|array|min:1',
-        'enderecos.*.endereco' => 'required|max:255',
-        'enderecos.*.bairro_id' => 'required|exists:bairros,id',
-        'enderecos.*.ponto_referencia' => 'nullable',
-        'enderecos.*.cep' => 'required|digits:8',
-        'enderecos.*.cidade_id' => 'required|exists:cidades,id',
-    ];
+    const PARCEIROS_POR_PAGINA = 6;
+
+    public function __construct(Parceiro $parceiro)
+    {
+        $this->parceiro = $parceiro;
+    }
+
+    public function get(Request $request): array
+    {
+        $limit = (int)$request->query('limit');
+
+        if ($limit == 0) {
+            $limit = self::PARCEIROS_POR_PAGINA;
+        }
+
+        try {
+            $parceiros = $this->parceiro->paginate($limit);
+
+            $resultado = [
+                'success' => true,
+                'data' => $parceiros,
+                'message' => 'Parceiro obtido com sucesso!',
+                'code' => HttpStatus::OK,
+            ];
+        } catch (Exception $e) {
+            $resultado = [
+                'success' => false,
+                'message' => ApiError::erroInesperado($e->getMessage()),
+                'code' => HttpStatus::INTERNAL_SERVER_ERROR,
+            ];
+        }
+
+        return $resultado;
+    }
 
     public function find(string $parceiroId): array
     {
@@ -56,30 +75,20 @@ class ParceiroService
 
     public function create(Request $request): array
     {
-        $resultado = $this->validate($request);
-        if (!$resultado[0]) {
-            return [
-                'success' => false,
-                'message' => $resultado[1],
-                'code' => HttpStatus::BAD_REQUEST,
-            ];
-        }
-
-        $dados = $resultado[1];
         DB::beginTransaction();
 
         try {
-            $tipoPessoa = $this->criarTipoPessoa($dados);
-            $parceiro = $this->criarParceiro($dados, $tipoPessoa);
-            $this->criarEndereco($dados, $parceiro);
-            $this->criarTelefone($dados, $parceiro);
+            $tipoPessoa = $this->criarTipoPessoa($request);
+            $parceiro = $this->criarParceiro($request, $tipoPessoa);
+            $this->criarEndereco($request, $parceiro);
+            $this->criarTelefone($request, $parceiro);
 
             DB::commit();
 
             return [
                 'success' => true,
-                'data' => $parceiro,
-                'message' => 'Parceiro criada com sucesso!',
+                'data' => ['id' => $parceiro->id],
+                'message' => 'Parceiro criado com sucesso!',
                 'code' => HttpStatus::CREATED,
             ];
         } catch (Throwable $e) {
@@ -102,32 +111,22 @@ class ParceiroService
 
         $parceiro = $resultado['data'];
 
-        $resultado = $this->validate($request);
-        if (!$resultado[0]) {
-            return [
-                'success' => false,
-                'message' => $resultado[1],
-                'code' => HttpStatus::BAD_REQUEST,
-            ];
-        }
-
-        $dados = $resultado[1];
         DB::beginTransaction();
 
         try {
             $this->removerEnderecos($parceiro);
             $this->removerTelefones($parceiro);
-            $this->atualizarParceiro($dados, $parceiro);
-            $this->atualizarTipoPessoa($dados, $parceiro->tipoPessoa);
-            $this->criarEndereco($dados, $parceiro);
-            $this->criarTelefone($dados, $parceiro);
+            $this->atualizarParceiro($request, $parceiro);
+            $this->atualizarTipoPessoa($request, $parceiro->tipoPessoa);
+            $this->criarEndereco($request, $parceiro);
+            $this->criarTelefone($request, $parceiro);
 
             DB::commit();
 
             return [
                 'success' => true,
                 'data' => $parceiro,
-                'message' => 'Parceiro criada com sucesso!',
+                'message' => 'Parceiro atualizado com sucesso!',
                 'code' => HttpStatus::OK,
             ];
         } catch (Throwable $e) {
@@ -177,22 +176,11 @@ class ParceiroService
         }
     }
 
-    protected function validate(Request $request): array
-    {
-        $dadosValidados = $request->validate($this->regrasValidacao);
-
-        if (!isset($dadosValidados['cpf']) && !isset($dadosValidados['cnpj'])) {
-            return [false, ApiError::cpfCnpjNaoEncontrado()];
-        }
-
-        return [true, $dadosValidados];
-    }
-
-    private function criarParceiro(array $dados, TipoPessoa $tipoPessoa): Parceiro
+    private function criarParceiro(Request $request, TipoPessoa $tipoPessoa): Parceiro
     {
         $parceiro = Parceiro::create([
-            'nome' => $dados['nome'],
-            'email' => $dados['email'],
+            'nome' => $request->nome,
+            'email' => $request->email,
             'tipo_pessoa_id' => $tipoPessoa->id,
         ]);
 
@@ -205,11 +193,11 @@ class ParceiroService
         return $parceiro;
     }
 
-    private function criarTipoPessoa(array $dados): TipoPessoa
+    private function criarTipoPessoa(Request $request): TipoPessoa
     {
         $tipoPessoa = new TipoPessoa();
-        $tipoPessoa->tipo_pessoa = $this->getTipoPessoa($dados);
-        $tipoPessoa->cpf_cnpj = $this->getCpfOrCnpj($dados);
+        $tipoPessoa->tipo_pessoa = $this->getTipoPessoa($request);
+        $tipoPessoa->cpf_cnpj = $this->getCpfOrCnpj($request);
         $resultado = $tipoPessoa->save();
 
         throw_if(
@@ -221,58 +209,54 @@ class ParceiroService
         return $tipoPessoa;
     }
 
-    private function getTipoPessoa(array $dados): string
+    private function getTipoPessoa(Request $request): string
     {
-        if (isset($dados['cnpj'])) {
-            return TipoPessoa::TIPO_PESSOA_PJ;
-        }
-
-        return TipoPessoa::TIPO_PESSOA_PF;
+        return $request->cnpj ? TipoPessoa::TIPO_PESSOA_PJ : TipoPessoa::TIPO_PESSOA_PF;
     }
 
-    private function getCpfOrCnpj(array $dados): string
+    private function getCpfOrCnpj(Request $request): string
     {
-        if (isset($dados['cnpj'])) {
-            return $dados['cnpj'];
-        }
-
-        return $dados['cpf'];
+        return $request->cnpj ??= $request->cpf;
     }
 
-    private function criarEndereco(array $dados, Parceiro $parceiro)
+    private function criarEndereco(Request $request, Parceiro $parceiro)
     {
-        foreach($dados['enderecos'] as $endereco) {
+        $enderecos = $request->only('enderecos');
+        foreach ($enderecos['enderecos'] as &$endereco) {
             $endereco['parceiro_id'] = $parceiro->id;
-            $novoEndereco = Endereco::create($endereco);
-
-            throw_if(
-                !$novoEndereco,
-                Exception::class,
-                [ApiError::falhaSalvarEndereco(), HttpStatus::INTERNAL_SERVER_ERROR],
-            );
         }
+
+        $resultado = $parceiro->enderecos()->createMany($enderecos['enderecos']);
+
+        throw_if(
+            !$resultado,
+            Exception::class,
+            [ApiError::falhaSalvarEndereco(), HttpStatus::INTERNAL_SERVER_ERROR],
+        );
     }
 
-    private function criarTelefone(array $dados, Parceiro $parceiro)
+    private function criarTelefone(Request $request, Parceiro $parceiro)
     {
-        foreach($dados['telefones'] as $telefone) {
+        $telefones = $request->only('telefones');
+        foreach ($telefones['telefones'] as &$telefone) {
             $telefone['parceiro_id'] = $parceiro->id;
             $telefone['tipo'] = Telefone::TIPO_TELEFONES[$telefone['tipo']];
-            $novoTelefone = Telefone::create($telefone);
-
-            throw_if(
-                !$novoTelefone,
-                Exception::class,
-                [ApiError::falhaSalvarTelefone(), HttpStatus::INTERNAL_SERVER_ERROR],
-            );
         }
+
+        $resultado = $parceiro->telefones()->createMany($telefones['telefones']);
+
+        throw_if(
+            !$resultado,
+            Exception::class,
+            [ApiError::falhaSalvarTelefone(), HttpStatus::INTERNAL_SERVER_ERROR],
+        );
     }
 
-    private function atualizarParceiro(array $dados, Parceiro $parceiro): Parceiro
+    private function atualizarParceiro(Request $request, Parceiro $parceiro): Parceiro
     {
         $resultado = $parceiro->update([
-            'nome' => $dados['nome'],
-            'email' => $dados['email'],
+            'nome' => $request->nome,
+            'email' => $request->email,
             'tipo_pessoa_id' => $parceiro->tipoPessoa->id,
         ]);
 
@@ -285,10 +269,10 @@ class ParceiroService
         return $parceiro;
     }
 
-    private function atualizarTipoPessoa(array $dados, TipoPessoa $tipoPessoa)
+    private function atualizarTipoPessoa(Request $request, TipoPessoa $tipoPessoa)
     {
-        $tipoPessoa->tipo_pessoa = $this->getTipoPessoa($dados);
-        $tipoPessoa->cpf_cnpj = $this->getCpfOrCnpj($dados);
+        $tipoPessoa->tipo_pessoa = $this->getTipoPessoa($request);
+        $tipoPessoa->cpf_cnpj = $this->getCpfOrCnpj($request);
         $resultado = $tipoPessoa->update();
 
         throw_if(

@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 class ApiError
 {
+    const CODIGO_ERRO_INESPERADO = 1;
     const CODIGO_ERRO_CPF_CNPJ_NAO_ENCONTRADO = 100;
     const CODIGO_ERRO_SALVAR_PARCEIRO = 101;
     const CODIGO_ERRO_SALVAR_TIPO_PESSOA = 102;
@@ -16,6 +17,14 @@ class ApiError
     const CODIGO_ERRO_ATUALIZAR_TIPO_PESSOA = 109;
     const CODIGO_ERRO_REMOVER_PARCEIRO = 110;
     const CODIGO_ERRO_REMOVER_TIPO_PESSOA = 111;
+
+    public static function erroInesperado(string $message)
+    {
+        return self::setMessageAndCode(
+            'Um erro inesperado ocorreu: ' . $message,
+            self::CODIGO_ERRO_INESPERADO,
+        );
+    }
 
     public static function cpfCnpjNaoEncontrado()
     {
@@ -115,11 +124,6 @@ class ApiError
 
     private static function setMessageAndCode($message, $code)
     {
-        return [
-            'error' => [
-                'message' => $message,
-                'code' => $code,
-            ],
-        ];
+        return 'Erro #' . $code . ': ' . $message;
     }
 }

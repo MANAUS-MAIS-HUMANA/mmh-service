@@ -21,7 +21,6 @@ class HttpStatus
     const USE_PROXY = 305;
     const UNUSED = 306;
     const TEMPORARY_REDIRECT = 307;
-    const CodesBeginAt = 400;
     const BAD_REQUEST = 400;
     const UNAUTHORIZED = 401;
     const PAYMENT_REQUIRED = 402;
