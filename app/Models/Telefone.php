@@ -13,6 +13,11 @@ class Telefone extends Model
     protected $guarded = [
         'id',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'parceiro_id',
+    ];
 
     const TIPO_TELEFONE_CELULAR = 1;
     const TIPO_TELEFONE_FIXO = 2;

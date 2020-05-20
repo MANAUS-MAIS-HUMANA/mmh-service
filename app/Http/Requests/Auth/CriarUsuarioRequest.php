@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
-use App\Http\Resources\FormRequest\FailedResource;
-use App\Traits\FormRequest as FormRequestTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Resources\FormRequest\FailedResource;
+use App\Traits\FormRequest as FormRequestTrait;
 
 class CriarUsuarioRequest extends FormRequest
 {

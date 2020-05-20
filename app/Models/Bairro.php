@@ -13,6 +13,12 @@ class Bairro extends Model
     protected $guarded = [
         'id',
     ];
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+        'cidade_id',
+    ];
 
     public function cidade()
     {

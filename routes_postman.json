@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "689519b0-6915-480c-a7a9-7f3acd55cf08",
+		"name": "ManausMaisHumana",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Parceiros",
+			"item": [
+				{
+					"name": "Parceiros",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/parceiros",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"parceiros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Parceiros ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/parceiros/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Parceiros",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nome\": \"Boa Ação\",\n\t\"email\": \"contato@boacao.com.br\",\n\t\"cnpj\": \"14253678901597\",\n\t\"telefones\": [\n\t\t{\n\t\t\t\"telefone\": \"9236445874\",\n\t\t\t\"tipo\": \"Fixo\"\n\t\t}\n\t],\n\t\"enderecos\": [\n\t\t{\n\t\t\t\"endereco\": \"Rua Açaí\",\n\t\t\t\"bairro_id\": 50,\n\t\t\t\"cep\": \"69068447\",\n\t\t\t\"cidade_id\": 1\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/parceiros",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"parceiros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Parceiros",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nome\": \"Ação de Graças\",\n\t\"email\": \"contato@gracas.com.br\",\n\t\"cnpj\": \"45678912602487\",\n\t\"telefones\": [\n\t\t{\n\t\t\t\"telefone\": \"92991475870\",\n\t\t\t\"tipo\": \"Celular\"\n\t\t}\n\t],\n\t\"enderecos\": [\n\t\t{\n\t\t\t\"endereco\": \"Rua Japura\",\n\t\t\t\"bairro_id\": 50,\n\t\t\t\"cep\": \"69068747\",\n\t\t\t\"cidade_id\": 1\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/parceiros/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Parceiros",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/parceiros/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

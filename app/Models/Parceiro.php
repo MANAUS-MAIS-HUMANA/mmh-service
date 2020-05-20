@@ -13,6 +13,16 @@ class Parceiro extends Model
     protected $guarded = [
         'id',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'tipo_pessoa_id',
+    ];
+    protected $with = [
+        'tipoPessoa',
+        'telefones',
+        'enderecos',
+    ];
 
     public function tipoPessoa()
     {

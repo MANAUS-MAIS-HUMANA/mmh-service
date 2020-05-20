@@ -13,6 +13,15 @@ class Cidade extends Model
     protected $guarded = [
         'id',
     ];
+    protected $hidden = [
+        'id',
+        'estado_id',
+        'created_at',
+        'updated_at',
+    ];
+    protected $with = [
+        'estado',
+    ];
 
     public function estado()
     {

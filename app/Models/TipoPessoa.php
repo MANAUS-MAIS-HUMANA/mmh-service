@@ -20,6 +20,9 @@ class TipoPessoa extends Model
         'created_at', 'updated_at'
     ];
 
+    const TIPO_PESSOA_PF = 'pf';
+    const TIPO_PESSOA_PJ = 'pj';
+
     const TIPO_PESSOA = [
         'pf' => 'PF',
         'pj' => 'PJ',

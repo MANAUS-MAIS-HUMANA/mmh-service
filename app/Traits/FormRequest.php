@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use App\Models\Parceiro;
+use App\Models\Telefone;
 use App\Models\TipoPessoa;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest as FormRequestBase;
@@ -76,5 +78,33 @@ trait FormRequest
             ->find($formRequest->id);
 
         return $usuario->exists ?? false;
+    }
+
+    /**
+     * Valida se o CPF ou CNPJ pertence ao parceiro com o ID especificado.
+     *
+     * @param FormRequestBase $formRequest
+     * @return bool
+     */
+    protected function validateCpfOrCnpjBelongsToId(FormRequestBase $formRequest): bool
+    {
+        $parceiro = Parceiro::find($formRequest->id);
+
+        return !is_null($parceiro) &&
+            (($parceiro->tipoPessoa->cpf_cnpj == $formRequest->cpf) ||
+            ($parceiro->tipoPessoa->cpf_cnpj == $formRequest->cnpj));
+    }
+
+    /**
+     * Valida se o telefone pertence ao parceiro com o ID especificado.
+     *
+     * @param FormRequestBase $formRequest
+     * @return bool
+     */
+    protected function validateTelefoneBelongsToId(FormRequestBase $formRequest): bool
+    {
+        return Telefone::where('parceiro_id', '=', $formRequest->id)
+            ->whereIn('telefone', array_column($formRequest->telefones, 'telefone'))
+            ->exists();
     }
 }
