@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
              TipoPessoaSeeder::class,
              PessoaSeeder::class,
              UserSeeder::class,
+             EstadoSeeder::class,
+             CidadeSeeder::class,
+             BairroSeeder::class,
          ]);
     }
 }
