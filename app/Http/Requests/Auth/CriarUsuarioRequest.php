@@ -107,12 +107,14 @@ class CriarUsuarioRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator): void
     {
-        throw new HttpResponseException(
-            (new FailedResource(null, false, "Existem campos inválidos.", $this->replaceErroTipoPessoa
-            ($validator)))
-                ->response()
-                ->setStatusCode(422)
+        $failedResource = new FailedResource(
+            null,
+            false,
+            "Existem campos inválidos.",
+            $validator->errors()->unique(),
         );
+
+        throw new HttpResponseException($failedResource->response()->setStatusCode(422));
     }
 
     /**
