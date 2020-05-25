@@ -18,11 +18,14 @@ class Endereco extends Model
         'updated_at',
         'bairro_id',
         'parceiro_id',
+        'beneficiario_id',
         'cidade_id',
+        'zona_id',
     ];
     protected $with = [
         'cidade',
         'bairro',
+        'zona',
     ];
 
 
@@ -39,5 +42,15 @@ class Endereco extends Model
     public function bairro()
     {
         return $this->hasOne('App\Models\Bairro', 'id', 'bairro_id');
+    }
+
+    public function zona()
+    {
+        return $this->hasOne('App\Models\Zona', 'id', 'zona_id');
+    }
+
+    public function beneficiario()
+    {
+        return $this->belongsTo('App\Models\Beneficiario', 'beneficiario_id');
     }
 }
