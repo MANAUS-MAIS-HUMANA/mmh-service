@@ -1,0 +1,10 @@
+{
+    "data": [
+        {
+            "id": 1
+        }
+    ],
+    "message": "Beneficiario encontrado!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/1"
+}

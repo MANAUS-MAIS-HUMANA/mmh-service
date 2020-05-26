@@ -17,6 +17,10 @@ class ApiError
     const CODIGO_ERRO_ATUALIZAR_TIPO_PESSOA = 109;
     const CODIGO_ERRO_REMOVER_PARCEIRO = 110;
     const CODIGO_ERRO_REMOVER_TIPO_PESSOA = 111;
+    const CODIGO_ERRO_BENEFICIARIO_NAO_ENCONTRADO = 200;
+    const CODIGO_ERRO_SALVAR_BENEFICIARIO = 201;
+    const CODIGO_ERRO_ATUALIZAR_BENEFICIARIO = 202;
+    const CODIGO_ERRO_REMOVER_BENEFICIARIO = 203;
 
     public static function erroInesperado(string $message)
     {
@@ -77,7 +81,7 @@ class ApiError
     public static function falhaRemoverEndereco()
     {
         return self::setMessageAndCode(
-            'Falha ao remover o endereco do parceiro',
+            'Falha ao remover o endereco',
             self::CODIGO_ERRO_REMOVER_ENDERECO,
         );
     }
@@ -85,7 +89,7 @@ class ApiError
     public static function falhaRemoverTelefone()
     {
         return self::setMessageAndCode(
-            'Falha ao remover o telefone do parceiro',
+            'Falha ao remover o telefone',
             self::CODIGO_ERRO_REMOVER_TELEFONE,
         );
     }
@@ -109,7 +113,7 @@ class ApiError
     public static function falhaRemoverParceiro()
     {
         return self::setMessageAndCode(
-            'Falha ao remover o endereco do parceiro',
+            'Falha ao remover o parceiro',
             self::CODIGO_ERRO_REMOVER_PARCEIRO,
         );
     }
@@ -117,8 +121,40 @@ class ApiError
     public static function falhaRemoverTipoPessoa()
     {
         return self::setMessageAndCode(
-            'Falha ao remover o endereco do parceiro',
+            'Falha ao remover o tipo_pessoa do parceiro',
             self::CODIGO_ERRO_REMOVER_TIPO_PESSOA,
+        );
+    }
+
+    public static function beneficiarioNaoEncontrado($beneficiarioId)
+    {
+        return self::setMessageAndCode(
+            'Beneficiario ' . $beneficiarioId . ' não encontrado.',
+            self::CODIGO_ERRO_BENEFICIARIO_NAO_ENCONTRADO,
+        );
+    }
+
+    public static function falhaSalvarBeneficiario()
+    {
+        return self::setMessageAndCode(
+            'Não foi possível criar o beneficiário',
+            self::CODIGO_ERRO_SALVAR_BENEFICIARIO,
+        );
+    }
+
+    public static function falhaAtualizarBeneficiario($beneficiarioId)
+    {
+        return self::setMessageAndCode(
+            'Falha ao atualizar o beneficiario ' . $beneficiarioId,
+            self::CODIGO_ERRO_ATUALIZAR_BENEFICIARIO,
+        );
+    }
+
+    public static function falhaRemoverBeneficiario()
+    {
+        return self::setMessageAndCode(
+            'Falha ao remover o beneficiário',
+            self::CODIGO_ERRO_REMOVER_BENEFICIARIO,
         );
     }
 

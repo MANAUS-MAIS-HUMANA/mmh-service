@@ -807,6 +807,1268 @@ response.json()</code></pre>
 </tbody>
 </table>
 <!-- END_64744f99fcf3bece9ec84aee8c3b0cfc -->
+<h1>BeneficiarioController</h1>
+<p>Controller responsável pelo CRUD de beneficiários.</p>
+<!-- START_b66ddf7052986a20d72d938918504a7c -->
+<h2>Listar</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para buscar uma lista de beneficiários.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/beneficiarios"
+);
+
+let params = {
+    "page": ""1"",
+    "limit": ""10"",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;get(
+    'http://localhost/api/v1/beneficiarios',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page'=&gt; '"1"',
+            'limit'=&gt; '"10"',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/beneficiarios'
+params = {
+  'page': '"1"',
+  'limit': '"10"',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X GET \
+    -G "http://localhost/api/v1/beneficiarios?page=%221%22&amp;limit=%2210%22" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 1
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/beneficiarios",
+    "from": null,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/beneficiarios",
+    "next_page_url": null,
+    "path": "http:\/\/back.localhost\/api\/v1\/beneficiarios",
+    "per_page": 10,
+    "prev_page_url": "http:\/\/back.localhost\/api\/v1\/beneficiarios",
+    "to": null,
+    "total": 0,
+    "message": "Beneficiario obtido com sucesso!",
+    "success": true
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/v1/beneficiarios</code></p>
+<h4>Query Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>page</code></td>
+<td>optional</td>
+<td>Número da página para retornar os dados.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>optional</td>
+<td>Total de elementos por página para retornar.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_b66ddf7052986a20d72d938918504a7c -->
+<!-- START_16c03d3a0496c95c245c0466712bd25d -->
+<h2>Buscar</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para obter os dados de um beneficiário específico.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/beneficiarios/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;get(
+    'http://localhost/api/v1/beneficiarios/1',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/beneficiarios/1'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X GET \
+    -G "http://localhost/api/v1/beneficiarios/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "id": 1
+        }
+    ],
+    "message": "Beneficiario encontrado!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #200: Beneficiario 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/v1/beneficiarios/{id}</code></p>
+<h4>URL Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beneficiario</code></td>
+<td>required</td>
+<td>ID do beneficiário.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_16c03d3a0496c95c245c0466712bd25d -->
+<!-- START_2c241c85d2933fb7bf154de02f887721 -->
+<h2>Criar</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para inserir um novo beneficiário no sistema.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/beneficiarios"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "parceiro_id": 1,
+    "nome": "Machado de Assis",
+    "cpf": "12345678901",
+    "email": "fulano@tal.com",
+    "data_nascimento": "1990-01-01",
+    "trabalho": "Trabalhador Aut\u00f4nomo",
+    "esta_desempregado": false,
+    "estado_civil_id": 8,
+    "nome_conjuge": "Carolina Novais.",
+    "cpf_conjuge": "10987654321",
+    "total_residentes": 4,
+    "situacao_moradia": "asperiores",
+    "renda_mensal": 1000,
+    "gostaria_montar_negocio": false,
+    "gostaria_participar_cursos": false,
+    "tipo_curso": "ipsum",
+    "concorda_informacoes_verdadeiras": true,
+    "data_submissao": "2020-05-01 10:11:12",
+    "telefones": [
+        {
+            "telefone": 92991234567,
+            "tipo": "beatae"
+        }
+    ],
+    "enderecos": [
+        {
+            "endereco": "Rua da paz, 150",
+            "bairro_id": 1,
+            "zona_id": 1,
+            "cep": "\"69061000\"",
+            "ponto_referencia": "\"INPA\"",
+            "cidade_id": 1
+        }
+    ]
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;post(
+    'http://localhost/api/v1/beneficiarios',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'parceiro_id' =&gt; 1,
+            'nome' =&gt; 'Machado de Assis',
+            'cpf' =&gt; '12345678901',
+            'email' =&gt; 'fulano@tal.com',
+            'data_nascimento' =&gt; '1990-01-01',
+            'trabalho' =&gt; 'Trabalhador Autônomo',
+            'esta_desempregado' =&gt; false,
+            'estado_civil_id' =&gt; 8,
+            'nome_conjuge' =&gt; 'Carolina Novais.',
+            'cpf_conjuge' =&gt; '10987654321',
+            'total_residentes' =&gt; 4,
+            'situacao_moradia' =&gt; 'asperiores',
+            'renda_mensal' =&gt; 1000.0,
+            'gostaria_montar_negocio' =&gt; false,
+            'gostaria_participar_cursos' =&gt; false,
+            'tipo_curso' =&gt; 'ipsum',
+            'concorda_informacoes_verdadeiras' =&gt; true,
+            'data_submissao' =&gt; '2020-05-01 10:11:12',
+            'telefones' =&gt; [
+                [
+                    'telefone' =&gt; 92991234567,
+                    'tipo' =&gt; 'beatae',
+                ],
+            ],
+            'enderecos' =&gt; [
+                [
+                    'endereco' =&gt; 'Rua da paz, 150',
+                    'bairro_id' =&gt; 1,
+                    'zona_id' =&gt; 1,
+                    'cep' =&gt; '"69061000"',
+                    'ponto_referencia' =&gt; '"INPA"',
+                    'cidade_id' =&gt; 1,
+                ],
+            ],
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/beneficiarios'
+payload = {
+    "parceiro_id": 1,
+    "nome": "Machado de Assis",
+    "cpf": "12345678901",
+    "email": "fulano@tal.com",
+    "data_nascimento": "1990-01-01",
+    "trabalho": "Trabalhador Aut\u00f4nomo",
+    "esta_desempregado": false,
+    "estado_civil_id": 8,
+    "nome_conjuge": "Carolina Novais.",
+    "cpf_conjuge": "10987654321",
+    "total_residentes": 4,
+    "situacao_moradia": "asperiores",
+    "renda_mensal": 1000,
+    "gostaria_montar_negocio": false,
+    "gostaria_participar_cursos": false,
+    "tipo_curso": "ipsum",
+    "concorda_informacoes_verdadeiras": true,
+    "data_submissao": "2020-05-01 10:11:12",
+    "telefones": [
+        {
+            "telefone": 92991234567,
+            "tipo": "beatae"
+        }
+    ],
+    "enderecos": [
+        {
+            "endereco": "Rua da paz, 150",
+            "bairro_id": 1,
+            "zona_id": 1,
+            "cep": "\"69061000\"",
+            "ponto_referencia": "\"INPA\"",
+            "cidade_id": 1
+        }
+    ]
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X POST \
+    "http://localhost/api/v1/beneficiarios" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":8,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"asperiores","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":false,"tipo_curso":"ipsum","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"beatae"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+</code></pre>
+<blockquote>
+<p>Example response (201):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "id": 1
+    },
+    "message": "Beneficiário criado com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "errors": [
+        "O CPF já existe no sistema."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v1/beneficiarios</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>parceiro_id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>ID da instituição parceira.</td>
+</tr>
+<tr>
+<td><code>nome</code></td>
+<td>string</td>
+<td>required</td>
+<td>Nome do novo beneficiário - (max. 255).</td>
+</tr>
+<tr>
+<td><code>cpf</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Número do CPF do beneficiário.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>string</td>
+<td>required</td>
+<td>Endereço de e-mail do beneficiário - (max. 255).</td>
+</tr>
+<tr>
+<td><code>data_nascimento</code></td>
+<td>string</td>
+<td>required</td>
+<td>Data de nascimento do beneficiário, no formato AAAA-MM-DD.</td>
+</tr>
+<tr>
+<td><code>trabalho</code></td>
+<td>string</td>
+<td>required</td>
+<td>Ocupação do beneficiário.</td>
+</tr>
+<tr>
+<td><code>esta_desempregado</code></td>
+<td>boolean</td>
+<td>required</td>
+<td>Indica se o beneficiário está desempregado ou não.</td>
+</tr>
+<tr>
+<td><code>estado_civil_id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Estado civil do beneficiario.</td>
+</tr>
+<tr>
+<td><code>nome_conjuge</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Nome do cônjuge.</td>
+</tr>
+<tr>
+<td><code>cpf_conjuge</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Número do CPF do cônjuge.</td>
+</tr>
+<tr>
+<td><code>total_residentes</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Total de pessoas na residência do beneficiario.</td>
+</tr>
+<tr>
+<td><code>situacao_moradia</code></td>
+<td>string</td>
+<td>required</td>
+<td>Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada</td>
+</tr>
+<tr>
+<td><code>renda_mensal</code></td>
+<td>float</td>
+<td>required</td>
+<td>Renda mensal do beneficiário.</td>
+</tr>
+<tr>
+<td><code>gostaria_montar_negocio</code></td>
+<td>boolean</td>
+<td>required</td>
+<td>Indica se o beneficiário tem intersse em montar um negócio.</td>
+</tr>
+<tr>
+<td><code>gostaria_participar_cursos</code></td>
+<td>boolean</td>
+<td>optional</td>
+<td>Indica se o usuário tem interesse em participar de cursos.</td>
+</tr>
+<tr>
+<td><code>tipo_curso</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.</td>
+</tr>
+<tr>
+<td><code>concorda_informacoes_verdadeiras</code></td>
+<td>boolean</td>
+<td>required</td>
+<td>Indica se o usuário concordou com os termos.</td>
+</tr>
+<tr>
+<td><code>data_submissao</code></td>
+<td>string</td>
+<td>required</td>
+<td>Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.</td>
+</tr>
+<tr>
+<td><code>telefones</code></td>
+<td>array</td>
+<td>required</td>
+<td>Lista de telefones.</td>
+</tr>
+<tr>
+<td><code>telefones[0].telefone</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Número de telefone com DDD.</td>
+</tr>
+<tr>
+<td><code>telefones[0].tipo</code></td>
+<td>string</td>
+<td>required</td>
+<td>Tipo do telefone: &quot;Fixo&quot; ou &quot;Celular&quot;</td>
+</tr>
+<tr>
+<td><code>enderecos</code></td>
+<td>array</td>
+<td>required</td>
+<td>Lista de enderecos.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].endereco</code></td>
+<td>string</td>
+<td>required</td>
+<td>Nome da rua, com número e complemento.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].bairro_id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>ID do bairro.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].zona_id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>ID da zona da cidade.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].cep</code></td>
+<td>string</td>
+<td>required</td>
+<td>CEP da rua.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].ponto_referencia</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Ponto de referência.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].cidade_id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>ID da cidade.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_2c241c85d2933fb7bf154de02f887721 -->
+<!-- START_ac16fe552e87e418591297f9829ceb5d -->
+<h2>Atualizar</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para atualizar os dados de um beneficiário.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/beneficiarios/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "parceiro_id": 1,
+    "nome": "Machado de Assis",
+    "cpf": "12345678901",
+    "email": "fulano@tal.com",
+    "data_nascimento": "1990-01-01",
+    "trabalho": "Trabalhador Aut\u00f4nomo",
+    "esta_desempregado": true,
+    "estado_civil_id": 16,
+    "nome_conjuge": "Carolina Novais.",
+    "cpf_conjuge": "10987654321",
+    "total_residentes": 4,
+    "situacao_moradia": "architecto",
+    "renda_mensal": 1000,
+    "gostaria_montar_negocio": false,
+    "gostaria_participar_cursos": true,
+    "tipo_curso": "tempore",
+    "concorda_informacoes_verdadeiras": false,
+    "data_submissao": "2020-05-01 10:11:12",
+    "telefones": [
+        {
+            "telefone": 92991234567,
+            "tipo": "accusamus"
+        }
+    ],
+    "enderecos": [
+        {
+            "endereco": "Rua da paz, 150",
+            "bairro_id": 1,
+            "zona_id": 1,
+            "cep": "\"69061000\"",
+            "ponto_referencia": "\"INPA\"",
+            "cidade_id": 1
+        }
+    ]
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;put(
+    'http://localhost/api/v1/beneficiarios/1',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'parceiro_id' =&gt; 1,
+            'nome' =&gt; 'Machado de Assis',
+            'cpf' =&gt; '12345678901',
+            'email' =&gt; 'fulano@tal.com',
+            'data_nascimento' =&gt; '1990-01-01',
+            'trabalho' =&gt; 'Trabalhador Autônomo',
+            'esta_desempregado' =&gt; true,
+            'estado_civil_id' =&gt; 16,
+            'nome_conjuge' =&gt; 'Carolina Novais.',
+            'cpf_conjuge' =&gt; '10987654321',
+            'total_residentes' =&gt; 4,
+            'situacao_moradia' =&gt; 'architecto',
+            'renda_mensal' =&gt; 1000.0,
+            'gostaria_montar_negocio' =&gt; false,
+            'gostaria_participar_cursos' =&gt; true,
+            'tipo_curso' =&gt; 'tempore',
+            'concorda_informacoes_verdadeiras' =&gt; false,
+            'data_submissao' =&gt; '2020-05-01 10:11:12',
+            'telefones' =&gt; [
+                [
+                    'telefone' =&gt; 92991234567,
+                    'tipo' =&gt; 'accusamus',
+                ],
+            ],
+            'enderecos' =&gt; [
+                [
+                    'endereco' =&gt; 'Rua da paz, 150',
+                    'bairro_id' =&gt; 1,
+                    'zona_id' =&gt; 1,
+                    'cep' =&gt; '"69061000"',
+                    'ponto_referencia' =&gt; '"INPA"',
+                    'cidade_id' =&gt; 1,
+                ],
+            ],
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/beneficiarios/1'
+payload = {
+    "parceiro_id": 1,
+    "nome": "Machado de Assis",
+    "cpf": "12345678901",
+    "email": "fulano@tal.com",
+    "data_nascimento": "1990-01-01",
+    "trabalho": "Trabalhador Aut\u00f4nomo",
+    "esta_desempregado": true,
+    "estado_civil_id": 16,
+    "nome_conjuge": "Carolina Novais.",
+    "cpf_conjuge": "10987654321",
+    "total_residentes": 4,
+    "situacao_moradia": "architecto",
+    "renda_mensal": 1000,
+    "gostaria_montar_negocio": false,
+    "gostaria_participar_cursos": true,
+    "tipo_curso": "tempore",
+    "concorda_informacoes_verdadeiras": false,
+    "data_submissao": "2020-05-01 10:11:12",
+    "telefones": [
+        {
+            "telefone": 92991234567,
+            "tipo": "accusamus"
+        }
+    ],
+    "enderecos": [
+        {
+            "endereco": "Rua da paz, 150",
+            "bairro_id": 1,
+            "zona_id": 1,
+            "cep": "\"69061000\"",
+            "ponto_referencia": "\"INPA\"",
+            "cidade_id": 1
+        }
+    ]
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X PUT \
+    "http://localhost/api/v1/beneficiarios/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":16,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"architecto","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":true,"tipo_curso":"tempore","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"accusamus"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Beneficiario atualizado com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #200: Beneficiario 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "errors": [
+        "O ID do parceiro é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PUT api/v1/beneficiarios/{id}</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>parceiro_id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>ID da instituição parceira.</td>
+</tr>
+<tr>
+<td><code>nome</code></td>
+<td>string</td>
+<td>required</td>
+<td>Nome do novo beneficiário - (max. 255).</td>
+</tr>
+<tr>
+<td><code>cpf</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Número do CPF do beneficiário.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>string</td>
+<td>required</td>
+<td>Endereço de e-mail do beneficiário - (max. 255).</td>
+</tr>
+<tr>
+<td><code>data_nascimento</code></td>
+<td>string</td>
+<td>required</td>
+<td>Data de nascimento do beneficiário, no formato AAAA-MM-DD.</td>
+</tr>
+<tr>
+<td><code>trabalho</code></td>
+<td>string</td>
+<td>required</td>
+<td>Ocupação do beneficiário.</td>
+</tr>
+<tr>
+<td><code>esta_desempregado</code></td>
+<td>boolean</td>
+<td>required</td>
+<td>Indica se o beneficiário está desempregado ou não.</td>
+</tr>
+<tr>
+<td><code>estado_civil_id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Estado civil do beneficiario.</td>
+</tr>
+<tr>
+<td><code>nome_conjuge</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Nome do cônjuge.</td>
+</tr>
+<tr>
+<td><code>cpf_conjuge</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Número do CPF do cônjuge.</td>
+</tr>
+<tr>
+<td><code>total_residentes</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Total de pessoas na residência do beneficiario.</td>
+</tr>
+<tr>
+<td><code>situacao_moradia</code></td>
+<td>string</td>
+<td>required</td>
+<td>Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada</td>
+</tr>
+<tr>
+<td><code>renda_mensal</code></td>
+<td>float</td>
+<td>required</td>
+<td>Renda mensal do beneficiário.</td>
+</tr>
+<tr>
+<td><code>gostaria_montar_negocio</code></td>
+<td>boolean</td>
+<td>required</td>
+<td>Indica se o beneficiário tem intersse em montar um negócio.</td>
+</tr>
+<tr>
+<td><code>gostaria_participar_cursos</code></td>
+<td>boolean</td>
+<td>optional</td>
+<td>Indica se o usuário tem interesse em participar de cursos.</td>
+</tr>
+<tr>
+<td><code>tipo_curso</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.</td>
+</tr>
+<tr>
+<td><code>concorda_informacoes_verdadeiras</code></td>
+<td>boolean</td>
+<td>required</td>
+<td>Indica se o usuário concordou com os termos.</td>
+</tr>
+<tr>
+<td><code>data_submissao</code></td>
+<td>string</td>
+<td>required</td>
+<td>Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.</td>
+</tr>
+<tr>
+<td><code>telefones</code></td>
+<td>array</td>
+<td>required</td>
+<td>Lista de telefones.</td>
+</tr>
+<tr>
+<td><code>telefones[0].telefone</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Número de telefone com DDD.</td>
+</tr>
+<tr>
+<td><code>telefones[0].tipo</code></td>
+<td>string</td>
+<td>required</td>
+<td>Tipo do telefone: &quot;Fixo&quot; ou &quot;Celular&quot;</td>
+</tr>
+<tr>
+<td><code>enderecos</code></td>
+<td>array</td>
+<td>required</td>
+<td>Lista de enderecos.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].endereco</code></td>
+<td>string</td>
+<td>required</td>
+<td>Nome da rua, com número e complemento.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].bairro_id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>ID do bairro.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].zona_id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>ID da zona da cidade.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].cep</code></td>
+<td>string</td>
+<td>required</td>
+<td>CEP da rua.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].ponto_referencia</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Ponto de referência.</td>
+</tr>
+<tr>
+<td><code>enderecos[0].cidade_id</code></td>
+<td>integer</td>
+<td>required</td>
+<td>ID da cidade.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_ac16fe552e87e418591297f9829ceb5d -->
+<!-- START_bf69b99e6bfae0dd82366f4a6beb22cd -->
+<h2>Remover</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para remover um beneficiário do sistema.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/beneficiarios/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;delete(
+    'http://localhost/api/v1/beneficiarios/1',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/beneficiarios/1'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('DELETE', url, headers=headers)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X DELETE \
+    "http://localhost/api/v1/beneficiarios/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Beneficiário removido com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #200: Beneficiario 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>DELETE api/v1/beneficiarios/{id}</code></p>
+<h4>URL Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beneficiario</code></td>
+<td>required</td>
+<td>ID do beneficiário.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_bf69b99e6bfae0dd82366f4a6beb22cd -->
+<h1>DoadorController</h1>
+<p>Controller responsável pelo CRUD de doadores.</p>
+<!-- START_b3fba95f5e912d42c5fd681d1e2a21ec -->
+<h2>Listar</h2>
+<p>Endpoint para buscar doadores ordernados pela quantidade de cestas doadas</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/doadores/ranking"
+);
+
+let params = {
+    "page": ""1"",
+    "limit": ""6"",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;get(
+    'http://localhost/api/v1/doadores/ranking',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page'=&gt; '"1"',
+            'limit'=&gt; '"6"',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/doadores/ranking'
+params = {
+  'page': '"1"',
+  'limit': '"6"',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X GET \
+    -G "http://localhost/api/v1/doadores/ranking?page=%221%22&amp;limit=%226%22" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "current_page": 1,
+    "data": [
+        {
+            "nome": "Teste 7",
+            "logo_url": null,
+            "total_cestas_basicas": 100
+        },
+        {
+            "nome": "Teste 2",
+            "logo_url": null,
+            "total_cestas_basicas": 40
+        },
+        {
+            "nome": "Teste 4",
+            "logo_url": null,
+            "total_cestas_basicas": 20
+        },
+        {
+            "nome": "Teste 3",
+            "logo_url": null,
+            "total_cestas_basicas": 15
+        },
+        {
+            "nome": "Teste 5",
+            "logo_url": null,
+            "total_cestas_basicas": 10
+        },
+        {
+            "nome": "Teste 6",
+            "logo_url": null,
+            "total_cestas_basicas": 9
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/doadores\/ranking?page=1",
+    "from": 1,
+    "last_page": 2,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/doadores\/ranking?page=2",
+    "next_page_url": "http:\/\/back.localhost\/api\/v1\/doadores\/ranking?page=2",
+    "path": "http:\/\/back.localhost\/api\/v1\/doadores\/ranking",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 6,
+    "total": 7,
+    "message": "Raqueamento dos doadores obtidos com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/doadores\/ranking"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/v1/doadores/ranking</code></p>
+<h4>Query Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>page</code></td>
+<td>optional</td>
+<td>Número da página para retornar os dados.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>optional</td>
+<td>Total de elementos por página para retornar.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_b3fba95f5e912d42c5fd681d1e2a21ec -->
 <h1>ParceiroController</h1>
 <p>Controller responsável pelo CRUD de instituições parceiras.</p>
 <!-- START_0d4dfb28e77c127afb29ac9f5077f22f -->

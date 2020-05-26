@@ -14,8 +14,6 @@ use App\Models\Endereco;
 use App\Models\Parceiro;
 use App\Models\Telefone;
 use App\Models\TipoPessoa;
-use App\Services\EndercoService;
-use App\Services\TelefoneService;
 
 class ParceiroService
 {
