@@ -1052,7 +1052,7 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "itaque"
+            "tipo": "totam"
         }
     ],
     "enderecos": [
@@ -1090,7 +1090,7 @@ $response = $client-&gt;post(
             'telefones' =&gt; [
                 [
                     'telefone' =&gt; 92991234567,
-                    'tipo' =&gt; 'itaque',
+                    'tipo' =&gt; 'totam',
                 ],
             ],
             'enderecos' =&gt; [
@@ -1119,7 +1119,7 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "itaque"
+            "tipo": "totam"
         }
     ],
     "enderecos": [
@@ -1142,7 +1142,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/parceiros" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"itaque"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"totam"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
 </code></pre>
 <blockquote>
 <p>Example response (201):</p>
@@ -1302,7 +1302,7 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "nisi"
+            "tipo": "et"
         }
     ],
     "enderecos": [
@@ -1340,7 +1340,7 @@ $response = $client-&gt;put(
             'telefones' =&gt; [
                 [
                     'telefone' =&gt; 92991234567,
-                    'tipo' =&gt; 'nisi',
+                    'tipo' =&gt; 'et',
                 ],
             ],
             'enderecos' =&gt; [
@@ -1369,7 +1369,7 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "nisi"
+            "tipo": "et"
         }
     ],
     "enderecos": [
@@ -1392,7 +1392,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/parceiros/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"nisi"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"et"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
 </code></pre>
 <blockquote>
 <p>Example response (200):</p>

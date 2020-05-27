@@ -152,7 +152,6 @@ Parameter | Type | Status | Description
         `senha` | string |  required  | Senha (min. 8).
     
 <!-- END_2be1f0e022faf424f18f30275e61416e -->
-
 <!-- START_a68ff660ea3d08198e527df659b17963 -->
 ## Logout
 
@@ -406,7 +405,6 @@ Parameter | Type | Status | Description
         `senha_confirmation` | string |  required  | Confirmação de senha de usuário.
     
 <!-- END_a4a233f86d97c8deebe3bedaa936f967 -->
-
 <!-- START_758d1bc327f18e2d4dbb9b0a22083976 -->
 ## Password Reset
 
@@ -548,7 +546,6 @@ Parameter | Type | Status | Description
     `email` | string |  required  | Endereço de e-mail.
     
 <!-- END_758d1bc327f18e2d4dbb9b0a22083976 -->
-
 <!-- START_64744f99fcf3bece9ec84aee8c3b0cfc -->
 ## Confirm Password Reset
 
@@ -690,7 +687,6 @@ Parameter | Type | Status | Description
         `senha_confirmation` | string |  required  | Confirmação de nova senha.
     
 <!-- END_64744f99fcf3bece9ec84aee8c3b0cfc -->
-
 #ParceiroController
 
 
@@ -1028,7 +1024,7 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "itaque"
+            "tipo": "totam"
         }
     ],
     "enderecos": [
@@ -1069,7 +1065,7 @@ $response = $client->post(
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'itaque',
+                    'tipo' => 'totam',
                 ],
             ],
             'enderecos' => [
@@ -1101,7 +1097,7 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "itaque"
+            "tipo": "totam"
         }
     ],
     "enderecos": [
@@ -1127,7 +1123,7 @@ curl -X POST \
     "http://localhost/api/v1/parceiros" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"itaque"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"totam"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
 
 ```
 
@@ -1198,7 +1194,6 @@ Parameter | Type | Status | Description
         `enderecos[0].cidade_id` | integer |  required  | ID da cidade.
     
 <!-- END_543d37f5ea560f7ea10b487b2b15671f -->
-
 <!-- START_5aaa67f3f0225463d7c25473608a7464 -->
 ## Atualizar
 
@@ -1225,7 +1220,7 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "nisi"
+            "tipo": "et"
         }
     ],
     "enderecos": [
@@ -1266,7 +1261,7 @@ $response = $client->put(
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'nisi',
+                    'tipo' => 'et',
                 ],
             ],
             'enderecos' => [
@@ -1298,7 +1293,7 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "nisi"
+            "tipo": "et"
         }
     ],
     "enderecos": [
@@ -1324,7 +1319,7 @@ curl -X PUT \
     "http://localhost/api/v1/parceiros/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"nisi"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"et"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
 
 ```
 
@@ -1442,7 +1437,6 @@ Parameter | Type | Status | Description
         `enderecos[0].cidade_id` | integer |  required  | ID da cidade.
     
 <!-- END_5aaa67f3f0225463d7c25473608a7464 -->
-
 <!-- START_ce8ca1fc55cd829a93844b4be19d491a -->
 ## Remover
 
@@ -1910,7 +1904,6 @@ Parameter | Type | Status | Description
         `perfis[0].descricao` | string |  optional  | Descrição do perfil.
     
 <!-- END_f4118dbd959bf0da643fc902f2d8ba1b -->
-
 <!-- START_33b204ea4b1df799847e39ea5600738b -->
 ## Show
 
@@ -2237,7 +2230,6 @@ Parameter | Type | Status | Description
         `status` | string |  optional  | Status de usuário (A, I ou B).
     
 <!-- END_6a759fafba79060dfb4b8762a07e4c23 -->
-
 <!-- START_c72d2f99606a3aefdfc00ac95b31d8d1 -->
 ## SetStatus
 
@@ -2386,7 +2378,6 @@ Parameter | Type | Status | Description
     `status` | string |  optional  | Status de usuário (A, I ou B).
     
 <!-- END_c72d2f99606a3aefdfc00ac95b31d8d1 -->
-
 <!-- START_af574b0c80b0d9c34cb32ac5d2367e41 -->
 ## SetPassword
 
@@ -2549,5 +2540,4 @@ Parameter | Type | Status | Description
         `senha_confirmation` | string |  required  | Confirmação de nova senha.
     
 <!-- END_af574b0c80b0d9c34cb32ac5d2367e41 -->
-
 
