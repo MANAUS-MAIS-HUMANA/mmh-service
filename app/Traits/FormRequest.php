@@ -57,6 +57,33 @@ trait FormRequest
     }
 
     /**
+     * Remove espaços e caracteres especiais de um nome. Além disso, converte o nome para uppercase.
+     *
+     * @param FormRequestBase $formRequest
+     */
+    protected function sanitizarNomes(FormRequestBase $formRequest): void
+    {
+        $camposNomes = ['nome', 'nome_conjuge'];
+        $attributes = [];
+        foreach ($camposNomes as $campoNome) {
+            if (isset($formRequest->$campoNome)) {
+                $nome = preg_replace('/\s+/', ' ', trim($formRequest->$campoNome));
+                $nome = mb_strtoupper($nome, mb_internal_encoding());
+
+                $partesNome = explode(' ', $nome);
+                $novoNome = [];
+                foreach ($partesNome as $parte) {
+                    $novoNome[] = preg_replace('/\PL/u', '', $parte);
+                }
+                $nome = implode(' ', $novoNome);
+                $attributes[$campoNome] = $nome;
+            }
+        }
+
+        $formRequest->merge($attributes);
+    }
+
+    /**
      * Valida, transforma o caracter de maúscula e faz o merge no status.
      *
      * @param FormRequestBase $formRequest

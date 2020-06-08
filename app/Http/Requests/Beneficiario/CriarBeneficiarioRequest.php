@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Beneficiario;
 
 use App\Http\Resources\FormRequest\FailedResource;
+use App\Rules\ValidarSeExisteSobrenome;
 use App\Traits\FormRequest as FormRequestTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -33,7 +34,7 @@ class CriarBeneficiarioRequest extends FormRequest
     {
         return [
             'parceiro_id' => 'required|exists:parceiros,id',
-            'nome' => 'required|min:2',
+            'nome' => ['required', 'string', 'min:2', new ValidarSeExisteSobrenome()],
             'cpf' => 'required|cpf|size:11|unique:beneficiarios,cpf|' .
                 'unique:beneficiarios,cpf_conjuge',
             'email' => 'required|email|unique:beneficiarios,email',
@@ -41,9 +42,15 @@ class CriarBeneficiarioRequest extends FormRequest
             'trabalho' => 'required|min:2',
             'esta_desempregado' => 'required|boolean',
             'estado_civil_id' => 'required|exists:estados_civis,id',
-            'nome_conjuge' => 'nullable',
-            'cpf_conjuge' => 'nullable|cpf|size:11||unique:beneficiarios,cpf|' .
-                'unique:beneficiarios,cpf_conjuge',
+            'nome_conjuge' => [
+                'nullable',
+                'required_with:cpf_conjuge',
+                'string',
+                'min:2',
+                new ValidarSeExisteSobrenome(),
+            ],
+            'cpf_conjuge' => 'nullable|required_with:nome_conjuge|cpf|size:11|' .
+                'unique:beneficiarios,cpf|unique:beneficiarios,cpf_conjuge',
             'total_residentes' => 'required|integer|min:0',
             'situacao_moradia' => 'required|in:Alugada,Cedido,Própria,Própria Financiada',
             'renda_mensal' => 'required|numeric|min:0',
@@ -87,6 +94,7 @@ class CriarBeneficiarioRequest extends FormRequest
             "numeric" => "O :attribute deve ser um número.",
             "required" => "O :attribute é obrigatório.",
             "unique" => "O :attribute já existe no sistema.",
+            "required_with" => "O nome e CPF do cônjuge precisam ser fornecidos juntos.",
         ];
     }
 
@@ -137,6 +145,7 @@ class CriarBeneficiarioRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->mergeExistsCpfOrCnpj($this);
+        $this->sanitizarNomes($this);
     }
 
     /**

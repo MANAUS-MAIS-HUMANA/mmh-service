@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Beneficiario;
 
 use App\Http\Resources\FormRequest\FailedResource;
+use App\Rules\ValidarSeExisteSobrenome;
 use App\Traits\FormRequest as FormRequestTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -33,12 +34,18 @@ class AtualizarBeneficiarioRequest extends FormRequest
     {
         $rules = [
             'parceiro_id' => 'required|exists:parceiros,id',
-            'nome' => 'required|min:2',
+            'nome' => ['required', 'string', 'min:2', new ValidarSeExisteSobrenome()],
             'data_nascimento' => 'required|date_format:Y-m-d',
             'trabalho' => 'required|min:2',
             'esta_desempregado' => 'required|boolean',
             'estado_civil_id' => 'required|exists:estados_civis,id',
-            'nome_conjuge' => 'nullable',
+            'nome_conjuge' => [
+                'nullable',
+                'required_with:cpf_conjuge',
+                'string',
+                'min:2',
+                new ValidarSeExisteSobrenome(),
+            ],
             'total_residentes' => 'required|integer|min:0',
             'situacao_moradia' => 'required|in:Alugada,Cedido,Própria,Própria Financiada',
             'renda_mensal' => 'required|numeric|min:0',
@@ -70,8 +77,8 @@ class AtualizarBeneficiarioRequest extends FormRequest
             $emailRule = 'required|email|unique:beneficiarios,email';
         }
         if (!$this->validateDataBelongsToBeneficiary($this, 'cpf_conjuge')) {
-            $cpfConjugeRule = 'nullable|cpf|size:11||unique:beneficiarios,cpf' .
-                '|unique:beneficiarios,cpf_conjuge';
+            $cpfConjugeRule = 'nullable|required_with:nome_conjuge|cpf|size:11|' .
+                'unique:beneficiarios,cpf|unique:beneficiarios,cpf_conjuge';
         }
         if (!$this->validateTelefoneBelongsToId($this, 'beneficiario_id')) {
             $telefoneRule = 'required|numeric|min:10|unique:telefones,telefone';
@@ -107,6 +114,7 @@ class AtualizarBeneficiarioRequest extends FormRequest
             "numeric" => "O :attribute deve ser um número.",
             "required" => "O :attribute é obrigatório.",
             "unique" => "O :attribute já existe no sistema.",
+            "required_with" => "O nome e CPF do cônjuge precisam ser fornecidos juntos.",
         ];
     }
 
@@ -157,6 +165,7 @@ class AtualizarBeneficiarioRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->mergeExistsCpfOrCnpj($this);
+        $this->sanitizarNomes($this);
     }
 
     /**
