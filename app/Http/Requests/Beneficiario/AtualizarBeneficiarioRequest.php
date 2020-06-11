@@ -35,6 +35,7 @@ class AtualizarBeneficiarioRequest extends FormRequest
         $rules = [
             'parceiro_id' => 'required|exists:parceiros,id',
             'nome' => ['required', 'string', 'min:2', new ValidarSeExisteSobrenome()],
+            'email' => 'required|email',
             'data_nascimento' => 'required|date_format:Y-m-d',
             'trabalho' => 'required|min:2',
             'esta_desempregado' => 'required|boolean',
@@ -55,6 +56,7 @@ class AtualizarBeneficiarioRequest extends FormRequest
             'concorda_informacoes_verdadeiras' => 'required|boolean',
             'data_submissao' => 'required|date_format:Y-m-d H:i:s',
             'telefones' => 'required|array|min:1',
+            'telefones.*.telefone' => 'required|numeric|min:10',
             'telefones.*.tipo' => 'required|in:Celular,Fixo',
             'enderecos' => 'required|array|min:1',
             'enderecos.*.endereco' => 'required|max:255',
@@ -66,28 +68,18 @@ class AtualizarBeneficiarioRequest extends FormRequest
         ];
 
         $cpfRule = 'nullable';
-        $emailRule = 'nullable';
         $cpfConjugeRule = 'nullable';
-        $telefoneRule = 'nullable';
         if (!$this->validateDataBelongsToBeneficiary($this, 'cpf')) {
             $cpfRule = 'required|cpf|size:11|unique:beneficiarios,cpf|' .
                 'unique:beneficiarios,cpf_conjuge';
-        }
-        if (!$this->validateDataBelongsToBeneficiary($this, 'email')) {
-            $emailRule = 'required|email|unique:beneficiarios,email';
         }
         if (!$this->validateDataBelongsToBeneficiary($this, 'cpf_conjuge')) {
             $cpfConjugeRule = 'nullable|required_with:nome_conjuge|cpf|size:11|' .
                 'unique:beneficiarios,cpf|unique:beneficiarios,cpf_conjuge';
         }
-        if (!$this->validateTelefoneBelongsToId($this, 'beneficiario_id')) {
-            $telefoneRule = 'required|numeric|min:10|unique:telefones,telefone';
-        }
 
         $rules['cpf'] = $cpfRule;
-        $rules['email'] = $emailRule;
         $rules['cpf_conjuge'] = $cpfConjugeRule;
-        $rules['telefones.*.telefone'] = $telefoneRule;
 
         return $rules;
     }

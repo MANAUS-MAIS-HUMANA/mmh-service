@@ -37,7 +37,7 @@ class CriarBeneficiarioRequest extends FormRequest
             'nome' => ['required', 'string', 'min:2', new ValidarSeExisteSobrenome()],
             'cpf' => 'required|cpf|size:11|unique:beneficiarios,cpf|' .
                 'unique:beneficiarios,cpf_conjuge',
-            'email' => 'required|email|unique:beneficiarios,email',
+            'email' => 'required|email',
             'data_nascimento' => 'required|date_format:Y-m-d',
             'trabalho' => 'required|min:2',
             'esta_desempregado' => 'required|boolean',
@@ -60,7 +60,7 @@ class CriarBeneficiarioRequest extends FormRequest
             'concorda_informacoes_verdadeiras' => 'required|boolean',
             'data_submissao' => 'required|date_format:Y-m-d H:i:s',
             'telefones' => 'required|array|min:1',
-            'telefones.*.telefone' => 'required|numeric|min:10|unique:telefones,telefone',
+            'telefones.*.telefone' => 'required|numeric|min:10',
             'telefones.*.tipo' => 'required|in:Celular,Fixo',
             'enderecos' => 'required|array|min:1',
             'enderecos.*.endereco' => 'required|max:255',
