@@ -97,22 +97,22 @@ class BeneficiarioController extends Controller
      * @bodyParam parceiro_id int required ID da instituição parceira. Example: 1
      * @bodyParam nome string required Nome do novo beneficiário - (max. 255). Example: Machado de Assis
      * @bodyParam cpf string Número do CPF do beneficiário. Example: 12345678901
-     * @bodyParam email string required Endereço de e-mail do beneficiário - (max. 255). Example: fulano@tal.com
+     * @bodyParam email string Endereço de e-mail do beneficiário - (max. 255). Example: fulano@tal.com
      * @bodyParam data_nascimento string required Data de nascimento do beneficiário, no formato AAAA-MM-DD. Example: 1990-01-01
-     * @bodyParam trabalho string required Ocupação do beneficiário. Example: Trabalhador Autônomo
-     * @bodyParam esta_desempregado boolean required Indica se o beneficiário está desempregado ou não.
-     * @bodyParam estado_civil_id int required Estado civil do beneficiario.
+     * @bodyParam trabalho string Ocupação do beneficiário. Example: Trabalhador Autônomo
+     * @bodyParam esta_desempregado boolean Indica se o beneficiário está desempregado ou não.
+     * @bodyParam estado_civil_id int Estado civil do beneficiario.
      * @bodyParam nome_conjuge string Nome do cônjuge. Example: Carolina Novais.
      * @bodyParam cpf_conjuge string Número do CPF do cônjuge. Example: 10987654321
-     * @bodyParam total_residentes int required Total de pessoas na residência do beneficiario. Example: 4
-     * @bodyParam situacao_moradia string required Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada
-     * @bodyParam renda_mensal float required Renda mensal do beneficiário. Example: 1000
-     * @bodyParam gostaria_montar_negocio boolean required Indica se o beneficiário tem intersse em montar um negócio.
+     * @bodyParam total_residentes int Total de pessoas na residência do beneficiario. Example: 4
+     * @bodyParam situacao_moradia string Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada
+     * @bodyParam renda_mensal float Renda mensal do beneficiário. Example: 1000
+     * @bodyParam gostaria_montar_negocio boolean Indica se o beneficiário tem intersse em montar um negócio.
      * @bodyParam gostaria_participar_cursos boolean Indica se o usuário tem interesse em participar de cursos.
      * @bodyParam tipo_curso string Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.
      * @bodyParam concorda_informacoes_verdadeiras boolean required Indica se o usuário concordou com os termos.
-     * @bodyParam data_submissao string required Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS. Example: 2020-05-01 10:11:12
-     * @bodyParam telefones array required Lista de telefones.
+     * @bodyParam data_submissao string Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS. Example: 2020-05-01 10:11:12
+     * @bodyParam telefones array Lista de telefones.
      * @bodyParam telefones[0].telefone int required Número de telefone com DDD. Example: 92991234567
      * @bodyParam telefones[0].tipo string required Tipo do telefone: "Fixo" ou "Celular"
      * @bodyParam enderecos array required Lista de enderecos.
@@ -151,22 +151,22 @@ class BeneficiarioController extends Controller
      * @bodyParam parceiro_id int required ID da instituição parceira. Example: 1
      * @bodyParam nome string required Nome do novo beneficiário - (max. 255). Example: Machado de Assis
      * @bodyParam cpf string Número do CPF do beneficiário. Example: 12345678901
-     * @bodyParam email string required Endereço de e-mail do beneficiário - (max. 255). Example: fulano@tal.com
+     * @bodyParam email string Endereço de e-mail do beneficiário - (max. 255). Example: fulano@tal.com
      * @bodyParam data_nascimento string required Data de nascimento do beneficiário, no formato AAAA-MM-DD. Example: 1990-01-01
-     * @bodyParam trabalho string required Ocupação do beneficiário. Example: Trabalhador Autônomo
-     * @bodyParam esta_desempregado boolean required Indica se o beneficiário está desempregado ou não.
-     * @bodyParam estado_civil_id int required Estado civil do beneficiario.
+     * @bodyParam trabalho string Ocupação do beneficiário. Example: Trabalhador Autônomo
+     * @bodyParam esta_desempregado boolean Indica se o beneficiário está desempregado ou não.
+     * @bodyParam estado_civil_id int Estado civil do beneficiario.
      * @bodyParam nome_conjuge string Nome do cônjuge. Example: Carolina Novais.
      * @bodyParam cpf_conjuge string Número do CPF do cônjuge. Example: 10987654321
-     * @bodyParam total_residentes int required Total de pessoas na residência do beneficiario. Example: 4
-     * @bodyParam situacao_moradia string required Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada
-     * @bodyParam renda_mensal float required Renda mensal do beneficiário. Example: 1000
-     * @bodyParam gostaria_montar_negocio boolean required Indica se o beneficiário tem intersse em montar um negócio.
+     * @bodyParam total_residentes int Total de pessoas na residência do beneficiario. Example: 4
+     * @bodyParam situacao_moradia string Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada
+     * @bodyParam renda_mensal float Renda mensal do beneficiário. Example: 1000
+     * @bodyParam gostaria_montar_negocio boolean Indica se o beneficiário tem intersse em montar um negócio.
      * @bodyParam gostaria_participar_cursos boolean Indica se o usuário tem interesse em participar de cursos.
      * @bodyParam tipo_curso string Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.
      * @bodyParam concorda_informacoes_verdadeiras boolean required Indica se o usuário concordou com os termos.
-     * @bodyParam data_submissao string required Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS. Example: 2020-05-01 10:11:12
-     * @bodyParam telefones array required Lista de telefones.
+     * @bodyParam data_submissao string Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS. Example: 2020-05-01 10:11:12
+     * @bodyParam telefones array Lista de telefones.
      * @bodyParam telefones[0].telefone int required Número de telefone com DDD. Example: 92991234567
      * @bodyParam telefones[0].tipo string required Tipo do telefone: "Fixo" ou "Celular"
      * @bodyParam enderecos array required Lista de enderecos.

@@ -252,55 +252,47 @@ class BeneficiarioService
     private function criarEndereco(Request $request, Beneficiario $beneficiario)
     {
         $enderecos = $request->only('enderecos');
-        foreach ($enderecos['enderecos'] as &$endereco) {
-            $endereco['beneficiario_id'] = $beneficiario->id;
+        if (!empty($enderecos)) {
+            foreach ($enderecos['enderecos'] as &$endereco) {
+                $endereco['beneficiario_id'] = $beneficiario->id;
+            }
+
+            $resultado = $beneficiario->enderecos()->createMany($enderecos['enderecos']);
+
+            throw_if(
+                !$resultado,
+                Exception::class,
+                [ApiError::falhaSalvarEndereco(), HttpStatus::INTERNAL_SERVER_ERROR],
+            );
         }
-
-        $resultado = $beneficiario->enderecos()->createMany($enderecos['enderecos']);
-
-        throw_if(
-            !$resultado,
-            Exception::class,
-            [ApiError::falhaSalvarEndereco(), HttpStatus::INTERNAL_SERVER_ERROR],
-        );
     }
 
     private function criarTelefone(Request $request, Beneficiario $beneficiario)
     {
         $telefones = $request->only('telefones');
-        foreach ($telefones['telefones'] as &$telefone) {
-            $telefone['beneficiario_id'] = $beneficiario->id;
-            $telefone['tipo'] = Telefone::TIPO_TELEFONES[$telefone['tipo']];
+        if (!empty($telefones)) {
+            foreach ($telefones['telefones'] as &$telefone) {
+                $telefone['beneficiario_id'] = $beneficiario->id;
+                $telefone['tipo'] = Telefone::TIPO_TELEFONES[$telefone['tipo']];
+            }
+
+            $resultado = $beneficiario->telefones()->createMany($telefones['telefones']);
+
+            throw_if(
+                !$resultado,
+                Exception::class,
+                [ApiError::falhaSalvarTelefone(), HttpStatus::INTERNAL_SERVER_ERROR],
+            );
         }
-
-        $resultado = $beneficiario->telefones()->createMany($telefones['telefones']);
-
-        throw_if(
-            !$resultado,
-            Exception::class,
-            [ApiError::falhaSalvarTelefone(), HttpStatus::INTERNAL_SERVER_ERROR],
-        );
     }
 
     private function removerEnderecos(Beneficiario $beneficiario)
     {
         $resultado = Endereco::where('beneficiario_id', '=', $beneficiario->id)->delete();
-
-        throw_if(
-            !$resultado,
-            Exception::class,
-            [ApiError::falhaRemoverEndereco(), HttpStatus::INTERNAL_SERVER_ERROR],
-        );
     }
 
     private function removerTelefones(Beneficiario $beneficiario)
     {
         $resultado = Telefone::where('beneficiario_id', '=', $beneficiario->id)->delete();
-
-        throw_if(
-            !$resultado,
-            Exception::class,
-            [ApiError::falhaRemoverTelefone(), HttpStatus::INTERNAL_SERVER_ERROR],
-        );
     }
 }

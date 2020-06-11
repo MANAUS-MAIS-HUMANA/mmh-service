@@ -28,19 +28,19 @@ class CreateTableBeneficiarios extends Migration
             $table->string('cpf');
             $table->string('email')->nullable();
             $table->date('data_nascimento');
-            $table->string('trabalho');
+            $table->string('trabalho')->nullable();
             $table->boolean('esta_desempregado')->nullable();
             $table->unsignedBigInteger('estado_civil_id')->nullable();
             $table->string('nome_conjuge')->nullable();
             $table->string('cpf_conjuge')->nullable();
             $table->unsignedInteger('total_residentes')->nullable();
             $table->string('situacao_moradia')->nullable();
-            $table->decimal('renda_mensal')->default(0);
-            $table->boolean('gostaria_montar_negocio');
+            $table->decimal('renda_mensal')->default(0)->nullable();
+            $table->boolean('gostaria_montar_negocio')->nullable();
             $table->boolean('gostaria_participar_cursos')->nullable();
             $table->string('tipo_curso')->nullable();
             $table->boolean('concorda_informacoes_verdadeiras');
-            $table->dateTime('data_submissao');
+            $table->dateTime('data_submissao')->nullable();
 
             $table->foreign('parceiro_id')->references('id')->on('parceiros');
             $table->foreign('estado_civil_id')->references('id')->on('estados_civis');
