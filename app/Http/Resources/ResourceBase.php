@@ -43,7 +43,6 @@ class ResourceBase extends JsonResource
         ];
 
         $this->setErrors($response);
-        $this->setRefreshToken($response);
 
         return Arr::sortRecursive($response);
     }
@@ -57,18 +56,6 @@ class ResourceBase extends JsonResource
     {
         if (!empty($this->errors)) {
             $response['errors'] = $this->errors;
-        }
-    }
-
-    /**
-     * Inclui o refreshToken ao response
-     *
-     * @param array $response
-     */
-    private function setRefreshToken(array &$response): void
-    {
-        if (!Str::contains(url()->full(), ['auth', 'set-password']) && auth()->check()) {
-            $response['refreshToken'] = auth()->refresh();
         }
     }
 }
