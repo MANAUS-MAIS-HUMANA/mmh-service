@@ -152,6 +152,7 @@ Parameter | Type | Status | Description
         `senha` | string |  required  | Senha (min. 8).
     
 <!-- END_2be1f0e022faf424f18f30275e61416e -->
+
 <!-- START_a68ff660ea3d08198e527df659b17963 -->
 ## Logout
 
@@ -405,6 +406,101 @@ Parameter | Type | Status | Description
         `senha_confirmation` | string |  required  | Confirmação de senha de usuário.
     
 <!-- END_a4a233f86d97c8deebe3bedaa936f967 -->
+
+<!-- START_4b77551ffe3e806c992cdd1044012aa7 -->
+## Refresh Access token
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para fazer um refresh de um access token previamente gerado.
+Após o refresh, o token antigo não poderá ser mais usado.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/auth/refresh"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get(
+    'http://localhost/api/v1/auth/refresh',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/auth/refresh'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers)
+response.json()
+```
+
+```bash
+curl -X GET \
+    -G "http://localhost/api/v1/auth/refresh" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": {
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9",
+        "token_type": "Bearer",
+        "expires_in": 3600
+    },
+    "message": "Token atualizado com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/auth\/refresh"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+
+### HTTP Request
+`GET api/v1/auth/refresh`
+
+
+<!-- END_4b77551ffe3e806c992cdd1044012aa7 -->
+
 <!-- START_758d1bc327f18e2d4dbb9b0a22083976 -->
 ## Password Reset
 
@@ -546,6 +642,7 @@ Parameter | Type | Status | Description
     `email` | string |  required  | Endereço de e-mail.
     
 <!-- END_758d1bc327f18e2d4dbb9b0a22083976 -->
+
 <!-- START_64744f99fcf3bece9ec84aee8c3b0cfc -->
 ## Confirm Password Reset
 
@@ -687,6 +784,7 @@ Parameter | Type | Status | Description
         `senha_confirmation` | string |  required  | Confirmação de nova senha.
     
 <!-- END_64744f99fcf3bece9ec84aee8c3b0cfc -->
+
 #ParceiroController
 
 
@@ -1904,6 +2002,7 @@ Parameter | Type | Status | Description
         `perfis[0].descricao` | string |  optional  | Descrição do perfil.
     
 <!-- END_f4118dbd959bf0da643fc902f2d8ba1b -->
+
 <!-- START_33b204ea4b1df799847e39ea5600738b -->
 ## Show
 
@@ -2230,6 +2329,7 @@ Parameter | Type | Status | Description
         `status` | string |  optional  | Status de usuário (A, I ou B).
     
 <!-- END_6a759fafba79060dfb4b8762a07e4c23 -->
+
 <!-- START_c72d2f99606a3aefdfc00ac95b31d8d1 -->
 ## SetStatus
 
@@ -2378,6 +2478,7 @@ Parameter | Type | Status | Description
     `status` | string |  optional  | Status de usuário (A, I ou B).
     
 <!-- END_c72d2f99606a3aefdfc00ac95b31d8d1 -->
+
 <!-- START_af574b0c80b0d9c34cb32ac5d2367e41 -->
 ## SetPassword
 
@@ -2540,4 +2641,5 @@ Parameter | Type | Status | Description
         `senha_confirmation` | string |  required  | Confirmação de nova senha.
     
 <!-- END_af574b0c80b0d9c34cb32ac5d2367e41 -->
+
 

@@ -10,6 +10,7 @@ Route::prefix('v1')->group(function () {
         Route::post('login', 'AuthController@login')->name('auth.login');
         Route::post('logout', 'AuthController@logout')->name('auth.logout');
         Route::post('create', 'AuthController@create')->name('auth.create');
+        Route::get('refresh', 'AuthController@refresh')->name('auth.refresh');
         Route::post('password-reset', 'AuthController@passwordReset')->name('auth.passwordReset');
         Route::post('confirm-password-reset', 'AuthController@confirmPasswordReset')->name('auth.confirmPasswordReset');
     });

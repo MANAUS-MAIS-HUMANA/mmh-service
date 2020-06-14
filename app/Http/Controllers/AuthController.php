@@ -13,6 +13,7 @@ use App\Http\Resources\Auth\CriarUsuarioResource;
 use App\Http\Resources\Auth\LoginResource;
 use App\Http\Resources\Auth\LogoutResource;
 use App\Http\Resources\Auth\RedefinirSenhaResource;
+use App\Http\Resources\Auth\RefreshResource;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 
@@ -191,5 +192,32 @@ class AuthController extends Controller
         ))
             ->response()
             ->setStatusCode($result['code']);
+    }
+
+    /**
+     * Refresh Access token
+     *
+     * Endpoint para fazer um refresh de um access token previamente gerado.
+     * Após o refresh, o token antigo não poderá ser mais usado.
+     *
+     * @authenticated
+     *
+     * @responseFile 200 responses/AuthController/refresh.200.json
+     * @responseFile 401 responses/Middleware/unauthorized.401.json
+     *
+     * @param ConfirmarRedefinirSenhaRequest $request
+     * @return JsonResponse
+     */
+    public function refresh(): JsonResponse
+    {
+        $result = $this->authService->refresh();
+
+        $resource = new RefreshResource(
+            $result['data'] ??= null,
+            $result['success'],
+            $result['message'],
+        );
+
+        return $resource->response()->setStatusCode($result['code']);
     }
 }
