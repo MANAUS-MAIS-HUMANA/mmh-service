@@ -28,4 +28,8 @@ Route::prefix('v1')->group(function () {
         Route::put('/{id}', 'ParceiroController@update')->name('parceiros.update');
         Route::delete('/{id}', 'ParceiroController@delete')->name('parceiros.delete');
     });
+
+    Route::prefix('doadores')->group(function () {
+        Route::get('/ranking', 'DoadorController@getRanking')->name('doadores.getRanking');
+    });
 });
