@@ -218,6 +218,31 @@ class AuthService
     }
 
     /**
+     * Faz o refresh do token gerado durante o login
+     *
+     * @return array
+     */
+    public function refresh(): array
+    {
+        try {
+            $token = auth('api')->refresh();
+
+            return [
+                'success' => true,
+                'data' => $this->respondWithToken((string)$token),
+                'message' => 'Token atualizado com sucesso!',
+                'code' => 200,
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => 500,
+            ];
+        }
+    }
+
+    /**
      * Retorna os dados de acesso
      *
      * @param string $token

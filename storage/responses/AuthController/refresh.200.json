@@ -1,0 +1,10 @@
+{
+  "data": {
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9",
+    "token_type": "Bearer",
+    "expires_in": 3600
+  },
+  "message": "Token atualizado com sucesso!",
+  "success": true,
+  "url": "http:\/\/back.localhost\/api\/v1\/auth\/refresh"
+}
