@@ -35,6 +35,8 @@ class AtualizarBeneficiarioRequest extends FormRequest
         $rules = [
             'parceiro_id' => 'required|exists:parceiros,id',
             'nome' => ['required', 'string', 'min:2', new ValidarSeExisteSobrenome()],
+            'cpf' => 'required|cpf|size:11|unique:beneficiarios,cpf,' . $this->id . '|' .
+                'unique:beneficiarios,cpf_conjuge',
             'email' => 'nullable|email',
             'data_nascimento' => 'required|date_format:Y-m-d',
             'trabalho' => 'nullable|min:2',
@@ -47,6 +49,8 @@ class AtualizarBeneficiarioRequest extends FormRequest
                 'min:2',
                 new ValidarSeExisteSobrenome(),
             ],
+            'cpf_conjuge' => 'nullable|required_with:nome_conjuge|cpf|size:11|' .
+                'unique:beneficiarios,cpf|unique:beneficiarios,cpf_conjuge,' . $this->id,
             'total_residentes' => 'nullable|integer|min:0',
             'situacao_moradia' => 'nullable|in:Alugada,Cedido,Própria,Própria Financiada',
             'renda_mensal' => 'nullable|numeric|min:0',
@@ -66,20 +70,6 @@ class AtualizarBeneficiarioRequest extends FormRequest
             'enderecos.*.cep' => 'required|digits:8',
             'enderecos.*.cidade_id' => 'required|exists:cidades,id',
         ];
-
-        $cpfRule = 'nullable';
-        $cpfConjugeRule = 'nullable';
-        if (!$this->validateDataBelongsToBeneficiary($this, 'cpf')) {
-            $cpfRule = 'required|cpf|size:11|unique:beneficiarios,cpf|' .
-                'unique:beneficiarios,cpf_conjuge';
-        }
-        if (!$this->validateDataBelongsToBeneficiary($this, 'cpf_conjuge')) {
-            $cpfConjugeRule = 'nullable|required_with:nome_conjuge|cpf|size:11|' .
-                'unique:beneficiarios,cpf|unique:beneficiarios,cpf_conjuge';
-        }
-
-        $rules['cpf'] = $cpfRule;
-        $rules['cpf_conjuge'] = $cpfConjugeRule;
 
         return $rules;
     }
