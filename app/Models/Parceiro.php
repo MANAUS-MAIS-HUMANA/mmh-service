@@ -16,18 +16,11 @@ class Parceiro extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'tipo_pessoa_id',
     ];
     protected $with = [
-        'tipoPessoa',
         'telefones',
         'enderecos',
     ];
-
-    public function tipoPessoa()
-    {
-        return $this->hasOne('App\Models\TipoPessoa', 'id', 'tipo_pessoa_id');
-    }
 
     public function telefones()
     {
