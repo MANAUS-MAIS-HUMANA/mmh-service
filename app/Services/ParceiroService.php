@@ -52,6 +52,11 @@ class ParceiroService
         return $resultado;
     }
 
+    public function getParceiroByCpfOrCnpj(string $cpfOrCnpj)
+    {
+        return Parceiro::where('cpf_cnpj', '=', $cpfOrCnpj)->first();
+    }
+
     public function find(string $parceiroId): array
     {
         $parceiro = Parceiro::find($parceiroId);
