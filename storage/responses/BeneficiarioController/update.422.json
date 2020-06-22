@@ -1,0 +1,9 @@
+{
+    "data": [],
+    "errors": [
+        "O ID do parceiro é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/1"
+}

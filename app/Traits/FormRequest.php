@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use App\Models\Beneficiario;
 use App\Models\Parceiro;
 use App\Models\Telefone;
 use App\Models\TipoPessoa;
@@ -47,6 +48,36 @@ trait FormRequest
 
         if (isset($formRequest->cnpj)) {
             $attributes['cnpj'] = preg_replace('/[^0-9]/', '', $formRequest->cnpj);
+        }
+        if (isset($formRequest->cpf_conjuge)) {
+            $attributes['cpf_conjuge'] = preg_replace('/[^0-9]/', '', $formRequest->cpf_conjuge);
+        }
+
+        $formRequest->merge($attributes);
+    }
+
+    /**
+     * Remove espaços e caracteres especiais de um nome. Além disso, converte o nome para uppercase.
+     *
+     * @param FormRequestBase $formRequest
+     */
+    protected function sanitizarNomes(FormRequestBase $formRequest): void
+    {
+        $camposNomes = ['nome', 'nome_conjuge'];
+        $attributes = [];
+        foreach ($camposNomes as $campoNome) {
+            if (isset($formRequest->$campoNome)) {
+                $nome = preg_replace('/\s+/', ' ', trim($formRequest->$campoNome));
+                $nome = mb_strtoupper($nome, mb_internal_encoding());
+
+                $partesNome = explode(' ', $nome);
+                $novoNome = [];
+                foreach ($partesNome as $parte) {
+                    $novoNome[] = preg_replace('/\PL/u', '', $parte);
+                }
+                $nome = implode(' ', $novoNome);
+                $attributes[$campoNome] = $nome;
+            }
         }
 
         $formRequest->merge($attributes);
@@ -96,15 +127,30 @@ trait FormRequest
     }
 
     /**
-     * Valida se o telefone pertence ao parceiro com o ID especificado.
+     * Valida se o telefone pertence ao parceiro ou beneficiário com o ID especificado.
      *
      * @param FormRequestBase $formRequest
      * @return bool
      */
-    protected function validateTelefoneBelongsToId(FormRequestBase $formRequest): bool
+    protected function validateTelefoneBelongsToId(FormRequestBase $formRequest,
+        string $field = 'parceiro_id'): bool
     {
-        return Telefone::where('parceiro_id', '=', $formRequest->id)
+        return Telefone::where($field, '=', $formRequest->id)
             ->whereIn('telefone', array_column($formRequest->telefones, 'telefone'))
+            ->exists();
+    }
+
+    /**
+     * Valida se o e-mail pertence a um beneficiário.
+     *
+     * @param FormRequestBase $formRequest
+     * @return bool
+     */
+    protected function validateDataBelongsToBeneficiary(FormRequestBase $formRequest,
+        string $field): bool
+    {
+        return Beneficiario::where('id', '=', $formRequest->id)
+            ->where($field, '=', $formRequest->$field)
             ->exists();
     }
 }

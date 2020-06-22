@@ -1,0 +1,20 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 1
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/beneficiarios",
+    "from": null,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/beneficiarios",
+    "next_page_url": null,
+    "path": "http:\/\/back.localhost\/api\/v1\/beneficiarios",
+    "per_page": 10,
+    "prev_page_url": "http:\/\/back.localhost\/api\/v1\/beneficiarios",
+    "to": null,
+    "total": 0,
+    "message": "Beneficiario obtido com sucesso!",
+    "success": true
+}

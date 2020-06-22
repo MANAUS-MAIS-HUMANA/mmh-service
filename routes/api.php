@@ -33,4 +33,12 @@ Route::prefix('v1')->group(function () {
     Route::prefix('doadores')->group(function () {
         Route::get('/ranking', 'DoadorController@getRanking')->name('doadores.getRanking');
     });
+
+    Route::prefix('beneficiarios')->group(function () {
+        Route::get('/', 'BeneficiarioController@get')->name('beneficiarios.get');
+        Route::get('/{id}', 'BeneficiarioController@find')->name('beneficiarios.getbyid');
+        Route::post('/', 'BeneficiarioController@store')->name('beneficiarios.save');
+        Route::put('/{id}', 'BeneficiarioController@update')->name('beneficiarios.update');
+        Route::delete('/{id}', 'BeneficiarioController@delete')->name('beneficiarios.delete');
+    });
 });

@@ -30,4 +30,9 @@ class Telefone extends Model
     {
         return $this->belongsTo('App\Models\Parceiro', 'parceiro_id');
     }
+
+    public function beneficiario()
+    {
+        return $this->belongsTo('App\Models\Beneficiario', 'beneficiario_id');
+    }
 }

@@ -1,0 +1,8 @@
+{
+    "data": {
+        "id": 1
+    },
+    "message": "Beneficiário criado com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}

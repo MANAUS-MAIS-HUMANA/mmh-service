@@ -1,0 +1,9 @@
+{
+    "data": [],
+    "errors": [
+        "O CPF já existe no sistema."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}
