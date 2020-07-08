@@ -33,7 +33,7 @@ class BeneficiarioService
         }
 
         try {
-            $beneficiarios = $this->beneficiario->paginate($limit);
+            $beneficiarios = $this->beneficiario->with([ 'telefones', 'enderecos', 'estadoCivil'])->paginate($limit);
 
             $resultado = [
                 'success' => true,
@@ -54,7 +54,7 @@ class BeneficiarioService
 
     public function find(string $beneficiarioId): array
     {
-        $beneficiario = Beneficiario::find($beneficiarioId);
+        $beneficiario = Beneficiario::with([ 'telefones', 'enderecos', 'estadoCivil'])->find($beneficiarioId);
         if (is_null($beneficiario)) {
             return [
                 'success' => false,

@@ -21,6 +21,10 @@ class ApiError
     const CODIGO_ERRO_SALVAR_BENEFICIARIO = 201;
     const CODIGO_ERRO_ATUALIZAR_BENEFICIARIO = 202;
     const CODIGO_ERRO_REMOVER_BENEFICIARIO = 203;
+    const CODIGO_ERRO_DOACAO_NAO_ENCONTRADO = 204;
+    const CODIGO_ERRO_DOACAO_DE_OUTRO_PARCEIRO = 205;
+    const CODIGO_ERRO_DOACAO_DE_OUTRO_BENEFICIARIO = 206;
+    const CODIGO_ERRO_REMOVER_DOACAO_DE_BENEFICIARIO = 207;
 
     public static function erroInesperado(string $message)
     {
@@ -162,4 +166,37 @@ class ApiError
     {
         return 'Erro #' . $code . ': ' . $message;
     }
+
+    public static function doacaoNaoEncontrado($doacaoId)
+    {
+        return self::setMessageAndCode(
+            'Doação ' . $doacaoId . ' não encontrado.',
+            self::CODIGO_ERRO_DOACAO_NAO_ENCONTRADO,
+        );
+    }
+
+    public static function falhaRemoverDoacaoBeneficiario()
+    {
+        return self::setMessageAndCode(
+            'Falha ao remover doação de beneficiário.',
+            self::CODIGO_ERRO_REMOVER_DOACAO_DE_BENEFICIARIO,
+        );
+    }
+
+    public static function doacaoPossuiOutroParceiro($doacaoId, $parceiroId)
+    {
+        return self::setMessageAndCode(
+            'Doação ' . $doacaoId . ' pertence a outro parceiro '. $parceiroId . '.',
+            self::CODIGO_ERRO_DOACAO_DE_OUTRO_PARCEIRO,
+        );
+    }
+
+    public static function doacaoPossuiOutroBeneficiario($doacaoId, $beneficiarioId)
+    {
+        return self::setMessageAndCode(
+            'Doação ' . $doacaoId . ' pertence a outro beneficiário '. $beneficiarioId . '.',
+            self::CODIGO_ERRO_DOACAO_DE_OUTRO_BENEFICIARIO,
+        );
+    }
+
 }

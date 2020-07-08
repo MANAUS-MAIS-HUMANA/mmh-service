@@ -1,0 +1,46 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 3,
+            "beneficiario_id": 2,
+            "parceiro_id": 2,
+            "total_cestas": 1,
+            "data_doacao": "2020-06-01 00:00:00"
+        },
+        {
+            "id": 8,
+            "beneficiario_id": 2,
+            "parceiro_id": 2,
+            "total_cestas": 1,
+            "data_doacao": "2020-06-01 00:00:00"
+        },
+        {
+            "id": 9,
+            "beneficiario_id": 2,
+            "parceiro_id": 2,
+            "total_cestas": 1,
+            "data_doacao": "2020-06-01 00:00:00"
+        },
+        {
+            "id": 10,
+            "beneficiario_id": 2,
+            "parceiro_id": 2,
+            "total_cestas": 1,
+            "data_doacao": "2020-06-01 00:00:00"
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/parceiros\/2\/beneficiarios\/2\/doacoes?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/parceiros\/2\/beneficiarios\/2\/doacoes?page=1",
+    "next_page_url": null,
+    "path": "http:\/\/back.localhost\/api\/v1\/parceiros\/2\/beneficiarios\/2\/doacoes",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 4,
+    "total": 4,
+    "message": "Doações obtidos com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/2\/beneficiarios\/2\/doacoes"
+}

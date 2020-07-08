@@ -28,6 +28,10 @@ Route::prefix('v1')->group(function () {
         Route::post('/', 'ParceiroController@store')->name('parceiros.save');
         Route::put('/{id}', 'ParceiroController@update')->name('parceiros.update');
         Route::delete('/{id}', 'ParceiroController@delete')->name('parceiros.delete');
+        Route::post('/{id}/beneficiarios/{beneficiaryId}/doacoes', 'ParceiroController@createDonation')->name('parceiros.createDonation');
+        Route::delete('/{id}/beneficiarios/{beneficiaryId}/doacoes/{donationId}', 'ParceiroController@deleteDonation')->name('parceiros.createDonation');
+        Route::get('/{id}/beneficiarios/{beneficiaryId}/doacoes', 'ParceiroController@getDonations')->name('parceiros.getDonations');
+        Route::get('/{id}/beneficiarios', 'ParceiroController@getBeneficiaries')->name('parceiros.getBeneficiaries');
     });
 
     Route::prefix('doadores')->group(function () {

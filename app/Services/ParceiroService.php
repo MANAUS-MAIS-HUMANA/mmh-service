@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\ApiError;
 use App\Helpers\HttpStatus;
+use App\Models\Beneficiario;
+use App\Models\BeneficiarioDoacao;
 use App\Models\Endereco;
 use App\Models\Parceiro;
 use App\Models\Telefone;
@@ -18,6 +20,8 @@ use App\Models\TipoPessoa;
 class ParceiroService
 {
     const PARCEIROS_POR_PAGINA = 6;
+    const BENEFICIARIO_POR_PAGINA = 6;
+    const DOACAO_POR_PAGINA = 6;
 
     public function __construct(Parceiro $parceiro)
     {
@@ -285,5 +289,230 @@ class ParceiroService
             Exception::class,
             [ApiError::falhaRemoverTelefone(), HttpStatus::INTERNAL_SERVER_ERROR],
         );
+    }
+
+    public function createDonation(Request $request, string $parceiroId, string $beneficiaryId): array
+    {
+        $parceiro = Parceiro::find($parceiroId);
+        if (is_null($parceiro)) {
+            return [
+                'success' => false,
+                'message' => ApiError::parceiroNaoEncontrado($parceiroId),
+                'code' => HttpStatus::NOT_FOUND,
+            ];
+        }
+
+        $beneficiario = Beneficiario::find($beneficiaryId);
+        if (is_null($beneficiario)) {
+            return [
+                'success' => false,
+                'message' => ApiError::beneficiarioNaoEncontrado($beneficiaryId),
+                'code' => HttpStatus::NOT_FOUND,
+            ];
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $beneficiarioDoacao = new BeneficiarioDoacao();
+            $beneficiarioDoacao->total_cestas = $request->total_cestas;
+            $beneficiarioDoacao->data_doacao = $request->data_doacao;
+            $beneficiarioDoacao->parceiro_id = $parceiro->id;
+            $beneficiarioDoacao->beneficiario_id = $beneficiario->id;
+            $beneficiarioDoacao->save();
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => ['id' => $beneficiarioDoacao->id],
+                'message' => 'Doação do beneficiario criado com sucesso!',
+                'code' => HttpStatus::CREATED,
+            ];
+        } catch (Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+            ];
+        }
+
+    }
+
+    private function removerDoacao(BeneficiarioDoacao $doacao)
+    {
+        $resultado = $doacao->delete();
+
+        throw_if(
+            !$resultado,
+            Exception::class,
+            [ApiError::falhaRemoverDoacaoBeneficiario(), HttpStatus::INTERNAL_SERVER_ERROR],
+        );
+    }
+
+    public function findDonation(string $donationId): array
+    {
+        $doacao = BeneficiarioDoacao::find($donationId);
+
+        if (is_null($doacao)) {
+            return [
+                'success' => false,
+                'message' => ApiError::doacaoNaoEncontrado($donationId),
+                'code' => HttpStatus::NOT_FOUND,
+            ];
+        }
+
+        return [
+            'success' => true,
+            'data' => $doacao,
+            'message' => 'Doação encontrado!',
+            'code' => HttpStatus::OK,
+        ];
+    }
+
+    public function deleteDonation(string $parceiroId, string $beneficiarioId, string $doacaoId): array
+    {
+        $resultado = $this->findDonation($doacaoId);
+
+        if (!$resultado['success']) {
+            return $resultado;
+        }
+
+        if ($resultado['data']['parceiro_id'] != $parceiroId) {
+            return [
+                'success' => false,
+                'message' => ApiError::doacaoPossuiOutroParceiro($doacaoId, $parceiroId),
+                'code' => HttpStatus::BAD_REQUEST,
+            ];
+        }
+
+        if ($resultado['data']['beneficiario_id'] != $beneficiarioId) {
+            return [
+                'success' => false,
+                'message' => ApiError::doacaoPossuiOutroBeneficiario($doacaoId, $beneficiarioId),
+                'code' => HttpStatus::BAD_REQUEST,
+            ];
+        }
+
+
+        DB::beginTransaction();
+
+        try {
+            $this->removerDoacao($resultado['data']);
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => null,
+                'message' => 'Doação removido com sucesso!',
+                'code' => HttpStatus::OK,
+            ];
+        } catch (Throwable $e) {
+            DB::rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+            ];
+        }
+
+    }
+
+    public function getDonations(Request $request, string $parceiroId, string $beneficiaryId): array
+    {
+        $limit = (int)$request->query('limit');
+
+        if ($limit == 0) {
+            $limit = self::DOACAO_POR_PAGINA;
+        }
+
+        $parceiro = Parceiro::find($parceiroId);
+        if (!$parceiro) {
+            return [
+                'success' => false,
+                'message' => ApiError::parceiroNaoEncontrado($beneficiaryId),
+                'code' => HttpStatus::BAD_REQUEST,
+            ];
+        }
+
+        $beneficiario = Beneficiario::find($beneficiaryId);
+        if (is_null($beneficiario)) {
+            return [
+                'success' => false,
+                'message' => ApiError::beneficiarioNaoEncontrado($beneficiaryId),
+                'code' => HttpStatus::NOT_FOUND,
+            ];
+        }
+
+        try {
+            $doacoes = BeneficiarioDoacao::where([
+                        ['parceiro_id', '=', $parceiroId],
+                        ['beneficiario_id', '=', $beneficiaryId],
+                    ])->paginate($limit);
+
+            $resultado = [
+                'success' => true,
+                'data' => $doacoes,
+                'message' => 'Doações obtidos com sucesso!',
+                'code' => HttpStatus::OK,
+            ];
+
+        } catch (Exception $e) {
+            $resultado = [
+                'success' => false,
+                'message' => ApiError::erroInesperado($e->getMessage()),
+                'code' => HttpStatus::INTERNAL_SERVER_ERROR,
+            ];
+        }
+
+        return $resultado;
+    }
+
+    public function getBeneficiaries(Request $request, string $parceiroId): array
+    {
+        $parceiro = Parceiro::find($parceiroId);
+        if (is_null($parceiro)) {
+            return [
+                'success' => false,
+                'message' => ApiError::parceiroNaoEncontrado($parceiroId),
+                'code' => HttpStatus::NOT_FOUND,
+            ];
+        }
+
+        $limit = (int)$request->query('limit');
+
+        if ($limit == 0) {
+            $limit = self::BENEFICIARIO_POR_PAGINA;
+        }
+
+        try {
+            $beneficiarios = Beneficiario::select(
+                'id',
+                'nome',
+                'cpf',
+                'ativo'
+            )
+            ->where('parceiro_id', '=', $parceiroId)
+            ->paginate($limit);
+
+            $resultado = [
+                'success' => true,
+                'data' => $beneficiarios,
+                'message' => 'Beneficiarios obtidos com sucesso!',
+                'code' => HttpStatus::OK,
+            ];
+        } catch (Exception $e) {
+            $resultado = [
+                'success' => false,
+                'message' => ApiError::erroInesperado($e->getMessage()),
+                'code' => HttpStatus::INTERNAL_SERVER_ERROR,
+            ];
+        }
+
+        return $resultado;
     }
 }

@@ -19,11 +19,6 @@ class Beneficiario extends Model
         'estado_civil_id',
         'parceiro_id',
     ];
-    protected $with = [
-        'telefones',
-        'enderecos',
-        'estadoCivil'
-    ];
 
     public function estadoCivil()
     {
