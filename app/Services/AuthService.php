@@ -38,9 +38,17 @@ class AuthService
 
             $token = auth('api')->login($usuario);
 
+            $response = $this->respondWithToken((string)$token);
+            $response['perfis'] = array_column($usuario->perfis->toArray(), 'perfil');
+            if (in_array('parceiro', $response['perfis'])) {
+                $response['parceiro_id'] = $this->getParceiroId(
+                    $usuario->pessoa->tipoPessoa->cpf_cnpj,
+                );
+            }
+
             return [
                 'success' => true,
-                'data' => $this->respondWithToken((string)$token),
+                'data' => $response,
                 'message' => 'Usuário logado com sucesso!',
                 'code' => 200,
             ];

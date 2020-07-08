@@ -52,6 +52,11 @@ class ParceiroService
         return $resultado;
     }
 
+    public function getParceiroByCpfOrCnpj(string $cpfOrCnpj)
+    {
+        return Parceiro::where('cpf_cnpj', '=', $cpfOrCnpj)->first();
+    }
+
     public function find(string $parceiroId): array
     {
         $parceiro = Parceiro::find($parceiroId);
@@ -76,8 +81,7 @@ class ParceiroService
         DB::beginTransaction();
 
         try {
-            $tipoPessoa = $this->criarTipoPessoa($request);
-            $parceiro = $this->criarParceiro($request, $tipoPessoa);
+            $parceiro = $this->criarParceiro($request);
             $this->criarEndereco($request, $parceiro);
             $this->criarTelefone($request, $parceiro);
 
@@ -115,7 +119,6 @@ class ParceiroService
             $this->removerEnderecos($parceiro);
             $this->removerTelefones($parceiro);
             $this->atualizarParceiro($request, $parceiro);
-            $this->atualizarTipoPessoa($request, $parceiro->tipoPessoa);
             $this->criarEndereco($request, $parceiro);
             $this->criarTelefone($request, $parceiro);
 
@@ -151,9 +154,7 @@ class ParceiroService
         try {
             $this->removerTelefones($parceiro);
             $this->removerEnderecos($parceiro);
-            $tipoPessoaId = $parceiro->tipoPessoa->id;
             $this->removerParceiro($parceiro);
-            $this->removerTipoPessoa($tipoPessoaId);
 
             DB::commit();
 
@@ -174,12 +175,13 @@ class ParceiroService
         }
     }
 
-    private function criarParceiro(Request $request, TipoPessoa $tipoPessoa): Parceiro
+    private function criarParceiro(Request $request): Parceiro
     {
         $parceiro = Parceiro::create([
             'nome' => $request->nome,
             'email' => $request->email,
-            'tipo_pessoa_id' => $tipoPessoa->id,
+            'tipo_pessoa' => $this->getTipoPessoa($request),
+            'cpf_cnpj' => $this->getCpfOrCnpj($request),
         ]);
 
         throw_if(
@@ -189,22 +191,6 @@ class ParceiroService
         );
 
         return $parceiro;
-    }
-
-    private function criarTipoPessoa(Request $request): TipoPessoa
-    {
-        $tipoPessoa = new TipoPessoa();
-        $tipoPessoa->tipo_pessoa = $this->getTipoPessoa($request);
-        $tipoPessoa->cpf_cnpj = $this->getCpfOrCnpj($request);
-        $resultado = $tipoPessoa->save();
-
-        throw_if(
-            !$resultado,
-            \Exception::class,
-            ApiError::falhaSalvarTipoPessoa(), HttpStatus::INTERNAL_SERVER_ERROR,
-        );
-
-        return $tipoPessoa;
     }
 
     private function getTipoPessoa(Request $request): string
@@ -255,7 +241,8 @@ class ParceiroService
         $resultado = $parceiro->update([
             'nome' => $request->nome,
             'email' => $request->email,
-            'tipo_pessoa_id' => $parceiro->tipoPessoa->id,
+            'tipo_pessoa' => $this->getTipoPessoa($request),
+            'cpf_cnpj' => $this->getCpfOrCnpj($request),
         ]);
 
         throw_if(
@@ -267,22 +254,6 @@ class ParceiroService
         return $parceiro;
     }
 
-    private function atualizarTipoPessoa(Request $request, TipoPessoa $tipoPessoa)
-    {
-        $tipoPessoa->tipo_pessoa = $this->getTipoPessoa($request);
-        $tipoPessoa->cpf_cnpj = $this->getCpfOrCnpj($request);
-        $resultado = $tipoPessoa->update();
-
-        throw_if(
-            !$resultado,
-            Exception::class,
-            [
-                ApiError::falhaAtualizarTipoPessoa($tipoPessoa->id),
-                HttpStatus::INTERNAL_SERVER_ERROR,
-            ],
-        );
-    }
-
     private function removerParceiro(Parceiro $parceiro)
     {
         $resultado = $parceiro->delete();
@@ -291,17 +262,6 @@ class ParceiroService
             !$resultado,
             Exception::class,
             [ApiError::falhaRemoverParceiro(), HttpStatus::INTERNAL_SERVER_ERROR],
-        );
-    }
-
-    private function removerTipoPessoa(int $tipoPessoaId)
-    {
-        $resultado = TipoPessoa::where('id', '=', $tipoPessoaId)->delete();
-
-        throw_if(
-            !$resultado,
-            Exception::class,
-            [ApiError::falhaRemoverTipoPessoa(), HttpStatus::INTERNAL_SERVER_ERROR],
         );
     }
 

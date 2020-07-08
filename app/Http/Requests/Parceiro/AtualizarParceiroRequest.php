@@ -34,31 +34,26 @@ class AtualizarParceiroRequest extends FormRequest
         $rules = [
             'nome' => 'required|min:2',
             'email' => 'required|email',
+            'cpf' => 'required_without:cnpj|cpf|size:11|unique:parceiros,cpf_cnpj,' . $this->id,
+            'cnpj' => 'required_without:cpf|cnpj|size:14|unique:parceiros,cpf_cnpj,' . $this->id,
             'telefones' => 'required|array|min:1',
             'telefones.*.tipo' => 'required|in:Celular,Fixo',
             'enderecos' => 'required|array|min:1',
             'enderecos.*.endereco' => 'required|max:255',
+            'enderecos.*.numero' => 'required|string',
+            'enderecos.*.complemento' => 'nullable|string',
             'enderecos.*.bairro_id' => 'required|exists:bairros,id',
-            'enderecos.*.ponto_referencia' => 'nullable',
+            'enderecos.*.ponto_referencia' => 'nullable|string',
             'enderecos.*.cep' => 'required|digits:8',
             'enderecos.*.cidade_id' => 'required|exists:cidades,id',
         ];
 
-        $cpfRule = 'nullable';
-        $cnpjRule = 'nullable';
         $telefoneRule = 'nullable';
-
-        if (!$this->validateCpfOrCnpjBelongsToId($this)) {
-            $cpfRule = 'required_without:cnpj|cpf|size:11|unique:tipos_pessoa,cpf_cnpj';
-            $cnpjRule = 'required_without:cpf|cnpj|size:14|unique:tipos_pessoa,cpf_cnpj';
-        }
 
         if (!$this->validateTelefoneBelongsToId($this)) {
             $telefoneRule = 'required|numeric|min:10|unique:telefones,telefone';
         }
 
-        $rules['cpf'] = $cpfRule;
-        $rules['cnpj'] = $cnpjRule;
         $rules['telefones.*.telefone'] = $telefoneRule;
 
         return $rules;

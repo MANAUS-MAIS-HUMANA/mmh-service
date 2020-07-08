@@ -6,6 +6,7 @@ namespace App\Traits;
 
 use App\Models\Pessoa;
 use App\Models\User;
+use App\Services\ParceiroService;
 use App\Services\PerfilService;
 use App\Services\PessoaService;
 use Illuminate\Http\Request;
@@ -28,10 +29,12 @@ trait Usuario
      */
     public function __construct(
         PessoaService $pessoaService,
-        PerfilService $perfilService
+        PerfilService $perfilService,
+        ParceiroService $parceiroService
     ) {
         $this->pessoaService = $pessoaService;
         $this->perfilService = $perfilService;
+        $this->parceiroService = $parceiroService;
     }
 
     /**
@@ -146,5 +149,12 @@ trait Usuario
             $user->email !== $request->email || $user->senha !== $request->token,
             \Exception::class, "O e-mail ou token não pertencem ao usuário!", 500
         );
+    }
+
+    protected function getParceiroId(string $cpfOrCnpj)
+    {
+        $parceiro = $this->parceiroService->getParceiroByCpfOrCnpj($cpfOrCnpj);
+
+        return $parceiro->id ?? null;
     }
 }
