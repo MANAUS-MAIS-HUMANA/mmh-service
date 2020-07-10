@@ -1,0 +1,6 @@
+{
+    "data": [],
+    "message": "Compra removida com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}

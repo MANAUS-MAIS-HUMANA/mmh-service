@@ -1058,21 +1058,21 @@ let body = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": false,
-    "estado_civil_id": 8,
+    "estado_civil_id": 10,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "asperiores",
+    "situacao_moradia": "dicta",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": false,
-    "gostaria_participar_cursos": false,
-    "tipo_curso": "ipsum",
-    "concorda_informacoes_verdadeiras": true,
+    "gostaria_montar_negocio": true,
+    "gostaria_participar_cursos": true,
+    "tipo_curso": "rerum",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "beatae"
+            "tipo": "minima"
         }
     ],
     "enderecos": [
@@ -1114,21 +1114,21 @@ $response = $client->post(
             'data_nascimento' => '1990-01-01',
             'trabalho' => 'Trabalhador Autônomo',
             'esta_desempregado' => false,
-            'estado_civil_id' => 8,
+            'estado_civil_id' => 10,
             'nome_conjuge' => 'Carolina Novais.',
             'cpf_conjuge' => '10987654321',
             'total_residentes' => 4,
-            'situacao_moradia' => 'asperiores',
+            'situacao_moradia' => 'dicta',
             'renda_mensal' => 1000.0,
-            'gostaria_montar_negocio' => false,
-            'gostaria_participar_cursos' => false,
-            'tipo_curso' => 'ipsum',
-            'concorda_informacoes_verdadeiras' => true,
+            'gostaria_montar_negocio' => true,
+            'gostaria_participar_cursos' => true,
+            'tipo_curso' => 'rerum',
+            'concorda_informacoes_verdadeiras' => false,
             'data_submissao' => '2020-05-01 10:11:12',
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'beatae',
+                    'tipo' => 'minima',
                 ],
             ],
             'enderecos' => [
@@ -1161,21 +1161,21 @@ payload = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": false,
-    "estado_civil_id": 8,
+    "estado_civil_id": 10,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "asperiores",
+    "situacao_moradia": "dicta",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": false,
-    "gostaria_participar_cursos": false,
-    "tipo_curso": "ipsum",
-    "concorda_informacoes_verdadeiras": true,
+    "gostaria_montar_negocio": true,
+    "gostaria_participar_cursos": true,
+    "tipo_curso": "rerum",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "beatae"
+            "tipo": "minima"
         }
     ],
     "enderecos": [
@@ -1202,7 +1202,7 @@ curl -X POST \
     "http://localhost/api/v1/beneficiarios" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":8,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"asperiores","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":false,"tipo_curso":"ipsum","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"beatae"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":10,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"dicta","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":true,"tipo_curso":"rerum","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"minima"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
 
 ```
 
@@ -1261,22 +1261,22 @@ Parameter | Type | Status | Description
     `parceiro_id` | integer |  required  | ID da instituição parceira.
         `nome` | string |  required  | Nome do novo beneficiário - (max. 255).
         `cpf` | string |  optional  | Número do CPF do beneficiário.
-        `email` | string |  required  | Endereço de e-mail do beneficiário - (max. 255).
+        `email` | string |  optional  | Endereço de e-mail do beneficiário - (max. 255).
         `data_nascimento` | string |  required  | Data de nascimento do beneficiário, no formato AAAA-MM-DD.
-        `trabalho` | string |  required  | Ocupação do beneficiário.
-        `esta_desempregado` | boolean |  required  | Indica se o beneficiário está desempregado ou não.
-        `estado_civil_id` | integer |  required  | Estado civil do beneficiario.
+        `trabalho` | string |  optional  | Ocupação do beneficiário.
+        `esta_desempregado` | boolean |  optional  | Indica se o beneficiário está desempregado ou não.
+        `estado_civil_id` | integer |  optional  | Estado civil do beneficiario.
         `nome_conjuge` | string |  optional  | Nome do cônjuge.
         `cpf_conjuge` | string |  optional  | Número do CPF do cônjuge.
-        `total_residentes` | integer |  required  | Total de pessoas na residência do beneficiario.
-        `situacao_moradia` | string |  required  | Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada
-        `renda_mensal` | float |  required  | Renda mensal do beneficiário.
-        `gostaria_montar_negocio` | boolean |  required  | Indica se o beneficiário tem intersse em montar um negócio.
+        `total_residentes` | integer |  optional  | Total de pessoas na residência do beneficiario.
+        `situacao_moradia` | string |  optional  | Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada
+        `renda_mensal` | float |  optional  | Renda mensal do beneficiário.
+        `gostaria_montar_negocio` | boolean |  optional  | Indica se o beneficiário tem intersse em montar um negócio.
         `gostaria_participar_cursos` | boolean |  optional  | Indica se o usuário tem interesse em participar de cursos.
         `tipo_curso` | string |  optional  | Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.
         `concorda_informacoes_verdadeiras` | boolean |  required  | Indica se o usuário concordou com os termos.
-        `data_submissao` | string |  required  | Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.
-        `telefones` | array |  required  | Lista de telefones.
+        `data_submissao` | string |  optional  | Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.
+        `telefones` | array |  optional  | Lista de telefones.
         `telefones[0].telefone` | integer |  required  | Número de telefone com DDD.
         `telefones[0].tipo` | string |  required  | Tipo do telefone: "Fixo" ou "Celular"
         `enderecos` | array |  required  | Lista de enderecos.
@@ -1315,21 +1315,21 @@ let body = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": true,
-    "estado_civil_id": 16,
+    "estado_civil_id": 12,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "architecto",
+    "situacao_moradia": "esse",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": false,
-    "gostaria_participar_cursos": true,
-    "tipo_curso": "tempore",
-    "concorda_informacoes_verdadeiras": false,
+    "gostaria_montar_negocio": true,
+    "gostaria_participar_cursos": false,
+    "tipo_curso": "quia",
+    "concorda_informacoes_verdadeiras": true,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "accusamus"
+            "tipo": "impedit"
         }
     ],
     "enderecos": [
@@ -1371,21 +1371,21 @@ $response = $client->put(
             'data_nascimento' => '1990-01-01',
             'trabalho' => 'Trabalhador Autônomo',
             'esta_desempregado' => true,
-            'estado_civil_id' => 16,
+            'estado_civil_id' => 12,
             'nome_conjuge' => 'Carolina Novais.',
             'cpf_conjuge' => '10987654321',
             'total_residentes' => 4,
-            'situacao_moradia' => 'architecto',
+            'situacao_moradia' => 'esse',
             'renda_mensal' => 1000.0,
-            'gostaria_montar_negocio' => false,
-            'gostaria_participar_cursos' => true,
-            'tipo_curso' => 'tempore',
-            'concorda_informacoes_verdadeiras' => false,
+            'gostaria_montar_negocio' => true,
+            'gostaria_participar_cursos' => false,
+            'tipo_curso' => 'quia',
+            'concorda_informacoes_verdadeiras' => true,
             'data_submissao' => '2020-05-01 10:11:12',
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'accusamus',
+                    'tipo' => 'impedit',
                 ],
             ],
             'enderecos' => [
@@ -1418,21 +1418,21 @@ payload = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": true,
-    "estado_civil_id": 16,
+    "estado_civil_id": 12,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "architecto",
+    "situacao_moradia": "esse",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": false,
-    "gostaria_participar_cursos": true,
-    "tipo_curso": "tempore",
-    "concorda_informacoes_verdadeiras": false,
+    "gostaria_montar_negocio": true,
+    "gostaria_participar_cursos": false,
+    "tipo_curso": "quia",
+    "concorda_informacoes_verdadeiras": true,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "accusamus"
+            "tipo": "impedit"
         }
     ],
     "enderecos": [
@@ -1459,7 +1459,7 @@ curl -X PUT \
     "http://localhost/api/v1/beneficiarios/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":16,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"architecto","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":true,"tipo_curso":"tempore","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"accusamus"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":12,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"esse","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":false,"tipo_curso":"quia","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"impedit"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
 
 ```
 
@@ -1526,22 +1526,22 @@ Parameter | Type | Status | Description
     `parceiro_id` | integer |  required  | ID da instituição parceira.
         `nome` | string |  required  | Nome do novo beneficiário - (max. 255).
         `cpf` | string |  optional  | Número do CPF do beneficiário.
-        `email` | string |  required  | Endereço de e-mail do beneficiário - (max. 255).
+        `email` | string |  optional  | Endereço de e-mail do beneficiário - (max. 255).
         `data_nascimento` | string |  required  | Data de nascimento do beneficiário, no formato AAAA-MM-DD.
-        `trabalho` | string |  required  | Ocupação do beneficiário.
-        `esta_desempregado` | boolean |  required  | Indica se o beneficiário está desempregado ou não.
-        `estado_civil_id` | integer |  required  | Estado civil do beneficiario.
+        `trabalho` | string |  optional  | Ocupação do beneficiário.
+        `esta_desempregado` | boolean |  optional  | Indica se o beneficiário está desempregado ou não.
+        `estado_civil_id` | integer |  optional  | Estado civil do beneficiario.
         `nome_conjuge` | string |  optional  | Nome do cônjuge.
         `cpf_conjuge` | string |  optional  | Número do CPF do cônjuge.
-        `total_residentes` | integer |  required  | Total de pessoas na residência do beneficiario.
-        `situacao_moradia` | string |  required  | Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada
-        `renda_mensal` | float |  required  | Renda mensal do beneficiário.
-        `gostaria_montar_negocio` | boolean |  required  | Indica se o beneficiário tem intersse em montar um negócio.
+        `total_residentes` | integer |  optional  | Total de pessoas na residência do beneficiario.
+        `situacao_moradia` | string |  optional  | Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada
+        `renda_mensal` | float |  optional  | Renda mensal do beneficiário.
+        `gostaria_montar_negocio` | boolean |  optional  | Indica se o beneficiário tem intersse em montar um negócio.
         `gostaria_participar_cursos` | boolean |  optional  | Indica se o usuário tem interesse em participar de cursos.
         `tipo_curso` | string |  optional  | Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.
         `concorda_informacoes_verdadeiras` | boolean |  required  | Indica se o usuário concordou com os termos.
-        `data_submissao` | string |  required  | Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.
-        `telefones` | array |  required  | Lista de telefones.
+        `data_submissao` | string |  optional  | Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.
+        `telefones` | array |  optional  | Lista de telefones.
         `telefones[0].telefone` | integer |  required  | Número de telefone com DDD.
         `telefones[0].tipo` | string |  required  | Tipo do telefone: "Fixo" ou "Celular"
         `enderecos` | array |  required  | Lista de enderecos.
@@ -1667,6 +1667,769 @@ Parameter | Status | Description
     `beneficiario` |  required  | ID do beneficiário.
 
 <!-- END_bf69b99e6bfae0dd82366f4a6beb22cd -->
+
+#CompraController
+
+
+Controller responsável pelo CRUD de prestação de contas.
+<!-- START_3307c73fac77b1d7658f99ceb3fdda91 -->
+## Listar
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para buscar uma lista de compras.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/compras"
+);
+
+let params = {
+    "page": ""1"",
+    "limit": ""10"",
+};
+Object.keys(params)
+    .forEach(key => url.searchParams.append(key, params[key]));
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get(
+    'http://localhost/api/v1/compras',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'query' => [
+            'page'=> '"1"',
+            'limit'=> '"10"',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/compras'
+params = {
+  'page': '"1"',
+  'limit': '"10"',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()
+```
+
+```bash
+curl -X GET \
+    -G "http://localhost/api/v1/compras?page=%221%22&limit=%2210%22" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}
+```
+> Example response (200):
+
+```json
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 2,
+            "descricao_compra": "Os operadores Pedro efetuaram a compra no dia 05\/05\/2020",
+            "quantidade_cestas": 200,
+            "valor_cesta": "89.97",
+            "itens_cestas": "2kg feijão, 4kg arroz, 2kg Macarrão, 1l óleo, 1kg leite em pó, 1kg açúcar",
+            "justificativa_escolha": "O fornecedor `Distribuidora Bom Preço` ofereceu um preço melhor",
+            "fornecedores": [
+                {
+                    "id": 9,
+                    "nome": "Distribuidora Bom Preço",
+                    "contemplado": 1
+                },
+                {
+                    "id": 10,
+                    "nome": "Distribuidora Santa Ceia",
+                    "contemplado": 0
+                }
+            ]
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/compras?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/compras?page=2",
+    "next_page_url": "http:\/\/back.localhost\/api\/v1\/compras?page=2",
+    "path": "http:\/\/back.localhost\/api\/v1\/compras",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 1,
+    "total": 1,
+    "message": "Compras obtido com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}
+```
+
+### HTTP Request
+`GET api/v1/compras`
+
+#### Query Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -----------
+    `page` |  optional  | Número da página para retornar os dados.
+    `limit` |  optional  | Total de elementos por página para retornar.
+
+<!-- END_3307c73fac77b1d7658f99ceb3fdda91 -->
+
+<!-- START_f2194258230b20cd40fdcf620c7d74b8 -->
+## Buscar
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para obter os dados de uma compra específico.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/compras/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get(
+    'http://localhost/api/v1/compras/1',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/compras/1'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers)
+response.json()
+```
+
+```bash
+curl -X GET \
+    -G "http://localhost/api/v1/compras/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": {
+        "id": 1,
+        "descricao_compra": "Os operadores João e Maria efetuaram a compra",
+        "quantidade_cestas": 200,
+        "valor_cesta": "89.97",
+        "itens_cestas": "2kg feijão, 4kg arroz, 2kg Macarrão, 1l óleo, 1kg leite em pó, 1kg açúcar",
+        "justificativa_escolha": "O fornecedor `Distribuidora Bom Preço` ofereceu um preço melhor",
+        "fornecedores": [
+            {
+                "id": 7,
+                "nome": "Distribuidora Bom Preço",
+                "contemplado": 1
+            },
+            {
+                "id": 8,
+                "nome": "Distribuidora Santa Ceia",
+                "contemplado": 0
+            }
+        ]
+    },
+    "message": "Compra encontrada!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Erro #210: Compra 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}
+```
+
+### HTTP Request
+`GET api/v1/compras/{id}`
+
+#### URL Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -------
+    `compra_id` |  required  | ID da compra.
+
+<!-- END_f2194258230b20cd40fdcf620c7d74b8 -->
+
+<!-- START_534a09e01602e8bea25a1215ba3646e6 -->
+## Criar
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para criar uma compra.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/compras"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "descricao_compra": 0,
+    "quantidade_cestas": 10,
+    "valor_cesta": 59.87,
+    "itens_cestas": "Arroz, Feij\u00e3o, Farinha",
+    "justificativa_escolha": "Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os",
+    "fornecedores": [],
+    "forncedores": [
+        {
+            "nome": 0,
+            "contemplado": true
+        }
+    ]
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->post(
+    'http://localhost/api/v1/compras',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'json' => [
+            'descricao_compra' => 0,
+            'quantidade_cestas' => 10,
+            'valor_cesta' => 59.87,
+            'itens_cestas' => 'Arroz, Feijão, Farinha',
+            'justificativa_escolha' => 'Foi escolhido o fornecedor 1 por ter os melhores preços',
+            'fornecedores' => [],
+            'forncedores' => [
+                [
+                    'nome' => 0,
+                    'contemplado' => true,
+                ],
+            ],
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/compras'
+payload = {
+    "descricao_compra": 0,
+    "quantidade_cestas": 10,
+    "valor_cesta": 59.87,
+    "itens_cestas": "Arroz, Feij\u00e3o, Farinha",
+    "justificativa_escolha": "Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os",
+    "fornecedores": [],
+    "forncedores": [
+        {
+            "nome": 0,
+            "contemplado": true
+        }
+    ]
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()
+```
+
+```bash
+curl -X POST \
+    "http://localhost/api/v1/compras" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"descricao_compra":0,"quantidade_cestas":10,"valor_cesta":59.87,"itens_cestas":"Arroz, Feij\u00e3o, Farinha","justificativa_escolha":"Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os","fornecedores":[],"forncedores":[{"nome":0,"contemplado":true}]}'
+
+```
+
+
+> Example response (201):
+
+```json
+{
+    "data": {
+        "id": 1
+    },
+    "message": "Compra criado com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}
+```
+> Example response (422):
+
+```json
+{
+    "data": [],
+    "errors": [
+        "O Fornecedor é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}
+```
+
+### HTTP Request
+`POST api/v1/compras`
+
+#### URL Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -------
+    `compra_id` |  required  | ID da compra.
+#### Body Parameters
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    `descricao_compra` | integer |  required  | Descrição da compra - (max. 255).
+        `quantidade_cestas` | integer |  required  | Números de cestas comprasdas. Exemplo: 150
+        `valor_cesta` | float |  optional  | Valor unitário da cesta básica.
+        `itens_cestas` | string |  optional  | Descrição dos itens da cesta básica - (max. 255).
+        `justificativa_escolha` | string |  optional  | Justificativa da escolha do fornecedor, (max. 255).
+        `fornecedores` | array |  optional  | Lista de fornecedores.
+        `forncedores[0].nome` | integer |  required  | Nome do Forncedor.
+        `forncedores[0].contemplado` | boolean |  required  | Indica se o forncedor foi contemplado para a compra
+    
+<!-- END_534a09e01602e8bea25a1215ba3646e6 -->
+
+<!-- START_62d4501362033bfd1664cafc78845a8f -->
+## Atualizar
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para atualizar os dados de uma compra.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/compras/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "descricao_compra": 0,
+    "quantidade_cestas": 16,
+    "valor_cesta": 59.87,
+    "itens_cestas": "Arroz, Feij\u00e3o, Farinha",
+    "justificativa_escolha": "Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os",
+    "fornecedores": [],
+    "forncedores": [
+        {
+            "nome": 0,
+            "contemplado": false
+        }
+    ]
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->put(
+    'http://localhost/api/v1/compras/1',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'json' => [
+            'descricao_compra' => 0,
+            'quantidade_cestas' => 16,
+            'valor_cesta' => 59.87,
+            'itens_cestas' => 'Arroz, Feijão, Farinha',
+            'justificativa_escolha' => 'Foi escolhido o fornecedor 1 por ter os melhores preços',
+            'fornecedores' => [],
+            'forncedores' => [
+                [
+                    'nome' => 0,
+                    'contemplado' => false,
+                ],
+            ],
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/compras/1'
+payload = {
+    "descricao_compra": 0,
+    "quantidade_cestas": 16,
+    "valor_cesta": 59.87,
+    "itens_cestas": "Arroz, Feij\u00e3o, Farinha",
+    "justificativa_escolha": "Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os",
+    "fornecedores": [],
+    "forncedores": [
+        {
+            "nome": 0,
+            "contemplado": false
+        }
+    ]
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()
+```
+
+```bash
+curl -X PUT \
+    "http://localhost/api/v1/compras/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"descricao_compra":0,"quantidade_cestas":16,"valor_cesta":59.87,"itens_cestas":"Arroz, Feij\u00e3o, Farinha","justificativa_escolha":"Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os","fornecedores":[],"forncedores":[{"nome":0,"contemplado":false}]}'
+
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": [],
+    "message": "Compra atualizada com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Erro #210: Compra 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
+```
+> Example response (422):
+
+```json
+{
+    "data": [],
+    "errors": [
+        "O Fornecedor é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}
+```
+
+### HTTP Request
+`PUT api/v1/compras/{id}`
+
+#### Body Parameters
+Parameter | Type | Status | Description
+--------- | ------- | ------- | ------- | -----------
+    `descricao_compra` | integer |  required  | Descrição da compra - (max. 255).
+        `quantidade_cestas` | integer |  required  | Números de cestas comprasdas. Exemplo: 150
+        `valor_cesta` | float |  optional  | Valor unitário da cesta básica.
+        `itens_cestas` | string |  optional  | Descrição dos itens da cesta básica - (max. 255).
+        `justificativa_escolha` | string |  optional  | Justificativa da escolha do fornecedor, (max. 255).
+        `fornecedores` | array |  optional  | Lista de fornecedores.
+        `forncedores[0].nome` | integer |  required  | Nome do Forncedor.
+        `forncedores[0].contemplado` | boolean |  required  | Indica se o forncedor foi contemplado para a compra
+    
+<!-- END_62d4501362033bfd1664cafc78845a8f -->
+
+<!-- START_ba58543349b803e5122a61148c3045cc -->
+## Remover
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para remover uma compra do sistema.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/compras/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->delete(
+    'http://localhost/api/v1/compras/1',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/compras/1'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('DELETE', url, headers=headers)
+response.json()
+```
+
+```bash
+curl -X DELETE \
+    "http://localhost/api/v1/compras/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": [],
+    "message": "Compra removida com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Erro #210: Compra 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}
+```
+
+### HTTP Request
+`DELETE api/v1/compras/{id}`
+
+#### URL Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -------
+    `compra` |  required  | ID da compra.
+
+<!-- END_ba58543349b803e5122a61148c3045cc -->
 
 #DoadorController
 

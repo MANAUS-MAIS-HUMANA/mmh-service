@@ -41,4 +41,12 @@ Route::prefix('v1')->group(function () {
         Route::put('/{id}', 'BeneficiarioController@update')->name('beneficiarios.update');
         Route::delete('/{id}', 'BeneficiarioController@delete')->name('beneficiarios.delete');
     });
+
+    Route::prefix('compras')->group(function () {
+        Route::get('/', 'CompraController@get')->name('compras.get');
+        Route::get('/{id}', 'CompraController@find')->name('compras.getbyid');
+        Route::post('/', 'CompraController@store')->name('compras.save');
+        Route::put('/{id}', 'CompraController@update')->name('compras.update');
+        Route::delete('/{id}', 'CompraController@delete')->name('compras.delete');
+    });
 });

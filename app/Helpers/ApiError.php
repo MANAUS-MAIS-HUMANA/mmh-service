@@ -21,6 +21,12 @@ class ApiError
     const CODIGO_ERRO_SALVAR_BENEFICIARIO = 201;
     const CODIGO_ERRO_ATUALIZAR_BENEFICIARIO = 202;
     const CODIGO_ERRO_REMOVER_BENEFICIARIO = 203;
+    const CODIGO_ERRO_CRIAR_COMPRA = 208;
+    const CODIGO_ERRO_CRIAR_FORNECEDORES = 209;
+    const CODIGO_ERRO_COMPRA_NAO_ENCONTRADO = 210;
+    const CODIGO_ERRO_REMOVER_FORNECEDORES = 211;
+    const CODIGO_ERRO_REMOVER_COMPRA = 212;
+    const CODIGO_ERRO_ATUALIZAR_COMPRA = 213;
 
     public static function erroInesperado(string $message)
     {
@@ -161,5 +167,53 @@ class ApiError
     private static function setMessageAndCode($message, $code)
     {
         return 'Erro #' . $code . ': ' . $message;
+    }
+
+    public static function falhaSalvarCompra()
+    {
+        return self::setMessageAndCode(
+            'Não foi possível criar o compra',
+            self::CODIGO_ERRO_CRIAR_COMPRA,
+        );
+    }
+
+    public static function falhaSalvarfornecedores()
+    {
+        return self::setMessageAndCode(
+            'Não foi possível criar fornecedores',
+            self::CODIGO_ERRO_CRIAR_FORNECEDORES,
+        );
+    }
+
+    public static function CompraNaoEncontrado($compraId)
+    {
+        return self::setMessageAndCode(
+            'Compra ' . $compraId . ' não encontrado.',
+            self::CODIGO_ERRO_COMPRA_NAO_ENCONTRADO,
+        );
+    }
+
+    public static function falhaRemoverFornecedores()
+    {
+        return self::setMessageAndCode(
+            'Falha ao remover fornecedores.',
+            self::CODIGO_ERRO_REMOVER_FORNECEDORES,
+        );
+    }
+
+    public static function falhaRemoverCompra()
+    {
+        return self::setMessageAndCode(
+            'Falha ao remover compra.',
+            self::CODIGO_ERRO_REMOVER_COMPRA,
+        );
+    }
+
+    public static function falhaAtualizarCompra($compraId)
+    {
+        return self::setMessageAndCode(
+            'Falha ao atualizar a compra ' . $compraId,
+            self::CODIGO_ERRO_ATUALIZAR_COMPRA,
+        );
     }
 }

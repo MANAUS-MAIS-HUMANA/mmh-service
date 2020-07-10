@@ -1062,21 +1062,21 @@ let body = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": false,
-    "estado_civil_id": 8,
+    "estado_civil_id": 10,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "asperiores",
+    "situacao_moradia": "dicta",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": false,
-    "gostaria_participar_cursos": false,
-    "tipo_curso": "ipsum",
-    "concorda_informacoes_verdadeiras": true,
+    "gostaria_montar_negocio": true,
+    "gostaria_participar_cursos": true,
+    "tipo_curso": "rerum",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "beatae"
+            "tipo": "minima"
         }
     ],
     "enderecos": [
@@ -1115,21 +1115,21 @@ $response = $client-&gt;post(
             'data_nascimento' =&gt; '1990-01-01',
             'trabalho' =&gt; 'Trabalhador Autônomo',
             'esta_desempregado' =&gt; false,
-            'estado_civil_id' =&gt; 8,
+            'estado_civil_id' =&gt; 10,
             'nome_conjuge' =&gt; 'Carolina Novais.',
             'cpf_conjuge' =&gt; '10987654321',
             'total_residentes' =&gt; 4,
-            'situacao_moradia' =&gt; 'asperiores',
+            'situacao_moradia' =&gt; 'dicta',
             'renda_mensal' =&gt; 1000.0,
-            'gostaria_montar_negocio' =&gt; false,
-            'gostaria_participar_cursos' =&gt; false,
-            'tipo_curso' =&gt; 'ipsum',
-            'concorda_informacoes_verdadeiras' =&gt; true,
+            'gostaria_montar_negocio' =&gt; true,
+            'gostaria_participar_cursos' =&gt; true,
+            'tipo_curso' =&gt; 'rerum',
+            'concorda_informacoes_verdadeiras' =&gt; false,
             'data_submissao' =&gt; '2020-05-01 10:11:12',
             'telefones' =&gt; [
                 [
                     'telefone' =&gt; 92991234567,
-                    'tipo' =&gt; 'beatae',
+                    'tipo' =&gt; 'minima',
                 ],
             ],
             'enderecos' =&gt; [
@@ -1159,21 +1159,21 @@ payload = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": false,
-    "estado_civil_id": 8,
+    "estado_civil_id": 10,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "asperiores",
+    "situacao_moradia": "dicta",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": false,
-    "gostaria_participar_cursos": false,
-    "tipo_curso": "ipsum",
-    "concorda_informacoes_verdadeiras": true,
+    "gostaria_montar_negocio": true,
+    "gostaria_participar_cursos": true,
+    "tipo_curso": "rerum",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "beatae"
+            "tipo": "minima"
         }
     ],
     "enderecos": [
@@ -1197,7 +1197,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/beneficiarios" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":8,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"asperiores","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":false,"tipo_curso":"ipsum","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"beatae"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":10,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"dicta","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":true,"tipo_curso":"rerum","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"minima"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
 </code></pre>
 <blockquote>
 <p>Example response (201):</p>
@@ -1273,7 +1273,7 @@ response.json()</code></pre>
 <tr>
 <td><code>email</code></td>
 <td>string</td>
-<td>required</td>
+<td>optional</td>
 <td>Endereço de e-mail do beneficiário - (max. 255).</td>
 </tr>
 <tr>
@@ -1285,19 +1285,19 @@ response.json()</code></pre>
 <tr>
 <td><code>trabalho</code></td>
 <td>string</td>
-<td>required</td>
+<td>optional</td>
 <td>Ocupação do beneficiário.</td>
 </tr>
 <tr>
 <td><code>esta_desempregado</code></td>
 <td>boolean</td>
-<td>required</td>
+<td>optional</td>
 <td>Indica se o beneficiário está desempregado ou não.</td>
 </tr>
 <tr>
 <td><code>estado_civil_id</code></td>
 <td>integer</td>
-<td>required</td>
+<td>optional</td>
 <td>Estado civil do beneficiario.</td>
 </tr>
 <tr>
@@ -1315,25 +1315,25 @@ response.json()</code></pre>
 <tr>
 <td><code>total_residentes</code></td>
 <td>integer</td>
-<td>required</td>
+<td>optional</td>
 <td>Total de pessoas na residência do beneficiario.</td>
 </tr>
 <tr>
 <td><code>situacao_moradia</code></td>
 <td>string</td>
-<td>required</td>
+<td>optional</td>
 <td>Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada</td>
 </tr>
 <tr>
 <td><code>renda_mensal</code></td>
 <td>float</td>
-<td>required</td>
+<td>optional</td>
 <td>Renda mensal do beneficiário.</td>
 </tr>
 <tr>
 <td><code>gostaria_montar_negocio</code></td>
 <td>boolean</td>
-<td>required</td>
+<td>optional</td>
 <td>Indica se o beneficiário tem intersse em montar um negócio.</td>
 </tr>
 <tr>
@@ -1357,13 +1357,13 @@ response.json()</code></pre>
 <tr>
 <td><code>data_submissao</code></td>
 <td>string</td>
-<td>required</td>
+<td>optional</td>
 <td>Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.</td>
 </tr>
 <tr>
 <td><code>telefones</code></td>
 <td>array</td>
-<td>required</td>
+<td>optional</td>
 <td>Lista de telefones.</td>
 </tr>
 <tr>
@@ -1447,21 +1447,21 @@ let body = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": true,
-    "estado_civil_id": 16,
+    "estado_civil_id": 12,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "architecto",
+    "situacao_moradia": "esse",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": false,
-    "gostaria_participar_cursos": true,
-    "tipo_curso": "tempore",
-    "concorda_informacoes_verdadeiras": false,
+    "gostaria_montar_negocio": true,
+    "gostaria_participar_cursos": false,
+    "tipo_curso": "quia",
+    "concorda_informacoes_verdadeiras": true,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "accusamus"
+            "tipo": "impedit"
         }
     ],
     "enderecos": [
@@ -1500,21 +1500,21 @@ $response = $client-&gt;put(
             'data_nascimento' =&gt; '1990-01-01',
             'trabalho' =&gt; 'Trabalhador Autônomo',
             'esta_desempregado' =&gt; true,
-            'estado_civil_id' =&gt; 16,
+            'estado_civil_id' =&gt; 12,
             'nome_conjuge' =&gt; 'Carolina Novais.',
             'cpf_conjuge' =&gt; '10987654321',
             'total_residentes' =&gt; 4,
-            'situacao_moradia' =&gt; 'architecto',
+            'situacao_moradia' =&gt; 'esse',
             'renda_mensal' =&gt; 1000.0,
-            'gostaria_montar_negocio' =&gt; false,
-            'gostaria_participar_cursos' =&gt; true,
-            'tipo_curso' =&gt; 'tempore',
-            'concorda_informacoes_verdadeiras' =&gt; false,
+            'gostaria_montar_negocio' =&gt; true,
+            'gostaria_participar_cursos' =&gt; false,
+            'tipo_curso' =&gt; 'quia',
+            'concorda_informacoes_verdadeiras' =&gt; true,
             'data_submissao' =&gt; '2020-05-01 10:11:12',
             'telefones' =&gt; [
                 [
                     'telefone' =&gt; 92991234567,
-                    'tipo' =&gt; 'accusamus',
+                    'tipo' =&gt; 'impedit',
                 ],
             ],
             'enderecos' =&gt; [
@@ -1544,21 +1544,21 @@ payload = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": true,
-    "estado_civil_id": 16,
+    "estado_civil_id": 12,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "architecto",
+    "situacao_moradia": "esse",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": false,
-    "gostaria_participar_cursos": true,
-    "tipo_curso": "tempore",
-    "concorda_informacoes_verdadeiras": false,
+    "gostaria_montar_negocio": true,
+    "gostaria_participar_cursos": false,
+    "tipo_curso": "quia",
+    "concorda_informacoes_verdadeiras": true,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "accusamus"
+            "tipo": "impedit"
         }
     ],
     "enderecos": [
@@ -1582,7 +1582,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/beneficiarios/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":16,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"architecto","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":true,"tipo_curso":"tempore","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"accusamus"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":12,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"esse","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":false,"tipo_curso":"quia","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"impedit"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
 </code></pre>
 <blockquote>
 <p>Example response (200):</p>
@@ -1665,7 +1665,7 @@ response.json()</code></pre>
 <tr>
 <td><code>email</code></td>
 <td>string</td>
-<td>required</td>
+<td>optional</td>
 <td>Endereço de e-mail do beneficiário - (max. 255).</td>
 </tr>
 <tr>
@@ -1677,19 +1677,19 @@ response.json()</code></pre>
 <tr>
 <td><code>trabalho</code></td>
 <td>string</td>
-<td>required</td>
+<td>optional</td>
 <td>Ocupação do beneficiário.</td>
 </tr>
 <tr>
 <td><code>esta_desempregado</code></td>
 <td>boolean</td>
-<td>required</td>
+<td>optional</td>
 <td>Indica se o beneficiário está desempregado ou não.</td>
 </tr>
 <tr>
 <td><code>estado_civil_id</code></td>
 <td>integer</td>
-<td>required</td>
+<td>optional</td>
 <td>Estado civil do beneficiario.</td>
 </tr>
 <tr>
@@ -1707,25 +1707,25 @@ response.json()</code></pre>
 <tr>
 <td><code>total_residentes</code></td>
 <td>integer</td>
-<td>required</td>
+<td>optional</td>
 <td>Total de pessoas na residência do beneficiario.</td>
 </tr>
 <tr>
 <td><code>situacao_moradia</code></td>
 <td>string</td>
-<td>required</td>
+<td>optional</td>
 <td>Situação da moradia: Própria, Alugada, Cedida ou Própria Financiada</td>
 </tr>
 <tr>
 <td><code>renda_mensal</code></td>
 <td>float</td>
-<td>required</td>
+<td>optional</td>
 <td>Renda mensal do beneficiário.</td>
 </tr>
 <tr>
 <td><code>gostaria_montar_negocio</code></td>
 <td>boolean</td>
-<td>required</td>
+<td>optional</td>
 <td>Indica se o beneficiário tem intersse em montar um negócio.</td>
 </tr>
 <tr>
@@ -1749,13 +1749,13 @@ response.json()</code></pre>
 <tr>
 <td><code>data_submissao</code></td>
 <td>string</td>
-<td>required</td>
+<td>optional</td>
 <td>Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.</td>
 </tr>
 <tr>
 <td><code>telefones</code></td>
 <td>array</td>
-<td>required</td>
+<td>optional</td>
 <td>Lista de telefones.</td>
 </tr>
 <tr>
@@ -1919,6 +1919,809 @@ response.json()</code></pre>
 </tbody>
 </table>
 <!-- END_bf69b99e6bfae0dd82366f4a6beb22cd -->
+<h1>CompraController</h1>
+<p>Controller responsável pelo CRUD de prestação de contas.</p>
+<!-- START_3307c73fac77b1d7658f99ceb3fdda91 -->
+<h2>Listar</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para buscar uma lista de compras.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/compras"
+);
+
+let params = {
+    "page": ""1"",
+    "limit": ""10"",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;get(
+    'http://localhost/api/v1/compras',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page'=&gt; '"1"',
+            'limit'=&gt; '"10"',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/compras'
+params = {
+  'page': '"1"',
+  'limit': '"10"',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X GET \
+    -G "http://localhost/api/v1/compras?page=%221%22&amp;limit=%2210%22" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 2,
+            "descricao_compra": "Os operadores Pedro efetuaram a compra no dia 05\/05\/2020",
+            "quantidade_cestas": 200,
+            "valor_cesta": "89.97",
+            "itens_cestas": "2kg feijão, 4kg arroz, 2kg Macarrão, 1l óleo, 1kg leite em pó, 1kg açúcar",
+            "justificativa_escolha": "O fornecedor `Distribuidora Bom Preço` ofereceu um preço melhor",
+            "fornecedores": [
+                {
+                    "id": 9,
+                    "nome": "Distribuidora Bom Preço",
+                    "contemplado": 1
+                },
+                {
+                    "id": 10,
+                    "nome": "Distribuidora Santa Ceia",
+                    "contemplado": 0
+                }
+            ]
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/compras?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/compras?page=2",
+    "next_page_url": "http:\/\/back.localhost\/api\/v1\/compras?page=2",
+    "path": "http:\/\/back.localhost\/api\/v1\/compras",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 1,
+    "total": 1,
+    "message": "Compras obtido com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/v1/compras</code></p>
+<h4>Query Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>page</code></td>
+<td>optional</td>
+<td>Número da página para retornar os dados.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>optional</td>
+<td>Total de elementos por página para retornar.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_3307c73fac77b1d7658f99ceb3fdda91 -->
+<!-- START_f2194258230b20cd40fdcf620c7d74b8 -->
+<h2>Buscar</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para obter os dados de uma compra específico.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/compras/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;get(
+    'http://localhost/api/v1/compras/1',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/compras/1'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X GET \
+    -G "http://localhost/api/v1/compras/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "id": 1,
+        "descricao_compra": "Os operadores João e Maria efetuaram a compra",
+        "quantidade_cestas": 200,
+        "valor_cesta": "89.97",
+        "itens_cestas": "2kg feijão, 4kg arroz, 2kg Macarrão, 1l óleo, 1kg leite em pó, 1kg açúcar",
+        "justificativa_escolha": "O fornecedor `Distribuidora Bom Preço` ofereceu um preço melhor",
+        "fornecedores": [
+            {
+                "id": 7,
+                "nome": "Distribuidora Bom Preço",
+                "contemplado": 1
+            },
+            {
+                "id": 8,
+                "nome": "Distribuidora Santa Ceia",
+                "contemplado": 0
+            }
+        ]
+    },
+    "message": "Compra encontrada!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #210: Compra 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/v1/compras/{id}</code></p>
+<h4>URL Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>compra_id</code></td>
+<td>required</td>
+<td>ID da compra.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_f2194258230b20cd40fdcf620c7d74b8 -->
+<!-- START_534a09e01602e8bea25a1215ba3646e6 -->
+<h2>Criar</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para criar uma compra.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/compras"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "descricao_compra": 0,
+    "quantidade_cestas": 10,
+    "valor_cesta": 59.87,
+    "itens_cestas": "Arroz, Feij\u00e3o, Farinha",
+    "justificativa_escolha": "Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os",
+    "fornecedores": [],
+    "forncedores": [
+        {
+            "nome": 0,
+            "contemplado": true
+        }
+    ]
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;post(
+    'http://localhost/api/v1/compras',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'descricao_compra' =&gt; 0,
+            'quantidade_cestas' =&gt; 10,
+            'valor_cesta' =&gt; 59.87,
+            'itens_cestas' =&gt; 'Arroz, Feijão, Farinha',
+            'justificativa_escolha' =&gt; 'Foi escolhido o fornecedor 1 por ter os melhores preços',
+            'fornecedores' =&gt; [],
+            'forncedores' =&gt; [
+                [
+                    'nome' =&gt; 0,
+                    'contemplado' =&gt; true,
+                ],
+            ],
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/compras'
+payload = {
+    "descricao_compra": 0,
+    "quantidade_cestas": 10,
+    "valor_cesta": 59.87,
+    "itens_cestas": "Arroz, Feij\u00e3o, Farinha",
+    "justificativa_escolha": "Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os",
+    "fornecedores": [],
+    "forncedores": [
+        {
+            "nome": 0,
+            "contemplado": true
+        }
+    ]
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X POST \
+    "http://localhost/api/v1/compras" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"descricao_compra":0,"quantidade_cestas":10,"valor_cesta":59.87,"itens_cestas":"Arroz, Feij\u00e3o, Farinha","justificativa_escolha":"Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os","fornecedores":[],"forncedores":[{"nome":0,"contemplado":true}]}'
+</code></pre>
+<blockquote>
+<p>Example response (201):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "id": 1
+    },
+    "message": "Compra criado com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "errors": [
+        "O Fornecedor é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v1/compras</code></p>
+<h4>URL Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>compra_id</code></td>
+<td>required</td>
+<td>ID da compra.</td>
+</tr>
+</tbody>
+</table>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>descricao_compra</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Descrição da compra - (max. 255).</td>
+</tr>
+<tr>
+<td><code>quantidade_cestas</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Números de cestas comprasdas. Exemplo: 150</td>
+</tr>
+<tr>
+<td><code>valor_cesta</code></td>
+<td>float</td>
+<td>optional</td>
+<td>Valor unitário da cesta básica.</td>
+</tr>
+<tr>
+<td><code>itens_cestas</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Descrição dos itens da cesta básica - (max. 255).</td>
+</tr>
+<tr>
+<td><code>justificativa_escolha</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Justificativa da escolha do fornecedor, (max. 255).</td>
+</tr>
+<tr>
+<td><code>fornecedores</code></td>
+<td>array</td>
+<td>optional</td>
+<td>Lista de fornecedores.</td>
+</tr>
+<tr>
+<td><code>forncedores[0].nome</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Nome do Forncedor.</td>
+</tr>
+<tr>
+<td><code>forncedores[0].contemplado</code></td>
+<td>boolean</td>
+<td>required</td>
+<td>Indica se o forncedor foi contemplado para a compra</td>
+</tr>
+</tbody>
+</table>
+<!-- END_534a09e01602e8bea25a1215ba3646e6 -->
+<!-- START_62d4501362033bfd1664cafc78845a8f -->
+<h2>Atualizar</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para atualizar os dados de uma compra.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/compras/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "descricao_compra": 0,
+    "quantidade_cestas": 16,
+    "valor_cesta": 59.87,
+    "itens_cestas": "Arroz, Feij\u00e3o, Farinha",
+    "justificativa_escolha": "Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os",
+    "fornecedores": [],
+    "forncedores": [
+        {
+            "nome": 0,
+            "contemplado": false
+        }
+    ]
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;put(
+    'http://localhost/api/v1/compras/1',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'descricao_compra' =&gt; 0,
+            'quantidade_cestas' =&gt; 16,
+            'valor_cesta' =&gt; 59.87,
+            'itens_cestas' =&gt; 'Arroz, Feijão, Farinha',
+            'justificativa_escolha' =&gt; 'Foi escolhido o fornecedor 1 por ter os melhores preços',
+            'fornecedores' =&gt; [],
+            'forncedores' =&gt; [
+                [
+                    'nome' =&gt; 0,
+                    'contemplado' =&gt; false,
+                ],
+            ],
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/compras/1'
+payload = {
+    "descricao_compra": 0,
+    "quantidade_cestas": 16,
+    "valor_cesta": 59.87,
+    "itens_cestas": "Arroz, Feij\u00e3o, Farinha",
+    "justificativa_escolha": "Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os",
+    "fornecedores": [],
+    "forncedores": [
+        {
+            "nome": 0,
+            "contemplado": false
+        }
+    ]
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X PUT \
+    "http://localhost/api/v1/compras/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{"descricao_compra":0,"quantidade_cestas":16,"valor_cesta":59.87,"itens_cestas":"Arroz, Feij\u00e3o, Farinha","justificativa_escolha":"Foi escolhido o fornecedor 1 por ter os melhores pre\u00e7os","fornecedores":[],"forncedores":[{"nome":0,"contemplado":false}]}'
+</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Compra atualizada com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #210: Compra 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "errors": [
+        "O Fornecedor é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PUT api/v1/compras/{id}</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>descricao_compra</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Descrição da compra - (max. 255).</td>
+</tr>
+<tr>
+<td><code>quantidade_cestas</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Números de cestas comprasdas. Exemplo: 150</td>
+</tr>
+<tr>
+<td><code>valor_cesta</code></td>
+<td>float</td>
+<td>optional</td>
+<td>Valor unitário da cesta básica.</td>
+</tr>
+<tr>
+<td><code>itens_cestas</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Descrição dos itens da cesta básica - (max. 255).</td>
+</tr>
+<tr>
+<td><code>justificativa_escolha</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Justificativa da escolha do fornecedor, (max. 255).</td>
+</tr>
+<tr>
+<td><code>fornecedores</code></td>
+<td>array</td>
+<td>optional</td>
+<td>Lista de fornecedores.</td>
+</tr>
+<tr>
+<td><code>forncedores[0].nome</code></td>
+<td>integer</td>
+<td>required</td>
+<td>Nome do Forncedor.</td>
+</tr>
+<tr>
+<td><code>forncedores[0].contemplado</code></td>
+<td>boolean</td>
+<td>required</td>
+<td>Indica se o forncedor foi contemplado para a compra</td>
+</tr>
+</tbody>
+</table>
+<!-- END_62d4501362033bfd1664cafc78845a8f -->
+<!-- START_ba58543349b803e5122a61148c3045cc -->
+<h2>Remover</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para remover uma compra do sistema.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/compras/1"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;delete(
+    'http://localhost/api/v1/compras/1',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/compras/1'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('DELETE', url, headers=headers)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X DELETE \
+    "http://localhost/api/v1/compras/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Compra removida com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #210: Compra 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>DELETE api/v1/compras/{id}</code></p>
+<h4>URL Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>compra</code></td>
+<td>required</td>
+<td>ID da compra.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_ba58543349b803e5122a61148c3045cc -->
 <h1>DoadorController</h1>
 <p>Controller responsável pelo CRUD de doadores.</p>
 <!-- START_b3fba95f5e912d42c5fd681d1e2a21ec -->

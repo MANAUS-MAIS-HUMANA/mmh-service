@@ -1,0 +1,38 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 2,
+            "descricao_compra": "Os operadores Pedro efetuaram a compra no dia 05\/05\/2020",
+            "quantidade_cestas": 200,
+            "valor_cesta": "89.97",
+            "itens_cestas": "2kg feijão, 4kg arroz, 2kg Macarrão, 1l óleo, 1kg leite em pó, 1kg açúcar",
+            "justificativa_escolha": "O fornecedor `Distribuidora Bom Preço` ofereceu um preço melhor",
+            "fornecedores": [
+                {
+                    "id": 9,
+                    "nome": "Distribuidora Bom Preço",
+                    "contemplado": 1
+                },
+                {
+                    "id": 10,
+                    "nome": "Distribuidora Santa Ceia",
+                    "contemplado": 0
+                }
+            ]
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/compras?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/compras?page=2",
+    "next_page_url": "http:\/\/back.localhost\/api\/v1\/compras?page=2",
+    "path": "http:\/\/back.localhost\/api\/v1\/compras",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 1,
+    "total": 1,
+    "message": "Compras obtido com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras"
+}

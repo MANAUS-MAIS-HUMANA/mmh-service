@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "689519b0-6915-480c-a7a9-7f3acd55cf08",
+		"_postman_id": "d1a4ed1e-93e5-4187-aedf-d89682133505",
 		"name": "ManausMaisHumana",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -362,6 +362,202 @@
 								"v1",
 								"doadores",
 								"ranking"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Compras",
+			"item": [
+				{
+					"name": "Compras",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{valid_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/compras?limit=20",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"compras"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{valid_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"descricao_compra\": \"Os operadores Pedro efetuaram a compra no dia 05/05/2020\",\n\"quantidade_cestas\": 200,\n\"valor_cesta\": 89.97,\n\"itens_cestas\": \"2kg feijão, 4kg arroz, 2kg Macarrão, 1l óleo, 1kg leite em pó, 1kg açúcar\",\n\"justificativa_escolha\":\"O fornecedor `Distribuidora Bom Preço` ofereceu um preço melhor\",\n\"fornecedores\": [\n    {\n        \"nome\": \"Distribuidora Bom Preço\",\n        \"contemplado\": true\n    }, \n    {\n        \"nome\": \"Distribuidora Santa Ceia\",\n        \"contemplado\": false\n    }\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/compras/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"compras",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{valid_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/compras/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"compras",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{valid_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"descricao_compra\": \"Os operadores João e Maria efetuaram a compra\",\n\"quantidade_cestas\": 200,\n\"valor_cesta\": 89.97,\n\"itens_cestas\": \"2kg feijão, 4kg arroz, 2kg Macarrão, 1l óleo, 1kg leite em pó, 1kg açúcar\",\n\"justificativa_escolha\":\"O fornecedor `Distribuidora Bom Preço` ofereceu um preço melhor\",\n\"fornecedores\": [\n    {\n        \"nome\": \"Distribuidora Bom Preço\",\n        \"contemplado\": true\n    }, \n    {\n        \"nome\": \"Distribuidora Santa Ceia\",\n        \"contemplado\": false\n    }\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/compras/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"compras",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{valid_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/compras/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"compras",
+								"1"
 							]
 						}
 					},

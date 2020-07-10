@@ -1,0 +1,25 @@
+{
+    "data": {
+        "id": 1,
+        "descricao_compra": "Os operadores João e Maria efetuaram a compra",
+        "quantidade_cestas": 200,
+        "valor_cesta": "89.97",
+        "itens_cestas": "2kg feijão, 4kg arroz, 2kg Macarrão, 1l óleo, 1kg leite em pó, 1kg açúcar",
+        "justificativa_escolha": "O fornecedor `Distribuidora Bom Preço` ofereceu um preço melhor",
+        "fornecedores": [
+            {
+                "id": 7,
+                "nome": "Distribuidora Bom Preço",
+                "contemplado": 1
+            },
+            {
+                "id": 8,
+                "nome": "Distribuidora Santa Ceia",
+                "contemplado": 0
+            }
+        ]
+    },
+    "message": "Compra encontrada!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/compras\/1"
+}
