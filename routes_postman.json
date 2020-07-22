@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "689519b0-6915-480c-a7a9-7f3acd55cf08",
+		"_postman_id": "8e3fc925-ffda-4e20-95f9-e76b27813196",
 		"name": "ManausMaisHumana",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -326,6 +326,159 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Doações",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{valid_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data_doacao\": \"2020-06-01\",\n    \"total_cestas\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/parceiros/2/beneficiarios/2/doacoes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"2",
+								"beneficiarios",
+								"2",
+								"doacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Doações",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{valid_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/parceiros/2/beneficiarios/2/doacoes/8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"2",
+								"beneficiarios",
+								"2",
+								"doacoes",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Doações",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{valid_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/parceiros/2/beneficiarios/2/doacoes/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"2",
+								"beneficiarios",
+								"2",
+								"doacoes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Beneficiários",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{valid_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/parceiros/2/beneficiarios/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"2",
+								"beneficiarios",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -335,9 +488,6 @@
 			"item": [
 				{
 					"name": "Ranqueamento de doadores",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [

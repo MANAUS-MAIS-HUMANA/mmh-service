@@ -1,0 +1,30 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 1,
+            "nome": "Bene Teste",
+            "cpf": "42282879481",
+            "ativo": 1
+        },
+        {
+            "id": 2,
+            "nome": "Ficio Teste",
+            "cpf": "12345678900",
+            "ativo": 1
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/parceiros\/2\/beneficiarios?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/parceiros\/2\/beneficiarios?page=1",
+    "next_page_url": null,
+    "path": "http:\/\/back.localhost\/api\/v1\/parceiros\/2\/beneficiarios",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 2,
+    "total": 2,
+    "message": "Beneficiarios obtidos com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/2\/beneficiarios"
+}
