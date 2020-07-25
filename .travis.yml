@@ -1,0 +1,14 @@
+dist: trusty
+
+branches:
+  only:
+    - master
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker build -t manausmaishumana/back -f .infra/php-fpm/Dockerfile .
+      - docker images
+      - docker push $DOCKER_USERNAME/back:latest
