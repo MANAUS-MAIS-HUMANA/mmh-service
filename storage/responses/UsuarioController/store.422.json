@@ -1,0 +1,17 @@
+{
+    "data": [],
+    "errors": [
+        "O CNPJ é obrigatório quando CPF não foi informado.",
+        "O CPF é obrigatório quando CNPJ não foi informado.",
+        "O E-mail é obrigatório.",
+        "O Endereço é obrigatório.",
+        "O Estado é obrigatório.",
+        "O Nome é obrigatório.",
+        "O Perfil de Usuário é obrigatório.",
+        "O Tipo de Pessoa é obrigatório."
+    ],
+    "message": "Existem campos inválidos.",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario"
+}

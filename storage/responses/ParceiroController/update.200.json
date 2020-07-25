@@ -1,0 +1,40 @@
+{
+    "data": {
+        "id": 1,
+        "nome": "Ação de Graças",
+        "email": "contato@gracas.com.br",
+        "tipo_pessoa": {
+            "id": 9,
+            "tipo_pessoa": "pj",
+            "cpf_cnpj": "09627659000147"
+        },
+        "telefones": [
+            {
+                "id": 9,
+                "telefone": "92991475871",
+                "tipo": 1
+            }
+        ],
+        "enderecos": [
+            {
+                "id": 11,
+                "endereco": "Rua da Onça",
+                "ponto_referencia": null,
+                "cep": "69068748",
+                "cidade": {
+                    "nome": "Manaus",
+                    "estado": {
+                        "uf": "AM",
+                        "nome": "Amazonas"
+                    }
+                },
+                "bairro": {
+                    "nome": "Raiz"
+                }
+            }
+        ]
+    },
+    "message": "Parceiro atualizado com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/1"
+}

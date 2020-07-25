@@ -1,0 +1,6 @@
+{
+    "data": [],
+    "message": "Erro #105: Parceiro 1 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/1"
+}

@@ -1,0 +1,8 @@
+{
+    "data": {
+        "id": 2
+    },
+    "message": "Parceiro criado com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}

@@ -1,0 +1,15 @@
+{
+    "data": {
+        "id": 1,
+        "nome": "Manaus Mais Humana",
+        "email": "mmh@gmail.com",
+        "status": "Ativo",
+        "perfis": [
+            "admin"
+        ]
+    },
+    "message": "Usuário encontrado!",
+    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zd",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/usuario\/1"
+}
