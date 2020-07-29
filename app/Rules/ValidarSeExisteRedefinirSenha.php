@@ -20,6 +20,7 @@ class ValidarSeExisteRedefinirSenha implements Rule
     {
         $pwdReset = RedefinirSenha::whereEmail($value)
             ->whereDate('validade', '>', now())
+            ->where('status', '=', 'A')
             ->latest()
             ->first();
 
