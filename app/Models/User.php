@@ -41,6 +41,7 @@ class User extends Authenticatable implements JWTSubject
                 'nome' => $this->pessoa->nome,
                 'email' => $this->email,
                 'status' => $this->statusParse,
+                'perfis' => implode(',', array_column($this->perfis->toArray(), 'perfil')),
                 'criado' => $this->created_at->format('d/m/Y'),
             ]
         ];
