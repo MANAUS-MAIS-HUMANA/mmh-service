@@ -10,6 +10,14 @@ use Illuminate\Support\Str;
 
 class ValidarToken
 {
+    protected $permissions = [
+        'api/v1/auth/logout' => ['admin', 'codese', 'parceiro'],
+        'api/v1/auth/refresh' => ['admin', 'codese', 'parceiro'],
+        'api/v1/usuario/set-status' => ['admin', 'codese'],
+        'api/v1/beneficiarios' => ['admin', 'codese', 'parceiro'],
+        'api/v1/parceiros' => ['admin', 'codese'],
+    ];
+
     /**
      * Handle an incoming request.
      *
@@ -24,7 +32,12 @@ class ValidarToken
 
             $payload = auth()->setRequest($request)->getPayload();
 
-            throw_if($payload['user']->status !== 'Ativo', \Exception::class, 'Não autorizado', 401);
+            $perfis = explode(',', $payload['user']->perfis);
+            $usuarioTemPermissao = $this->isAllowed($request->path(), $perfis);
+
+            $naoTemPermissao = $payload['user']->status !== 'Ativo' || !$usuarioTemPermissao;
+
+            throw_if($naoTemPermissao, \Exception::class, 'Não autorizado', 401);
 
             return $next($request);
         } catch (\Throwable $e) {
@@ -32,5 +45,20 @@ class ValidarToken
                 ->response()
                 ->setStatusCode(401);
         }
+    }
+
+    protected function isAllowed($endpointPath, $perfisUsuario)
+    {
+        foreach($this->permissions as $path => $perfis) {
+            if (strpos($endpointPath, $path) === 0) {
+                foreach ($perfisUsuario as $perfilUsuario) {
+                    if (in_array($perfilUsuario, $perfis)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
