@@ -1,0 +1,23 @@
+{
+    "data": {
+        "arrecadados": 364823.78,
+        "meta_arrecadacao": 670,
+        "cestas_doadas": 5370,
+        "meta_cestas_doadas": 10000,
+        "pessoas_impactadas": 21480,
+        "meta_pessoas_impactadas": 40000,
+        "familias_impactadas": 5370,
+        "meta_familias_atendidas": 10000,
+        "instituicoes_contemplada": 57,
+        "zonas": {
+            "sul": 13.08,
+            "oeste": 17.3,
+            "norte": 16.6,
+            "leste": 13.04,
+            "centro_sul": 39.97
+        }
+    },
+    "message": "Informações do dashboard obtidas com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/dashboard"
+}

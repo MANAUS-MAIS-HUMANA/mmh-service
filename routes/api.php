@@ -43,6 +43,10 @@ Route::prefix('v1')->group(function () {
         Route::get('/', 'BairroController@get')->name('bairros.get');
     });
 
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', 'DashboardController@get')->name('dashboard.get');
+    });
+
     Route::prefix('beneficiarios')->group(function () {
         Route::get('/', 'BeneficiarioController@get')->name('beneficiarios.get');
         Route::get('/{id}', 'BeneficiarioController@find')->name('beneficiarios.getbyid');
