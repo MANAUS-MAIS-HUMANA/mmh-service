@@ -56,6 +56,28 @@ class ParceiroService
         return $resultado;
     }
 
+    public function basic(Request $request): array
+    {
+        try {
+            $parceiros = $this->parceiro->get(['id', 'nome']);
+
+            $resultado = [
+                'success' => true,
+                'data' => $parceiros->makeHidden(['telefones', 'enderecos']),
+                'message' => 'Parceiros obtidos com sucesso!',
+                'code' => HttpStatus::OK,
+            ];
+        } catch (Exception $e) {
+            $resultado = [
+                'success' => false,
+                'message' => ApiError::erroInesperado($e->getMessage()),
+                'code' => HttpStatus::INTERNAL_SERVER_ERROR,
+            ];
+        }
+
+        return $resultado;
+    }
+
     public function getParceiroByCpfOrCnpj(string $cpfOrCnpj)
     {
         return Parceiro::where('cpf_cnpj', '=', $cpfOrCnpj)->first();

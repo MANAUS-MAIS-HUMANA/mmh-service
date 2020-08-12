@@ -1,0 +1,14 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "nome": "Boa Ação",
+        },
+        {
+            "id": 2,
+            "nome": "Amanhã Melhor",
+        }
+    ],
+    "message": "Parceiros obtidos com sucesso!",
+    "success": true
+}

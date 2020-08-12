@@ -89,6 +89,31 @@ class ParceiroController extends Controller
     }
 
     /**
+     * Listar Básico
+     *
+     * Endpoint para buscar o ID e nome de todos os parceiros.
+     * Essa rota será usada especialmente na página de Beneficiários, quando o usuário logado
+     * for Admin ou Codese.
+     *
+     * @authenticated
+     *
+     * @responseFile 200 responses/ParceiroController/get.200.json
+     * @responseFile 500 responses/ParceiroController/internalServerError.500.json
+     */
+    public function basic(Request $request): JsonResponse
+    {
+        $resultado = $this->parceiroService->basic($request);
+
+        $resource = new ParceiroResource(
+            $resultado['data'] ??= null,
+            $resultado['success'],
+            $resultado['message'],
+        );
+
+        return $resource->response()->setStatusCode($resultado['code']);
+    }
+
+    /**
      * Criar
      *
      * Endpoint para inserir uma nova instituição parceira no sistema.
