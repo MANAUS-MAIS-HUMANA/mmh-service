@@ -33,19 +33,15 @@ class CriarParceiroRequest extends FormRequest
     {
         return [
             'nome' => 'required|min:2',
-            'email' => 'required|email',
-            'cpf' => 'required_without:cnpj|cpf|size:11|unique:parceiros,cpf_cnpj',
-            'cnpj' => 'required_without:cpf|cnpj|size:14|unique:parceiros,cpf_cnpj',
+            'email' => 'required|email|unique:parceiros,email',
+            'cpf' => 'required_without:cnpj|cpf|size:11',
+            'cnpj' => 'required_without:cpf|cnpj|size:14',
             'telefones' => 'required|array|min:1',
-            'telefones.*.telefone' => 'required|numeric|min:10|unique:telefones,telefone',
+            'telefones.*.telefone' => 'required|numeric|min:10',
             'telefones.*.tipo' => 'required|in:Celular,Fixo',
             'enderecos' => 'required|array|min:1',
             'enderecos.*.endereco' => 'required|max:255',
-            'enderecos.*.numero' => 'required|string',
-            'enderecos.*.complemento' => 'nullable|string',
             'enderecos.*.bairro_id' => 'required|exists:bairros,id',
-            'enderecos.*.ponto_referencia' => 'nullable',
-            'enderecos.*.cep' => 'required|digits:8',
             'enderecos.*.cidade_id' => 'required|exists:cidades,id',
         ];
     }
@@ -65,11 +61,12 @@ class CriarParceiroRequest extends FormRequest
             "email" => "O :attribute deve ser um endereço de e-mail válido.",
             "in" => "O :attribute é inválido (aceito: :values).",
             "cpf" => "O :attribute é inválido.",
+            "cpf.size" => "O :attribute deve conter 11 dígitos.",
             "cnpj" => "O :attribute é inválido.",
+            "cnpj.size" => "O :attribute deve conter 14 dígitos.",
             "array" => "O :attribute deve ser um array.",
             "numeric" => "O :attribute deve ser um numérico.",
             "exists" => "O :attribute é inválido.",
-            "digits" => "O :attribute deve possuir somente números.",
         ];
     }
 
@@ -91,8 +88,6 @@ class CriarParceiroRequest extends FormRequest
             'enderecos' => 'Endereço',
             'enderecos.*.endereco' => 'Endereço',
             'enderecos.*.bairro_id' => 'ID do Bairro',
-            'enderecos.*.ponto_referencia' => 'Ponto de Referência',
-            'enderecos.*.cep' => 'CEP',
             'enderecos.*.cidade_id' => 'ID da Cidade',
         ];
     }
@@ -105,6 +100,7 @@ class CriarParceiroRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->mergeExistsCpfOrCnpj($this);
+        $this->sanitizarNomes($this);
     }
 
     /**

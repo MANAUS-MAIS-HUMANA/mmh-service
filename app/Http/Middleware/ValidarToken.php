@@ -11,11 +11,11 @@ use Illuminate\Support\Str;
 class ValidarToken
 {
     protected $permissions = [
-        'api/v1/auth/logout' => ['admin', 'codese', 'parceiro'],
-        'api/v1/auth/refresh' => ['admin', 'codese', 'parceiro'],
-        'api/v1/usuario/set-status' => ['admin', 'codese'],
-        'api/v1/beneficiarios' => ['admin', 'codese', 'parceiro'],
-        'api/v1/parceiros' => ['admin', 'codese'],
+        '/api\/v1\/auth\/logout.*/' => ['admin', 'codese', 'parceiro'],
+        '/api\/v1\/auth\/refresh.*/' => ['admin', 'codese', 'parceiro'],
+        '/api\/v1\/usuario\/.+\/set-status/' => ['admin', 'codese'],
+        '/api\/v1\/beneficiarios.*/' => ['admin', 'codese', 'parceiro'],
+        '/api\/v1\/parceiros.*/' => ['admin', 'codese'],
     ];
 
     /**
@@ -49,8 +49,8 @@ class ValidarToken
 
     protected function isAllowed($endpointPath, $perfisUsuario)
     {
-        foreach($this->permissions as $path => $perfis) {
-            if (strpos($endpointPath, $path) === 0) {
+        foreach($this->permissions as $pattern => $perfis) {
+            if (preg_match($pattern, $endpointPath)) {
                 foreach ($perfisUsuario as $perfilUsuario) {
                     if (in_array($perfilUsuario, $perfis)) {
                         return true;

@@ -7,23 +7,12 @@ namespace App\Traits;
 use App\Models\Beneficiario;
 use App\Models\Parceiro;
 use App\Models\Telefone;
-use App\Models\TipoPessoa;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest as FormRequestBase;
 use Illuminate\Support\Str;
 
 trait FormRequest
 {
-    /**
-     * Retorna os tipos de pessoa
-     *
-     * @return string
-     */
-    protected function getTiposPessoa(): string
-    {
-        return implode(',', array_keys(TipoPessoa::TIPO_PESSOA));
-    }
-
     /**
      * Retorna os tipos de status
      *
@@ -122,8 +111,8 @@ trait FormRequest
         $parceiro = Parceiro::find($formRequest->id);
 
         return !is_null($parceiro) &&
-            (($parceiro->tipoPessoa->cpf_cnpj == $formRequest->cpf) ||
-            ($parceiro->tipoPessoa->cpf_cnpj == $formRequest->cnpj));
+            (($parceiro->cpf_cnpj == $formRequest->cpf) ||
+            ($parceiro->cpf_cnpj == $formRequest->cnpj));
     }
 
     /**

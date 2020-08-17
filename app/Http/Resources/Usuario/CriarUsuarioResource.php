@@ -17,11 +17,10 @@ class CriarUsuarioResource extends ResourceBase
         if ($this->resource) {
             return [
                 'id' => $this->id,
-                'nome' => $this->pessoa->nome,
+                'nome' => $this->nome,
                 'email' => $this->email,
                 'status' => $this->statusParse,
-                'perfis' => $this->perfis()
-                    ->pluck('perfil')
+                'perfis' => $this->perfis()->pluck('perfil'),
             ];
         }
     }

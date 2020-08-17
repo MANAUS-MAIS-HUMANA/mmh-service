@@ -14,7 +14,7 @@ class User extends Authenticatable implements JWTSubject
     protected $table = 'users';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'pessoa_id', 'email', 'senha', 'status'
+        'nome', 'email', 'senha', 'status', 'telefone'
     ];
     protected $guarded = [
         'id'
@@ -38,18 +38,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return [
             'user' => [
-                'nome' => $this->pessoa->nome,
+                'nome' => $this->nome,
                 'email' => $this->email,
                 'status' => $this->statusParse,
                 'perfis' => implode(',', array_column($this->perfis->toArray(), 'perfil')),
                 'criado' => $this->created_at->format('d/m/Y'),
             ]
         ];
-    }
-
-    public function pessoa()
-    {
-        return $this->hasOne(Pessoa::class, 'id', 'pessoa_id');
     }
 
     public function perfis()

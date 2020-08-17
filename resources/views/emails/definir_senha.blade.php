@@ -1,7 +1,7 @@
 @component('mail::message')
 # Definir Senha
 
-Olá **{{ $user->pessoa->nome }}**!
+Olá **{{ $user->nome }}**!
 
 Este é um e-mail de confirmação para criação do seu login único.<br>
 Para ativação e definição da senha do seu login único, clique no botão abaixo.
