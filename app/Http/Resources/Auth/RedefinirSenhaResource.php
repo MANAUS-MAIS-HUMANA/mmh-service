@@ -17,7 +17,7 @@ class RedefinirSenhaResource extends ResourceBase
         if ($this->resource) {
             return [
                 'email' => $this->email,
-                'nome' => $this->usuario->pessoa->nome,
+                'nome' => $this->usuario->nome,
                 'token' => $this->token,
                 'validade' => $this->validade,
             ];

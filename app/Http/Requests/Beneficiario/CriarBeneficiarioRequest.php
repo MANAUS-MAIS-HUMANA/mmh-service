@@ -66,8 +66,6 @@ class CriarBeneficiarioRequest extends FormRequest
             'enderecos.*.endereco' => 'required|max:255',
             'enderecos.*.bairro_id' => 'required|exists:bairros,id',
             'enderecos.*.zona_id' => 'nullable|exists:zonas,id',
-            'enderecos.*.ponto_referencia' => 'nullable',
-            'enderecos.*.cep' => 'required|digits:8',
             'enderecos.*.cidade_id' => 'required|exists:cidades,id',
         ];
     }
@@ -84,7 +82,6 @@ class CriarBeneficiarioRequest extends FormRequest
             "boolean" => "O :attribute deve ser um tipo booleano (true ou false).",
             "cpf" => "O :attribute é inválido.",
             "date_format" => "A :attribute possui uma data em formato inválido.",
-            "digits" => "O :attribute deve possuir somente números.",
             "email" => "O :attribute deve ser um endereço de e-mail válido.",
             "exists" => "O :attribute é inválido.",
             "in" => "O :attribute é inválido (aceito: :values).",
@@ -131,8 +128,6 @@ class CriarBeneficiarioRequest extends FormRequest
             'enderecos.*.endereco' => 'Endereço',
             'enderecos.*.bairro_id' => 'ID do Bairro',
             'enderecos.*.zona_id' => 'ID da zona da cidade',
-            'enderecos.*.ponto_referencia' => 'Ponto de Referência',
-            'enderecos.*.cep' => 'CEP',
             'enderecos.*.cidade_id' => 'ID da Cidade',
         ];
     }

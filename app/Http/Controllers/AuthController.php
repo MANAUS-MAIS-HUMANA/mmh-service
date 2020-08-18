@@ -100,13 +100,9 @@ class AuthController extends Controller
      *
      * @bodyParam nome string required Nome do novo usuário - (max. 255). Example: Fulano de Tal
      * @bodyParam email string required Endereço de e-mail - (max. 255). Example: fulano@tal.com
-     * @bodyParam endereco string required Endereço residencial - (max. 255). Example: Rua Dom Pedro, S/N, Dom Pedro
-     * @bodyParam estado string required Estado - (tam. 2). Example: AM
-     * @bodyParam tipo_pessoa string required Tipo de Pessoa (PF ou PJ). Example: pf
-     * @bodyParam cpf string Número do CPF do usuário (obrigatório se não houver CNPJ). Example: 111.111.111-11
-     * @bodyParam cnpj string Número do CNPJ da instituição (obrigatório se não houver CPF). Example: 11.111.111/1111-11
      * @bodyParam senha string required Senha de usuário (min. 8). Example: 5&bnaC#f
      * @bodyParam senha_confirmation string required Confirmação de senha de usuário. Example: 5&bnaC#f
+     * @bodyParam telefone string Telefone do usuário (min. 10). Example: 92991234567
      *
      * @responseFile 201 responses/AuthController/create.201.json
      * @responseFile 422 responses/AuthController/create.422.json

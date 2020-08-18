@@ -4,19 +4,13 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use App\Models\Pessoa;
 use App\Models\User;
 use App\Services\ParceiroService;
 use App\Services\PerfilService;
-use App\Services\PessoaService;
 use Illuminate\Http\Request;
 
 trait Usuario
 {
-    /**
-     * @var PessoaService
-     */
-    private PessoaService $pessoaService;
     /**
      * @var PerfilService
      */
@@ -24,51 +18,14 @@ trait Usuario
 
     /**
      * Usuario constructor.
-     * @param PessoaService $pessoaService
      * @param PerfilService $perfilService
      */
     public function __construct(
-        PessoaService $pessoaService,
         PerfilService $perfilService,
         ParceiroService $parceiroService
     ) {
-        $this->pessoaService = $pessoaService;
         $this->perfilService = $perfilService;
         $this->parceiroService = $parceiroService;
-    }
-
-    /**
-     * Solicita a criação da pessoa.
-     *
-     * @param Request $request
-     * @return Pessoa
-     * @throws \Throwable
-     */
-    protected function createPessoa(Request $request): Pessoa
-    {
-        $pessoa = $this->pessoaService->create($request);
-
-        throw_if(
-            !$pessoa['success'] ??= [], \Exception::class, $pessoa['message'], $pessoa['code']
-        );
-
-        return data_get($pessoa, 'data');
-    }
-
-    /**
-     * Solicita a atualização da pessoa.
-     *
-     * @param int $id
-     * @param Request $request
-     * @throws \Throwable
-     */
-    protected function updatePessoa(int $id, Request $request): void
-    {
-        $pessoa = $this->pessoaService->update($id, $request);
-
-        throw_if(
-            !$pessoa['success'] ??= [], \Exception::class, $pessoa['message'], $pessoa['code']
-        );
     }
 
     /**
@@ -151,9 +108,9 @@ trait Usuario
         );
     }
 
-    protected function getParceiroId(string $cpfOrCnpj)
+    protected function getParceiroId(string $email)
     {
-        $parceiro = $this->parceiroService->getParceiroByCpfOrCnpj($cpfOrCnpj);
+        $parceiro = $this->parceiroService->getParceiroByEmail($email);
 
         return $parceiro->id ?? null;
     }

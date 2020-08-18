@@ -1,10 +1,738 @@
 {
 	"info": {
-		"_postman_id": "8e3fc925-ffda-4e20-95f9-e76b27813196",
+		"_postman_id": "63e22f78-a4a8-4e0f-8eb8-3496f87e7c88",
 		"name": "ManausMaisHumana",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Criar Usuário",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nome\": \"Anjos da Guarda\",\n\t\"email\": \"contato@anjosdaguarda.com.br\",\n\t\"senha\": \"12345678\",\n\t\"telefone\": \"92991234567\",\n\t\"senha_confirmation\": \"12345678\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/auth/create",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"mmh@gmail.com\",\n\t\"senha\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/auth/logout",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Solicitar Alteração de Senha",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"algumemail@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/auth/password-reset",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"password-reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirmar Alteração de Senha",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"algumtoken123\",\n    \"email\": \"seuemail@gmail.com\",\n    \"senha\": \"87654321\",\n    \"senha_confirmation\": \"87654321\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/auth/confirm-password-reset",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"confirm-password-reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/auth/refresh",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Usuários",
+			"item": [
+				{
+					"name": "Alterar Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"A\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/usuario/2/set-status",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"usuario",
+								"2",
+								"set-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Senha",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"algumemail@gmail.com\",\n    \"token\": \"$2y$10$BXXeMfCCTRggA1VYR7g99.fuMjk4wZt.IZ8AkB5jjhjZpMYR1MWzy\",\n    \"senha\": \"12345678\",\n    \"senha_confirmation\": \"12345678\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/usuario/2/set-password",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"usuario",
+								"2",
+								"set-password"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Parceiros",
+			"item": [
+				{
+					"name": "Parceiros",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/parceiros",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"parceiros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Parceiros (Básico)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/parceiros/basico",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"basico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Parceiros ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/parceiros/1",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Parceiros",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nome\": \"Anjos da Guarda\",\n\t\"email\": \"contato@anjosdaguarda.com.br\",\n\t\"cnpj\": \"69.426.175/0001-61\",\n\t\"telefones\": [\n\t\t{\n\t\t\t\"telefone\": \"9236445874\",\n\t\t\t\"tipo\": \"Fixo\"\n\t\t}\n\t],\n\t\"enderecos\": [\n\t\t{\n\t\t\t\"endereco\": \"Rua Açaí, N 50, CEP: 69068447\",\n\t\t\t\"bairro_id\": 13,\n\t\t\t\"cidade_id\": 1\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/parceiros",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"parceiros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Parceiros",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nome\": \"Anjos da Guarda\",\n\t\"email\": \"contato@anjosdaguarda.com.br\",\n\t\"cnpj\": \"69.426.175/0001-61\",\n\t\"telefones\": [\n\t\t{\n\t\t\t\"telefone\": \"9236445874\",\n\t\t\t\"tipo\": \"Fixo\"\n\t\t}\n\t],\n\t\"enderecos\": [\n\t\t{\n\t\t\t\"endereco\": \"Rua Açaí, N 50, CEP: 69068447\",\n\t\t\t\"bairro_id\": 13,\n\t\t\t\"cidade_id\": 1\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/parceiros/3",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Parceiros",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/parceiros/3",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Doações",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/parceiros/1/beneficiarios/1/doacoes/",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"1",
+								"beneficiarios",
+								"1",
+								"doacoes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Beneficiários",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/parceiros/1/beneficiarios/",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"1",
+								"beneficiarios",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Doações",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data_doacao\": \"2020-08-18\",\n    \"total_cestas\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/parceiros/1/beneficiarios/1/doacoes",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"1",
+								"beneficiarios",
+								"1",
+								"doacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Doações",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/parceiros/1/beneficiarios/1/doacoes/1",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"parceiros",
+								"1",
+								"beneficiarios",
+								"1",
+								"doacoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
 		{
 			"name": "Beneficiarios",
 			"item": [
@@ -16,18 +744,30 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zdDo4NzY1XC9hcGlcL3YxXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU5MDQxMDk5MCwiZXhwIjoxNTkwNDE0NTkwLCJuYmYiOjE1OTA0MTA5OTAsImp0aSI6Ik1iZXpkNnZHNW1CU1hDNngiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJ1c2VyIjp7Im5vbWUiOiJNYW5hdXMgTWFpcyBIdW1hbmEiLCJlbWFpbCI6Im1taEBnbWFpbC5jb20iLCJzdGF0dXMiOiJBdGl2byIsImNyaWFkbyI6IjI1XC8wNVwvMjAyMCJ9fQ.ZBogdTDWR1HWQG0gqObK_cq5a0cD6pEJOv9QaLnGawY",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/api/v1/beneficiarios",
+							"raw": "{{url}}:{{port}}/api/v1/beneficiarios",
 							"host": [
 								"{{url}}"
 							],
+							"port": "{{port}}",
 							"path": [
 								"api",
 								"v1",
@@ -45,18 +785,30 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9iYWNrLmxvY2FsaG9zdDo4NzY1XC9hcGlcL3YxXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU5MDQxMTA3NiwiZXhwIjoxNTkwNDE0Njc2LCJuYmYiOjE1OTA0MTEwNzYsImp0aSI6IjkwNWFTYXdJV2ZuaTlaeTQiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJ1c2VyIjp7Im5vbWUiOiJNYW5hdXMgTWFpcyBIdW1hbmEiLCJlbWFpbCI6Im1taEBnbWFpbC5jb20iLCJzdGF0dXMiOiJBdGl2byIsImNyaWFkbyI6IjI1XC8wNVwvMjAyMCJ9fQ.ozyA3BJqzNwg4li15gkzLg3d74t5Tn6cFiFgzeQpcN4",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
 						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/api/v1/beneficiarios/1",
+							"raw": "{{url}}:{{port}}/api/v1/beneficiarios/1",
 							"host": [
 								"{{url}}"
 							],
+							"port": "{{port}}",
 							"path": [
 								"api",
 								"v1",
@@ -71,7 +823,14 @@
 					"name": "Beneficiários",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [
@@ -88,16 +847,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"parceiro_id\": 1,\n\t\"nome\": \"Machado de Assis\",\n\t\"cpf\": \"422.828.794-81\",\n\t\"email\": \"machadodeassis@gmail.com\",\n\t\"data_nascimento\": \"1950-01-01\",\n\t\"trabalho\": \"Autônomo\",\n\t\"esta_desempregado\": false,\n\t\"estado_civil_id\": 1,\n\t\"nome_conjuge\": \"Carolina Augusta\",\n\t\"cpf_conjuge\": \"216.498.812-40\",\n\t\"total_residentes\": 4,\n\t\"situacao_moradia\": \"Própria\",\n\t\"renda_mensal\": 20000,\n\t\"gostaria_montar_negocio\": false,\n\t\"gostaria_participar_cursos\": true,\n\t\"tipo_curso\": \"presencial\",\n\t\"concorda_informacoes_verdadeiras\": true,\n\t\"data_submissao\": \"2020-05-26 10:11:12\",\n\t\"telefones\": [\n\t\t{\n\t\t\t\"telefone\": \"92981174585\",\n\t\t\t\"tipo\": \"Celular\"\n\t\t}\n\t],\n\t\"enderecos\": [\n\t\t{\n\t\t\t\"endereco\": \"Rua das Letras\",\n\t\t\t\"numero\": \"23\",\n\t\t\t\"complemento\": \"Academia Brasileira de Letras\",\n\t\t\t\"bairro_id\": 23,\n\t\t\t\"zona_id\": 1,\n\t\t\t\"cep\": \"69067123\",\n\t\t\t\"cidade_id\": 1\n\t\t}\n\t]\n}",
+							"raw": "{\n\t\"parceiro_id\": 1,\n\t\"nome\": \"Machado de Assis\",\n\t\"cpf\": \"422.828.794-81\",\n\t\"email\": \"machadodeassis@gmail.com\",\n\t\"data_nascimento\": \"1950-01-01\",\n\t\"trabalho\": \"Autônomo\",\n\t\"esta_desempregado\": false,\n\t\"estado_civil_id\": 1,\n\t\"nome_conjuge\": \"Carolina Augusta\",\n\t\"cpf_conjuge\": \"216.498.812-40\",\n\t\"total_residentes\": 4,\n\t\"situacao_moradia\": \"Própria\",\n\t\"renda_mensal\": 20000,\n\t\"gostaria_montar_negocio\": false,\n\t\"gostaria_participar_cursos\": true,\n\t\"tipo_curso\": \"presencial\",\n\t\"concorda_informacoes_verdadeiras\": true,\n\t\"data_submissao\": \"2020-05-26 10:11:12\",\n\t\"telefones\": [\n\t\t{\n\t\t\t\"telefone\": \"92981174585\",\n\t\t\t\"tipo\": \"Celular\"\n\t\t}\n\t],\n\t\"enderecos\": [\n\t\t{\n\t\t\t\"endereco\": \"Rua das Letras\",\n\t\t\t\"bairro_id\": 23,\n\t\t\t\"zona_id\": 1,\n\t\t\t\"cidade_id\": 1\n\t\t}\n\t]\n}",
 							"options": {
 								"raw": {}
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/v1/beneficiarios",
+							"raw": "{{url}}:{{port}}/api/v1/beneficiarios",
 							"host": [
 								"{{url}}"
 							],
+							"port": "{{port}}",
 							"path": [
 								"api",
 								"v1",
@@ -110,6 +870,16 @@
 				{
 					"name": "Beneficiários",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [
 							{
@@ -125,16 +895,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"parceiro_id\": 1,\n\t\"nome\": \"Machado de Assis\",\n\t\"cpf\": \"422.828.794-81\",\n\t\"email\": \"machadodeassis@gmail.com\",\n\t\"data_nascimento\": \"1950-01-01\",\n\t\"trabalho\": \"Autônomo\",\n\t\"esta_desempregado\": false,\n\t\"estado_civil_id\": 1,\n\t\"nome_conjuge\": \"Carolina Augusta\",\n\t\"cpf_conjuge\": \"216.498.812-40\",\n\t\"total_residentes\": 4,\n\t\"situacao_moradia\": \"Própria\",\n\t\"renda_mensal\": 20000,\n\t\"gostaria_montar_negocio\": false,\n\t\"gostaria_participar_cursos\": true,\n\t\"tipo_curso\": \"presencial\",\n\t\"concorda_informacoes_verdadeiras\": true,\n\t\"data_submissao\": \"2020-05-26 10:11:12\",\n\t\"telefones\": [\n\t\t{\n\t\t\t\"telefone\": \"92981174585\",\n\t\t\t\"tipo\": \"Celular\"\n\t\t}\n\t],\n\t\"enderecos\": [\n\t\t{\n\t\t\t\"endereco\": \"Rua das Letras\",\n\t\t\t\"numero\": \"23\",\n\t\t\t\"complemento\": \"Academia Brasileira de Letras\",\n\t\t\t\"bairro_id\": 23,\n\t\t\t\"zona_id\": 1,\n\t\t\t\"cep\": \"69067123\",\n\t\t\t\"cidade_id\": 1\n\t\t}\n\t]\n}",
+							"raw": "{\n\t\"parceiro_id\": 1,\n\t\"nome\": \"Machado de Assis\",\n\t\"cpf\": \"422.828.794-81\",\n\t\"email\": \"machadodeassis@gmail.com\",\n\t\"data_nascimento\": \"1950-01-01\",\n\t\"trabalho\": \"Autônomo\",\n\t\"esta_desempregado\": false,\n\t\"estado_civil_id\": 1,\n\t\"nome_conjuge\": \"Carolina Augusta\",\n\t\"cpf_conjuge\": \"216.498.812-40\",\n\t\"total_residentes\": 4,\n\t\"situacao_moradia\": \"Própria\",\n\t\"renda_mensal\": 20000,\n\t\"gostaria_montar_negocio\": false,\n\t\"gostaria_participar_cursos\": true,\n\t\"tipo_curso\": \"presencial\",\n\t\"concorda_informacoes_verdadeiras\": true,\n\t\"data_submissao\": \"2020-05-26 10:11:12\",\n\t\"telefones\": [\n\t\t{\n\t\t\t\"telefone\": \"92981174585\",\n\t\t\t\"tipo\": \"Celular\"\n\t\t}\n\t],\n\t\"enderecos\": [\n\t\t{\n\t\t\t\"endereco\": \"Rua das Letras\",\n\t\t\t\"bairro_id\": 23,\n\t\t\t\"zona_id\": 1,\n\t\t\t\"cidade_id\": 1\n\t\t}\n\t]\n}",
 							"options": {
 								"raw": {}
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/v1/beneficiarios/1",
+							"raw": "{{url}}:{{port}}/api/v1/beneficiarios/1",
 							"host": [
 								"{{url}}"
 							],
+							"port": "{{port}}",
 							"path": [
 								"api",
 								"v1",
@@ -148,309 +919,17 @@
 				{
 					"name": "Beneficiários",
 					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/api/v1/beneficiarios/1",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"beneficiarios",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Parceiros",
-			"item": [
-				{
-					"name": "Parceiros",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/api/v1/parceiros",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"parceiros"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Parceiros ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/v1/parceiros/1",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"parceiros",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Parceiros",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"nome\": \"Boa Ação\",\n\t\"email\": \"contato@boacao.com.br\",\n\t\"cnpj\": \"14253678901597\",\n\t\"telefones\": [\n\t\t{\n\t\t\t\"telefone\": \"9236445874\",\n\t\t\t\"tipo\": \"Fixo\"\n\t\t}\n\t],\n\t\"enderecos\": [\n\t\t{\n\t\t\t\"endereco\": \"Rua Açaí\",\n\t\t\t\"numero\": \"10\",\n\t\t\t\"complemento\": \"Bloco A\",\n\t\t\t\"bairro_id\": 50,\n\t\t\t\"cep\": \"69068447\",\n\t\t\t\"cidade_id\": 1\n\t\t}\n\t]\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/v1/parceiros",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"parceiros"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Parceiros",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"nome\": \"Ação de Graças\",\n\t\"email\": \"contato@gracas.com.br\",\n\t\"cnpj\": \"45678912602487\",\n\t\"telefones\": [\n\t\t{\n\t\t\t\"telefone\": \"92991475870\",\n\t\t\t\"tipo\": \"Celular\"\n\t\t}\n\t],\n\t\"enderecos\": [\n\t\t{\n\t\t\t\"endereco\": \"Rua Japura\",\n\t\t\t\"numero\": \"20\",\n\t\t\t\"complemento\": \"Bloco J\",\n\t\t\t\"bairro_id\": 50,\n\t\t\t\"cep\": \"69068747\",\n\t\t\t\"cidade_id\": 1\n\t\t}\n\t]\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/v1/parceiros/1",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"parceiros",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Parceiros",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/v1/parceiros/1",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"parceiros",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Doações",
-					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{valid_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"data_doacao\": \"2020-06-01\",\n    \"total_cestas\":1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/v1/parceiros/2/beneficiarios/2/doacoes",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"parceiros",
-								"2",
-								"beneficiarios",
-								"2",
-								"doacoes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Doações",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{valid_token}}",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
 						},
 						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/v1/parceiros/2/beneficiarios/2/doacoes/8",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"parceiros",
-								"2",
-								"beneficiarios",
-								"2",
-								"doacoes",
-								"8"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Doações",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{valid_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/v1/parceiros/2/beneficiarios/2/doacoes/",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"parceiros",
-								"2",
-								"beneficiarios",
-								"2",
-								"doacoes",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Beneficiários",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{valid_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -464,17 +943,16 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/v1/parceiros/2/beneficiarios/",
+							"raw": "{{url}}:{{port}}/api/v1/beneficiarios/1",
 							"host": [
 								"{{url}}"
 							],
+							"port": "{{port}}",
 							"path": [
 								"api",
 								"v1",
-								"parceiros",
-								"2",
 								"beneficiarios",
-								""
+								"1"
 							]
 						}
 					},
@@ -503,10 +981,11 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/v1/doadores/ranking",
+							"raw": "{{url}}:{{port}}/api/v1/doadores/ranking",
 							"host": [
 								"{{url}}"
 							],
+							"port": "{{port}}",
 							"path": [
 								"api",
 								"v1",
