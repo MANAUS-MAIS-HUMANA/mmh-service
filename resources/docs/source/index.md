@@ -262,13 +262,9 @@ let headers = {
 let body = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
-    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
-    "estado": "AM",
-    "tipo_pessoa": "pf",
-    "cpf": "111.111.111-11",
-    "cnpj": "11.111.111\/1111-11",
     "senha": "5&bnaC#f",
-    "senha_confirmation": "5&bnaC#f"
+    "senha_confirmation": "5&bnaC#f",
+    "telefone": "92991234567"
 }
 
 fetch(url, {
@@ -293,13 +289,9 @@ $response = $client->post(
         'json' => [
             'nome' => 'Fulano de Tal',
             'email' => 'fulano@tal.com',
-            'endereco' => 'Rua Dom Pedro, S/N, Dom Pedro',
-            'estado' => 'AM',
-            'tipo_pessoa' => 'pf',
-            'cpf' => '111.111.111-11',
-            'cnpj' => '11.111.111/1111-11',
             'senha' => '5&bnaC#f',
             'senha_confirmation' => '5&bnaC#f',
+            'telefone' => '92991234567',
         ],
     ]
 );
@@ -315,13 +307,9 @@ url = 'http://localhost/api/v1/auth/create'
 payload = {
     "nome": "Fulano de Tal",
     "email": "fulano@tal.com",
-    "endereco": "Rua Dom Pedro, S\/N, Dom Pedro",
-    "estado": "AM",
-    "tipo_pessoa": "pf",
-    "cpf": "111.111.111-11",
-    "cnpj": "11.111.111\/1111-11",
     "senha": "5&bnaC#f",
-    "senha_confirmation": "5&bnaC#f"
+    "senha_confirmation": "5&bnaC#f",
+    "telefone": "92991234567"
 }
 headers = {
   'Content-Type': 'application/json',
@@ -336,7 +324,7 @@ curl -X POST \
     "http://localhost/api/v1/auth/create" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","endereco":"Rua Dom Pedro, S\/N, Dom Pedro","estado":"AM","tipo_pessoa":"pf","cpf":"111.111.111-11","cnpj":"11.111.111\/1111-11","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f"}'
+    -d '{"nome":"Fulano de Tal","email":"fulano@tal.com","senha":"5&bnaC#f","senha_confirmation":"5&bnaC#f","telefone":"92991234567"}'
 
 ```
 
@@ -397,13 +385,9 @@ Parameter | Type | Status | Description
 --------- | ------- | ------- | ------- | -----------
     `nome` | string |  required  | Nome do novo usuário - (max. 255).
         `email` | string |  required  | Endereço de e-mail - (max. 255).
-        `endereco` | string |  required  | Endereço residencial - (max. 255).
-        `estado` | string |  required  | Estado - (tam. 2).
-        `tipo_pessoa` | string |  required  | Tipo de Pessoa (PF ou PJ).
-        `cpf` | string |  optional  | Número do CPF do usuário (obrigatório se não houver CNPJ).
-        `cnpj` | string |  optional  | Número do CNPJ da instituição (obrigatório se não houver CPF).
         `senha` | string |  required  | Senha de usuário (min. 8).
         `senha_confirmation` | string |  required  | Confirmação de senha de usuário.
+        `telefone` | string |  optional  | Telefone do usuário (min. 10).
     
 <!-- END_a4a233f86d97c8deebe3bedaa936f967 -->
 
@@ -1057,22 +1041,22 @@ let body = {
     "email": "fulano@tal.com",
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
-    "esta_desempregado": true,
-    "estado_civil_id": 8,
+    "esta_desempregado": false,
+    "estado_civil_id": 15,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "a",
+    "situacao_moradia": "ducimus",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": false,
-    "gostaria_participar_cursos": false,
-    "tipo_curso": "debitis",
-    "concorda_informacoes_verdadeiras": false,
+    "gostaria_montar_negocio": true,
+    "gostaria_participar_cursos": true,
+    "tipo_curso": "voluptatibus",
+    "concorda_informacoes_verdadeiras": true,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "in"
+            "tipo": "dicta"
         }
     ],
     "enderecos": [
@@ -1080,8 +1064,6 @@ let body = {
             "endereco": "Rua da paz, 150",
             "bairro_id": 1,
             "zona_id": 1,
-            "cep": "\"69061000\"",
-            "ponto_referencia": "\"INPA\"",
             "cidade_id": 1
         }
     ]
@@ -1113,22 +1095,22 @@ $response = $client->post(
             'email' => 'fulano@tal.com',
             'data_nascimento' => '1990-01-01',
             'trabalho' => 'Trabalhador Autônomo',
-            'esta_desempregado' => true,
-            'estado_civil_id' => 8,
+            'esta_desempregado' => false,
+            'estado_civil_id' => 15,
             'nome_conjuge' => 'Carolina Novais.',
             'cpf_conjuge' => '10987654321',
             'total_residentes' => 4,
-            'situacao_moradia' => 'a',
+            'situacao_moradia' => 'ducimus',
             'renda_mensal' => 1000.0,
-            'gostaria_montar_negocio' => false,
-            'gostaria_participar_cursos' => false,
-            'tipo_curso' => 'debitis',
-            'concorda_informacoes_verdadeiras' => false,
+            'gostaria_montar_negocio' => true,
+            'gostaria_participar_cursos' => true,
+            'tipo_curso' => 'voluptatibus',
+            'concorda_informacoes_verdadeiras' => true,
             'data_submissao' => '2020-05-01 10:11:12',
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'in',
+                    'tipo' => 'dicta',
                 ],
             ],
             'enderecos' => [
@@ -1136,8 +1118,6 @@ $response = $client->post(
                     'endereco' => 'Rua da paz, 150',
                     'bairro_id' => 1,
                     'zona_id' => 1,
-                    'cep' => '"69061000"',
-                    'ponto_referencia' => '"INPA"',
                     'cidade_id' => 1,
                 ],
             ],
@@ -1160,22 +1140,22 @@ payload = {
     "email": "fulano@tal.com",
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
-    "esta_desempregado": true,
-    "estado_civil_id": 8,
+    "esta_desempregado": false,
+    "estado_civil_id": 15,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "a",
+    "situacao_moradia": "ducimus",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": false,
-    "gostaria_participar_cursos": false,
-    "tipo_curso": "debitis",
-    "concorda_informacoes_verdadeiras": false,
+    "gostaria_montar_negocio": true,
+    "gostaria_participar_cursos": true,
+    "tipo_curso": "voluptatibus",
+    "concorda_informacoes_verdadeiras": true,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "in"
+            "tipo": "dicta"
         }
     ],
     "enderecos": [
@@ -1183,8 +1163,6 @@ payload = {
             "endereco": "Rua da paz, 150",
             "bairro_id": 1,
             "zona_id": 1,
-            "cep": "\"69061000\"",
-            "ponto_referencia": "\"INPA\"",
             "cidade_id": 1
         }
     ]
@@ -1202,7 +1180,7 @@ curl -X POST \
     "http://localhost/api/v1/beneficiarios" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":8,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"a","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":false,"tipo_curso":"debitis","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"in"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":15,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"ducimus","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":true,"tipo_curso":"voluptatibus","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"dicta"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
@@ -1283,8 +1261,6 @@ Parameter | Type | Status | Description
         `enderecos[0].endereco` | string |  required  | Nome da rua, com número e complemento.
         `enderecos[0].bairro_id` | integer |  required  | ID do bairro.
         `enderecos[0].zona_id` | integer |  required  | ID da zona da cidade.
-        `enderecos[0].cep` | string |  required  | CEP da rua.
-        `enderecos[0].ponto_referencia` | string |  optional  | Ponto de referência.
         `enderecos[0].cidade_id` | integer |  required  | ID da cidade.
     
 <!-- END_2c241c85d2933fb7bf154de02f887721 -->
@@ -1315,21 +1291,21 @@ let body = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": true,
-    "estado_civil_id": 4,
+    "estado_civil_id": 17,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "id",
+    "situacao_moradia": "quae",
     "renda_mensal": 1000,
     "gostaria_montar_negocio": true,
     "gostaria_participar_cursos": true,
-    "tipo_curso": "saepe",
-    "concorda_informacoes_verdadeiras": false,
+    "tipo_curso": "earum",
+    "concorda_informacoes_verdadeiras": true,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "nihil"
+            "tipo": "sit"
         }
     ],
     "enderecos": [
@@ -1337,8 +1313,6 @@ let body = {
             "endereco": "Rua da paz, 150",
             "bairro_id": 1,
             "zona_id": 1,
-            "cep": "\"69061000\"",
-            "ponto_referencia": "\"INPA\"",
             "cidade_id": 1
         }
     ]
@@ -1371,21 +1345,21 @@ $response = $client->put(
             'data_nascimento' => '1990-01-01',
             'trabalho' => 'Trabalhador Autônomo',
             'esta_desempregado' => true,
-            'estado_civil_id' => 4,
+            'estado_civil_id' => 17,
             'nome_conjuge' => 'Carolina Novais.',
             'cpf_conjuge' => '10987654321',
             'total_residentes' => 4,
-            'situacao_moradia' => 'id',
+            'situacao_moradia' => 'quae',
             'renda_mensal' => 1000.0,
             'gostaria_montar_negocio' => true,
             'gostaria_participar_cursos' => true,
-            'tipo_curso' => 'saepe',
-            'concorda_informacoes_verdadeiras' => false,
+            'tipo_curso' => 'earum',
+            'concorda_informacoes_verdadeiras' => true,
             'data_submissao' => '2020-05-01 10:11:12',
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'nihil',
+                    'tipo' => 'sit',
                 ],
             ],
             'enderecos' => [
@@ -1393,8 +1367,6 @@ $response = $client->put(
                     'endereco' => 'Rua da paz, 150',
                     'bairro_id' => 1,
                     'zona_id' => 1,
-                    'cep' => '"69061000"',
-                    'ponto_referencia' => '"INPA"',
                     'cidade_id' => 1,
                 ],
             ],
@@ -1418,21 +1390,21 @@ payload = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": true,
-    "estado_civil_id": 4,
+    "estado_civil_id": 17,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "id",
+    "situacao_moradia": "quae",
     "renda_mensal": 1000,
     "gostaria_montar_negocio": true,
     "gostaria_participar_cursos": true,
-    "tipo_curso": "saepe",
-    "concorda_informacoes_verdadeiras": false,
+    "tipo_curso": "earum",
+    "concorda_informacoes_verdadeiras": true,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "nihil"
+            "tipo": "sit"
         }
     ],
     "enderecos": [
@@ -1440,8 +1412,6 @@ payload = {
             "endereco": "Rua da paz, 150",
             "bairro_id": 1,
             "zona_id": 1,
-            "cep": "\"69061000\"",
-            "ponto_referencia": "\"INPA\"",
             "cidade_id": 1
         }
     ]
@@ -1459,7 +1429,7 @@ curl -X PUT \
     "http://localhost/api/v1/beneficiarios/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":4,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"id","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":true,"tipo_curso":"saepe","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"nihil"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":17,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"quae","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":true,"tipo_curso":"earum","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"sit"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
@@ -1548,8 +1518,6 @@ Parameter | Type | Status | Description
         `enderecos[0].endereco` | string |  required  | Nome da rua, com número e complemento.
         `enderecos[0].bairro_id` | integer |  required  | ID do bairro.
         `enderecos[0].zona_id` | integer |  required  | ID da zona da cidade.
-        `enderecos[0].cep` | string |  required  | CEP da rua.
-        `enderecos[0].ponto_referencia` | string |  optional  | Ponto de referência.
         `enderecos[0].cidade_id` | integer |  required  | ID da cidade.
     
 <!-- END_ac16fe552e87e418591297f9829ceb5d -->
@@ -1985,6 +1953,144 @@ Parameter | Status | Description
 
 <!-- END_0d4dfb28e77c127afb29ac9f5077f22f -->
 
+<!-- START_5b7e578c57cc0e59c7b0a6653587ed4b -->
+## Listar Básico
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint para buscar o ID e nome de todos os parceiros.
+Essa rota será usada especialmente na página de Beneficiários, quando o usuário logado
+for Admin ou Codese.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/parceiros/basico"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get(
+    'http://localhost/api/v1/parceiros/basico',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/parceiros/basico'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers)
+response.json()
+```
+
+```bash
+curl -X GET \
+    -G "http://localhost/api/v1/parceiros/basico" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 8,
+            "nome": "Boa Ação",
+            "email": "contato@boacao.com.br",
+            "tipo_pessoa": {
+                "id": 9,
+                "tipo_pessoa": "pj",
+                "cpf_cnpj": "38797937000102"
+            },
+            "telefones": [
+                {
+                    "id": 1,
+                    "telefone": "9236445874",
+                    "tipo": 2
+                }
+            ],
+            "enderecos": [
+                {
+                    "id": 3,
+                    "endereco": "Rua Açaí",
+                    "ponto_referencia": null,
+                    "cep": "69068447",
+                    "cidade": {
+                        "nome": "Manaus",
+                        "estado": {
+                            "uf": "AM",
+                            "nome": "Amazonas"
+                        }
+                    },
+                    "bairro": {
+                        "nome": "Raiz"
+                    }
+                }
+            ]
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/parceiros",
+    "from": null,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/parceiros",
+    "next_page_url": null,
+    "path": "http:\/\/back.localhost\/api\/v1\/parceiros",
+    "per_page": 6,
+    "prev_page_url": "http:\/\/back.localhost\/api\/v1\/parceiros",
+    "to": null,
+    "total": 0,
+    "message": "Parceiro obtido com sucesso!",
+    "success": true
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}
+```
+
+### HTTP Request
+`GET api/v1/parceiros/basico`
+
+
+<!-- END_5b7e578c57cc0e59c7b0a6653587ed4b -->
+
 <!-- START_a072594af821ade9e7ce15d71dbe9460 -->
 ## Buscar
 
@@ -2161,15 +2267,14 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "totam"
+            "tipo": "esse"
         }
     ],
     "enderecos": [
         {
             "endereco": "Rua da paz, 150",
             "bairro_id": 1,
-            "cep": "\"69061000\"",
-            "ponto_referencia": "\"INPA\"",
+            "zona_id": 1,
             "cidade_id": 1
         }
     ]
@@ -2202,15 +2307,14 @@ $response = $client->post(
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'totam',
+                    'tipo' => 'esse',
                 ],
             ],
             'enderecos' => [
                 [
                     'endereco' => 'Rua da paz, 150',
                     'bairro_id' => 1,
-                    'cep' => '"69061000"',
-                    'ponto_referencia' => '"INPA"',
+                    'zona_id' => 1,
                     'cidade_id' => 1,
                 ],
             ],
@@ -2234,15 +2338,14 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "totam"
+            "tipo": "esse"
         }
     ],
     "enderecos": [
         {
             "endereco": "Rua da paz, 150",
             "bairro_id": 1,
-            "cep": "\"69061000\"",
-            "ponto_referencia": "\"INPA\"",
+            "zona_id": 1,
             "cidade_id": 1
         }
     ]
@@ -2260,7 +2363,7 @@ curl -X POST \
     "http://localhost/api/v1/parceiros" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"totam"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"esse"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
@@ -2326,11 +2429,11 @@ Parameter | Type | Status | Description
         `enderecos` | array |  required  | Lista de enderecos.
         `enderecos[0].endereco` | string |  required  | Nome da rua, com número e complemento.
         `enderecos[0].bairro_id` | integer |  required  | ID do bairro.
-        `enderecos[0].cep` | string |  required  | CEP da rua.
-        `enderecos[0].ponto_referencia` | string |  optional  | Ponto de referência.
+        `enderecos[0].zona_id` | integer |  optional  | ID da zona da cidade.
         `enderecos[0].cidade_id` | integer |  required  | ID da cidade.
     
 <!-- END_543d37f5ea560f7ea10b487b2b15671f -->
+
 <!-- START_5aaa67f3f0225463d7c25473608a7464 -->
 ## Atualizar
 
@@ -2357,15 +2460,14 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "vel"
+            "tipo": "est"
         }
     ],
     "enderecos": [
         {
             "endereco": "Rua da paz, 150",
             "bairro_id": 1,
-            "cep": "\"69061000\"",
-            "ponto_referencia": "\"INPA\"",
+            "zona_id": 1,
             "cidade_id": 1
         }
     ]
@@ -2398,15 +2500,14 @@ $response = $client->put(
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'vel',
+                    'tipo' => 'est',
                 ],
             ],
             'enderecos' => [
                 [
                     'endereco' => 'Rua da paz, 150',
                     'bairro_id' => 1,
-                    'cep' => '"69061000"',
-                    'ponto_referencia' => '"INPA"',
+                    'zona_id' => 1,
                     'cidade_id' => 1,
                 ],
             ],
@@ -2430,15 +2531,14 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "vel"
+            "tipo": "est"
         }
     ],
     "enderecos": [
         {
             "endereco": "Rua da paz, 150",
             "bairro_id": 1,
-            "cep": "\"69061000\"",
-            "ponto_referencia": "\"INPA\"",
+            "zona_id": 1,
             "cidade_id": 1
         }
     ]
@@ -2456,7 +2556,7 @@ curl -X PUT \
     "http://localhost/api/v1/parceiros/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"vel"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"cep":"\"69061000\"","ponto_referencia":"\"INPA\"","cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"est"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
@@ -2569,8 +2669,7 @@ Parameter | Type | Status | Description
         `enderecos` | array |  required  | Lista de enderecos
         `enderecos[0].endereco` | string |  required  | Nome da rua, com número e complemento.
         `enderecos[0].bairro_id` | integer |  required  | ID do bairro.
-        `enderecos[0].cep` | string |  required  | CEP da rua.
-        `enderecos[0].ponto_referencia` | string |  optional  | Ponto de referência.
+        `enderecos[0].zona_id` | integer |  optional  | ID da zona da cidade.
         `enderecos[0].cidade_id` | integer |  required  | ID da cidade.
     
 <!-- END_5aaa67f3f0225463d7c25473608a7464 -->

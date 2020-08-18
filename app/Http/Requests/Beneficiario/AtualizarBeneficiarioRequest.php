@@ -66,8 +66,6 @@ class AtualizarBeneficiarioRequest extends FormRequest
             'enderecos.*.endereco' => 'required|max:255',
             'enderecos.*.bairro_id' => 'required|exists:bairros,id',
             'enderecos.*.zona_id' => 'nullable|exists:zonas,id',
-            'enderecos.*.ponto_referencia' => 'nullable',
-            'enderecos.*.cep' => 'required|digits:8',
             'enderecos.*.cidade_id' => 'required|exists:cidades,id',
         ];
 

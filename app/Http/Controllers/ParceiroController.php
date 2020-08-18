@@ -89,6 +89,31 @@ class ParceiroController extends Controller
     }
 
     /**
+     * Listar Básico
+     *
+     * Endpoint para buscar o ID e nome de todos os parceiros.
+     * Essa rota será usada especialmente na página de Beneficiários, quando o usuário logado
+     * for Admin ou Codese.
+     *
+     * @authenticated
+     *
+     * @responseFile 200 responses/ParceiroController/get.200.json
+     * @responseFile 500 responses/ParceiroController/internalServerError.500.json
+     */
+    public function basic(Request $request): JsonResponse
+    {
+        $resultado = $this->parceiroService->basic($request);
+
+        $resource = new ParceiroResource(
+            $resultado['data'] ??= null,
+            $resultado['success'],
+            $resultado['message'],
+        );
+
+        return $resource->response()->setStatusCode($resultado['code']);
+    }
+
+    /**
      * Criar
      *
      * Endpoint para inserir uma nova instituição parceira no sistema.
@@ -105,8 +130,7 @@ class ParceiroController extends Controller
      * @bodyParam enderecos array required Lista de enderecos.
      * @bodyParam enderecos[0].endereco string required Nome da rua, com número e complemento. Example: Rua da paz, 150
      * @bodyParam enderecos[0].bairro_id int required ID do bairro. Example: 1
-     * @bodyParam enderecos[0].cep string required CEP da rua. Example: "69061000"
-     * @bodyParam enderecos[0].ponto_referencia string Ponto de referência. Example: "INPA"
+     * @bodyParam enderecos[0].zona_id int ID da zona da cidade. Example: 1
      * @bodyParam enderecos[0].cidade_id int required ID da cidade. Example: 1
      *
      * @responseFile 201 responses/ParceiroController/store.201.json
@@ -145,8 +169,7 @@ class ParceiroController extends Controller
      * @bodyParam enderecos array required Lista de enderecos
      * @bodyParam enderecos[0].endereco string required Nome da rua, com número e complemento. Example: Rua da paz, 150
      * @bodyParam enderecos[0].bairro_id int required ID do bairro. Example: 1
-     * @bodyParam enderecos[0].cep string required CEP da rua. Example: "69061000"
-     * @bodyParam enderecos[0].ponto_referencia string Ponto de referência. Example: "INPA"
+     * @bodyParam enderecos[0].zona_id int ID da zona da cidade. Example: 1
      * @bodyParam enderecos[0].cidade_id int required ID da cidade. Example: 1
      *
      * @responseFile 200 responses/ParceiroController/update.200.json

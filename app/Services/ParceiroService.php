@@ -56,9 +56,31 @@ class ParceiroService
         return $resultado;
     }
 
-    public function getParceiroByCpfOrCnpj(string $cpfOrCnpj)
+    public function basic(Request $request): array
     {
-        return Parceiro::where('cpf_cnpj', '=', $cpfOrCnpj)->first();
+        try {
+            $parceiros = $this->parceiro->get(['id', 'nome']);
+
+            $resultado = [
+                'success' => true,
+                'data' => $parceiros->makeHidden(['telefones', 'enderecos']),
+                'message' => 'Parceiros obtidos com sucesso!',
+                'code' => HttpStatus::OK,
+            ];
+        } catch (Exception $e) {
+            $resultado = [
+                'success' => false,
+                'message' => ApiError::erroInesperado($e->getMessage()),
+                'code' => HttpStatus::INTERNAL_SERVER_ERROR,
+            ];
+        }
+
+        return $resultado;
+    }
+
+    public function getParceiroByEmail(string $email)
+    {
+        return Parceiro::where('email', '=', $email)->first();
     }
 
     public function find(string $parceiroId): array
@@ -434,7 +456,7 @@ class ParceiroService
         if (!$parceiro) {
             return [
                 'success' => false,
-                'message' => ApiError::parceiroNaoEncontrado($beneficiaryId),
+                'message' => ApiError::parceiroNaoEncontrado($parceiroId),
                 'code' => HttpStatus::BAD_REQUEST,
             ];
         }

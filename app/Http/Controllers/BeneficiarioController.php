@@ -119,8 +119,6 @@ class BeneficiarioController extends Controller
      * @bodyParam enderecos[0].endereco string required Nome da rua, com número e complemento. Example: Rua da paz, 150
      * @bodyParam enderecos[0].bairro_id int required ID do bairro. Example: 1
      * @bodyParam enderecos[0].zona_id int required ID da zona da cidade. Example: 1
-     * @bodyParam enderecos[0].cep string required CEP da rua. Example: "69061000"
-     * @bodyParam enderecos[0].ponto_referencia string Ponto de referência. Example: "INPA"
      * @bodyParam enderecos[0].cidade_id int required ID da cidade. Example: 1
      *
      * @responseFile 201 responses/BeneficiarioController/store.201.json
@@ -173,8 +171,6 @@ class BeneficiarioController extends Controller
      * @bodyParam enderecos[0].endereco string required Nome da rua, com número e complemento. Example: Rua da paz, 150
      * @bodyParam enderecos[0].bairro_id int required ID do bairro. Example: 1
      * @bodyParam enderecos[0].zona_id int required ID da zona da cidade. Example: 1
-     * @bodyParam enderecos[0].cep string required CEP da rua. Example: "69061000"
-     * @bodyParam enderecos[0].ponto_referencia string Ponto de referência. Example: "INPA"
      * @bodyParam enderecos[0].cidade_id int required ID da cidade. Example: 1
      *
      * @responseFile 200 responses/BeneficiarioController/update.200.json

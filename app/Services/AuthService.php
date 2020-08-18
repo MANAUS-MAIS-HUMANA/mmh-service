@@ -41,9 +41,7 @@ class AuthService
             $response = $this->respondWithToken((string)$token);
             $response['perfis'] = array_column($usuario->perfis->toArray(), 'perfil');
             if (in_array('parceiro', $response['perfis'])) {
-                $response['parceiro_id'] = $this->getParceiroId(
-                    $usuario->pessoa->tipoPessoa->cpf_cnpj,
-                );
+                $response['parceiro_id'] = $this->getParceiroId($usuario->email);
             }
 
             return [
@@ -96,13 +94,12 @@ class AuthService
         DB::beginTransaction();
 
         try {
-            $pessoa = $this->createPessoa($request);
-
             $usuario = User::create([
-                'pessoa_id' => $pessoa->id,
+                'nome' => $request->nome,
                 'email' => $request->email,
                 'senha' => Hash::make($request->senha),
-                'status' => 'I'
+                'status' => 'I',
+                'telefone' => $request->telefone,
             ]);
 
             throw_if(!$usuario, \Exception::class, 'Não foi possível criar o usuaŕio!', 500);

@@ -18,12 +18,10 @@ class UsuariosResource extends ResourceBase
             return $this->resource->map(function ($usuario) {
                 return [
                     'id' => $usuario->id,
-                    'nome' => $usuario->pessoa->nome,
+                    'nome' => $usuario->nome,
                     'email' => $usuario->email,
                     'status' => $usuario->statusParse,
-                    'perfis' => $usuario->perfis()
-                        ->get(['perfil'])
-                        ->pluck('perfil')
+                    'perfis' => $usuario->perfis()->get(['perfil'])->pluck('perfil'),
                 ];
             });
         }

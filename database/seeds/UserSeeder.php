@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         if (!$hasUser) {
             /* Cria ou atualiza o usuário */
             $user = User::updateOrCreate([
-                'pessoa_id' => 1,
+                'nome' => 'Admin Manaus mais Humana',
                 'email' => 'mmh@gmail.com',
                 'senha' => Hash::make('admin123'),
                 'status' => 'A',

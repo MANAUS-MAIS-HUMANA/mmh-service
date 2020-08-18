@@ -89,6 +89,7 @@ class BeneficiarioService
                 'code' => HttpStatus::CREATED,
             ];
         } catch (Throwable $e) {
+            var_dump($e->getMessage());
             DB::rollBack();
 
             return [

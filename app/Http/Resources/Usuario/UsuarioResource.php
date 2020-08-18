@@ -18,7 +18,7 @@ class UsuarioResource extends ResourceBase
         if ($this->resource) {
             return [
                 'id' => $this->id,
-                'nome' => $this->pessoa->nome,
+                'nome' => $this->nome,
                 'email' => $this->email,
                 'status' => $this->statusParse,
                 'perfis' => $this->perfis()
