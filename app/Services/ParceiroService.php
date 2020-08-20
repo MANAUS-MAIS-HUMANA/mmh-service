@@ -59,7 +59,7 @@ class ParceiroService
     public function basic(Request $request): array
     {
         try {
-            $parceiros = $this->parceiro->get(['id', 'nome']);
+            $parceiros = $this->parceiro->orderBy('nome')->get(['id', 'nome']);
 
             $resultado = [
                 'success' => true,
