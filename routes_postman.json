@@ -998,6 +998,32 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Bairros",
+			"item": [
+				{
+					"name": "Bairros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/bairros",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"bairros"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}

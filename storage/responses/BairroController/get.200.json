@@ -1,0 +1,16 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 1,
+            "nome": "Adrianópolis"
+        },
+        {
+            "id": 2,
+            "nome": "Águas Claras"
+        }
+    ],
+    "message": "Bairros obtidos com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/bairros"
+}
