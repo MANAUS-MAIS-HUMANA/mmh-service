@@ -14,7 +14,6 @@ class Bairro extends Model
         'id',
     ];
     protected $hidden = [
-        'id',
         'created_at',
         'updated_at',
         'cidade_id',
