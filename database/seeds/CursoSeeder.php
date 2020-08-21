@@ -18,6 +18,7 @@ class CursoSeeder extends Seeder
             ['nome' => 'Custos'],
             ['nome' => 'Finanças'],
             ['nome' => 'Informática'],
+            ['nome' => 'Não Tenho Interesse'],
             ['nome' => 'Outro'],
             ['nome' => 'Planejamento'],
             ['nome' => 'Plano de Negócio'],
