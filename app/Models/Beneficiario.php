@@ -30,6 +30,11 @@ class Beneficiario extends Model
         return $this->hasOne('App\Models\Parceiro', 'id', 'parceiro_id');
     }
 
+    public function curso()
+    {
+        return $this->hasOne('App\Models\Curso', 'id', 'curso_id');
+    }
+
     public function telefones()
     {
         return $this->hasMany('App\Models\Telefone', 'beneficiario_id', 'id');
