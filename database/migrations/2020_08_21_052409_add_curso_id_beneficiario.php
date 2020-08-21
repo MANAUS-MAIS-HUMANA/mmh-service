@@ -27,7 +27,7 @@ class AddCursoIdBeneficiario extends Migration
     public function down()
     {
         Schema::table('beneficiarios', function (Blueprint $table) {
-            $table->dropForeig  n('beneficiarios_curso_id_foreign');
+            $table->dropForeign('beneficiarios_curso_id_foreign');
             $table->dropColumn('curso_id');
         });
     }
