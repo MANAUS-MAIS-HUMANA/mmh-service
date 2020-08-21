@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
              BairroSeeder::class,
              EstadoCivilSeeder::class,
              ZonaSeeder::class,
+             CursoSeeder::class,
          ]);
     }
 }
