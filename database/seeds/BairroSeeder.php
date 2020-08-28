@@ -108,6 +108,8 @@ class BairroSeeder extends Seeder
             ['cidade_id' => 1, 'nome' => 'Zumbi dos Palmares'],
             ['cidade_id' => 1, 'nome' => 'Zumbi dos Palmares II'],
             ['cidade_id' => 1, 'nome' => 'Outro (Especificar no campo "Endereço")'],
+            ['cidade_id' => 1, 'nome' => 'Alvorada 3'],
+            ['cidade_id' => 1, 'nome' => 'Ouro Verde'],
         ]);
 
         $bairros->each(fn($bairro) => Bairro::updateOrCreate($bairro));
