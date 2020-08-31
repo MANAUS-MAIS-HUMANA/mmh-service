@@ -7,8 +7,9 @@ ARG USER_UID=1000
 WORKDIR /var/www
 
 RUN rm -rf /var/www/html \
-    && apk add --no-cache openssl bash nano mysql-client nginx shadow supervisor \
-    && docker-php-ext-install pdo pdo_mysql bcmath \
+    && apk update \
+    && apk add --no-cache openssl bash nano mysql-client nginx shadow supervisor libzip-dev \
+    && docker-php-ext-install pdo pdo_mysql bcmath zip \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && usermod -u ${USER_UID} www-data \
     && groupmod -g ${USER_UID} www-data
