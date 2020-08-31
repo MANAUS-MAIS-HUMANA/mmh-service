@@ -137,7 +137,7 @@ return [
         'mail' => [],
 
         'slack' => [
-            'webhook_url' => 'https://hooks.slack.com/services/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',
+            'webhook_url' => env('SLACK_WEBHOOK', ''),
 
             /*
              * If this is set to null the default channel of the webhook will be used.
