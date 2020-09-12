@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\ApiError;
 use App\Helpers\HttpStatus;
+use App\Models\Parceiro;
 use App\Models\Endereco;
 use App\Models\Beneficiario;
 use App\Models\Telefone;
@@ -169,6 +170,91 @@ class BeneficiarioService
                 'code' => $e->getCode(),
             ];
         }
+    }
+
+    public function getBeneficiariesBasic(Request $request): array
+    {
+        $parceiroIdParam = $request->query('partner_id');
+        $parceiroId = null;
+        if (!is_null($parceiroIdParam)) {
+            $parceiroId = (int)$parceiroIdParam;
+            if ($parceiroId == 0) {
+                return [
+                    'success' => false,
+                    'message' => ApiError::parceiroNaoEncontrado($parceiroIdParam),
+                    'code' => HttpStatus::NOT_FOUND,
+                ];
+            }
+
+            $parceiro = Parceiro::find($parceiroId);
+
+            if (is_null($parceiro)) {
+                return [
+                    'success' => false,
+                    'message' => ApiError::parceiroNaoEncontrado($parceiroId),
+                    'code' => HttpStatus::NOT_FOUND,
+                ];
+            }
+        }
+
+        $limit = (int)$request->query('limit');
+
+        if ($limit == 0) {
+            $limit = self::BENEFICIARIOS_POR_PAGINA;
+        }
+
+        try {
+            $beneficiariosQuery = Beneficiario::select(
+                    'beneficiarios.id as id',
+                    'beneficiarios.nome as nome',
+                    'beneficiarios.ativo as ativo',
+                    'beneficiarios.total_residentes as total_residentes',
+                    \DB::raw('MAX(beneficiarios_doacoes.data_doacao) as data_doacao'),
+                    \DB::raw('SUM(beneficiarios_doacoes.total_cestas) as total_cestas'),
+                )->leftJoin(
+                    'beneficiarios_doacoes',
+                    'beneficiarios.id',
+                    '=',
+                    'beneficiarios_doacoes.beneficiario_id',
+                );
+
+            if ($parceiroId) {
+                $beneficiariosQuery = $beneficiariosQuery
+                    ->where('beneficiarios.parceiro_id', '=', $parceiroId)
+                    ->orWhere(function($query) use ($parceiroId) {
+                        $query->where('beneficiarios_doacoes.parceiro_id', '=', $parceiroId)
+                            ->whereNull('beneficiarios_doacoes.parceiro_id');
+                    });
+            }
+
+            if ($request->query('search')) {
+                $value = $request->query('search');
+                $beneficiariosQuery = $beneficiariosQuery
+                    ->where('beneficiarios.nome', 'like', '%' . $value . '%')
+                    ->orWhere('beneficiarios.cpf', '=', $value)
+                    ->orWhere('beneficiarios.email', 'like', '%' . $value . '%');
+            }
+
+            $beneficiarios = $beneficiariosQuery
+                ->groupBy('beneficiarios.id')
+                ->orderBy('beneficiarios.nome')
+                ->paginate($limit);
+
+            $resultado = [
+                'success' => true,
+                'data' => $beneficiarios,
+                'message' => 'Beneficiarios obtidos com sucesso!',
+                'code' => HttpStatus::OK,
+            ];
+        } catch (Exception $e) {
+            $resultado = [
+                'success' => false,
+                'message' => ApiError::erroInesperado($e->getMessage()),
+                'code' => HttpStatus::INTERNAL_SERVER_ERROR,
+            ];
+        }
+
+        return $resultado;
     }
 
     private function criarBeneficiario(Request $request): Beneficiario

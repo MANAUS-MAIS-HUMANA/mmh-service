@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "63e22f78-a4a8-4e0f-8eb8-3496f87e7c88",
+		"_postman_id": "ca25760d-0c83-474d-b902-cd1cd0e5b5dc",
 		"name": "ManausMaisHumana",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -953,6 +953,44 @@
 								"v1",
 								"beneficiarios",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Beneficiários (Básico)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}:{{port}}/api/v1/beneficiarios/basico",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"beneficiarios",
+								"basico"
 							]
 						}
 					},

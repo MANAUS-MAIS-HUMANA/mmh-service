@@ -966,6 +966,174 @@ response.json()</code></pre>
 </tbody>
 </table>
 <!-- END_b66ddf7052986a20d72d938918504a7c -->
+<!-- START_72732668cddc0c2f22c014ff77744237 -->
+<h2>Listar Básico</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint listar dados básicos dos beneficiários.</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/beneficiarios/basico"
+);
+
+let params = {
+    "page": ""1"",
+    "limit": ""6"",
+    "partner_id": ""1"",
+    "search": ""João"",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;get(
+    'http://localhost/api/v1/beneficiarios/basico',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page'=&gt; '"1"',
+            'limit'=&gt; '"6"',
+            'partner_id'=&gt; '"1"',
+            'search'=&gt; '"João"',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/beneficiarios/basico'
+params = {
+  'page': '"1"',
+  'limit': '"6"',
+  'partner_id': '"1"',
+  'search': '"João"',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X GET \
+    -G "http://localhost/api/v1/beneficiarios/basico?page=%221%22&amp;limit=%226%22&amp;partner_id=%221%22&amp;search=%22Jo%C3%A3o%22" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 1,
+            "nome": "João dos Santos",
+            "ativo": 1,
+            "total_residentes": "2",
+            "data_doacao": "2020-09-08 20:17:27",
+            "total_cestas": "3"
+        },
+        {
+            "id": 2,
+            "nome": "Joana da Silva",
+            "ativo": 1,
+            "total_residentes": "3",
+            "data_doacao": "2020-09-11 20:17:37",
+            "total_cestas": "3"
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/basico?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/basico?page=1",
+    "next_page_url": null,
+    "path": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/basico",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 2,
+    "total": 2,
+    "message": "Beneficiarios obtidos com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/basico"
+}</code></pre>
+<blockquote>
+<p>Example response (404):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #105: Parceiro 20 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/20\/beneficiarios"
+}</code></pre>
+<blockquote>
+<p>Example response (401):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/v1/beneficiarios/basico</code></p>
+<h4>Query Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>page</code></td>
+<td>optional</td>
+<td>Número da página para retornar os dados.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>optional</td>
+<td>Total de elementos por página para retornar.</td>
+</tr>
+<tr>
+<td><code>partner_id</code></td>
+<td>optional</td>
+<td>Filtrar elementos por parceiro.</td>
+</tr>
+<tr>
+<td><code>search</code></td>
+<td>optional</td>
+<td>Filtrar elementos por nome, CPF ou email.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_72732668cddc0c2f22c014ff77744237 -->
 <!-- START_16c03d3a0496c95c245c0466712bd25d -->
 <h2>Buscar</h2>
 <p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
@@ -1097,22 +1265,22 @@ let body = {
     "email": "fulano@tal.com",
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
-    "esta_desempregado": false,
-    "estado_civil_id": 15,
+    "esta_desempregado": true,
+    "estado_civil_id": 9,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "accusantium",
+    "situacao_moradia": "facere",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": true,
+    "gostaria_montar_negocio": false,
     "gostaria_participar_cursos": true,
-    "tipo_curso": "vero",
+    "tipo_curso": "vel",
     "concorda_informacoes_verdadeiras": true,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "adipisci"
+            "tipo": "dolorem"
         }
     ],
     "enderecos": [
@@ -1148,22 +1316,22 @@ $response = $client-&gt;post(
             'email' =&gt; 'fulano@tal.com',
             'data_nascimento' =&gt; '1990-01-01',
             'trabalho' =&gt; 'Trabalhador Autônomo',
-            'esta_desempregado' =&gt; false,
-            'estado_civil_id' =&gt; 15,
+            'esta_desempregado' =&gt; true,
+            'estado_civil_id' =&gt; 9,
             'nome_conjuge' =&gt; 'Carolina Novais.',
             'cpf_conjuge' =&gt; '10987654321',
             'total_residentes' =&gt; 4,
-            'situacao_moradia' =&gt; 'accusantium',
+            'situacao_moradia' =&gt; 'facere',
             'renda_mensal' =&gt; 1000.0,
-            'gostaria_montar_negocio' =&gt; true,
+            'gostaria_montar_negocio' =&gt; false,
             'gostaria_participar_cursos' =&gt; true,
-            'tipo_curso' =&gt; 'vero',
+            'tipo_curso' =&gt; 'vel',
             'concorda_informacoes_verdadeiras' =&gt; true,
             'data_submissao' =&gt; '2020-05-01 10:11:12',
             'telefones' =&gt; [
                 [
                     'telefone' =&gt; 92991234567,
-                    'tipo' =&gt; 'adipisci',
+                    'tipo' =&gt; 'dolorem',
                 ],
             ],
             'enderecos' =&gt; [
@@ -1190,22 +1358,22 @@ payload = {
     "email": "fulano@tal.com",
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
-    "esta_desempregado": false,
-    "estado_civil_id": 15,
+    "esta_desempregado": true,
+    "estado_civil_id": 9,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "accusantium",
+    "situacao_moradia": "facere",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": true,
+    "gostaria_montar_negocio": false,
     "gostaria_participar_cursos": true,
-    "tipo_curso": "vero",
+    "tipo_curso": "vel",
     "concorda_informacoes_verdadeiras": true,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "adipisci"
+            "tipo": "dolorem"
         }
     ],
     "enderecos": [
@@ -1227,7 +1395,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/beneficiarios" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":15,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"accusantium","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":true,"tipo_curso":"vero","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"adipisci"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":9,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"facere","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":true,"tipo_curso":"vel","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"dolorem"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 </code></pre>
 <blockquote>
 <p>Example response (201):</p>
@@ -1464,22 +1632,22 @@ let body = {
     "email": "fulano@tal.com",
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
-    "esta_desempregado": true,
-    "estado_civil_id": 1,
+    "esta_desempregado": false,
+    "estado_civil_id": 14,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "voluptatem",
+    "situacao_moradia": "ex",
     "renda_mensal": 1000,
     "gostaria_montar_negocio": true,
-    "gostaria_participar_cursos": false,
-    "tipo_curso": "est",
-    "concorda_informacoes_verdadeiras": true,
+    "gostaria_participar_cursos": true,
+    "tipo_curso": "rerum",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "nihil"
+            "tipo": "cupiditate"
         }
     ],
     "enderecos": [
@@ -1515,22 +1683,22 @@ $response = $client-&gt;put(
             'email' =&gt; 'fulano@tal.com',
             'data_nascimento' =&gt; '1990-01-01',
             'trabalho' =&gt; 'Trabalhador Autônomo',
-            'esta_desempregado' =&gt; true,
-            'estado_civil_id' =&gt; 1,
+            'esta_desempregado' =&gt; false,
+            'estado_civil_id' =&gt; 14,
             'nome_conjuge' =&gt; 'Carolina Novais.',
             'cpf_conjuge' =&gt; '10987654321',
             'total_residentes' =&gt; 4,
-            'situacao_moradia' =&gt; 'voluptatem',
+            'situacao_moradia' =&gt; 'ex',
             'renda_mensal' =&gt; 1000.0,
             'gostaria_montar_negocio' =&gt; true,
-            'gostaria_participar_cursos' =&gt; false,
-            'tipo_curso' =&gt; 'est',
-            'concorda_informacoes_verdadeiras' =&gt; true,
+            'gostaria_participar_cursos' =&gt; true,
+            'tipo_curso' =&gt; 'rerum',
+            'concorda_informacoes_verdadeiras' =&gt; false,
             'data_submissao' =&gt; '2020-05-01 10:11:12',
             'telefones' =&gt; [
                 [
                     'telefone' =&gt; 92991234567,
-                    'tipo' =&gt; 'nihil',
+                    'tipo' =&gt; 'cupiditate',
                 ],
             ],
             'enderecos' =&gt; [
@@ -1557,22 +1725,22 @@ payload = {
     "email": "fulano@tal.com",
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
-    "esta_desempregado": true,
-    "estado_civil_id": 1,
+    "esta_desempregado": false,
+    "estado_civil_id": 14,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "voluptatem",
+    "situacao_moradia": "ex",
     "renda_mensal": 1000,
     "gostaria_montar_negocio": true,
-    "gostaria_participar_cursos": false,
-    "tipo_curso": "est",
-    "concorda_informacoes_verdadeiras": true,
+    "gostaria_participar_cursos": true,
+    "tipo_curso": "rerum",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "nihil"
+            "tipo": "cupiditate"
         }
     ],
     "enderecos": [
@@ -1594,7 +1762,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/beneficiarios/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":1,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"voluptatem","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":false,"tipo_curso":"est","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"nihil"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":14,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"ex","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":true,"tipo_curso":"rerum","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"cupiditate"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 </code></pre>
 <blockquote>
 <p>Example response (200):</p>
@@ -1919,6 +2087,94 @@ response.json()</code></pre>
 </tbody>
 </table>
 <!-- END_bf69b99e6bfae0dd82366f4a6beb22cd -->
+<h1>DashboardController</h1>
+<p>Controller responsável por retornar as informações do dashboard.</p>
+<!-- START_8f5bbba9c61f23d65eddc127e763a2f9 -->
+<h2>Listar</h2>
+<p>Endpoint para retornar informações do dashboard</p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/dashboard"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;get(
+    'http://localhost/api/v1/dashboard',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost/api/v1/dashboard'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre>
+<pre><code class="language-bash">curl -X GET \
+    -G "http://localhost/api/v1/dashboard" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "arrecadados": 364823.78,
+        "meta_arrecadacao": 670,
+        "cestas_doadas": 5370,
+        "meta_cestas_doadas": 10000,
+        "pessoas_impactadas": 21480,
+        "meta_pessoas_impactadas": 40000,
+        "familias_impactadas": 5370,
+        "meta_familias_atendidas": 10000,
+        "instituicoes_contemplada": 57,
+        "zonas": {
+            "sul": 13.08,
+            "oeste": 17.3,
+            "norte": 16.6,
+            "leste": 13.04,
+            "centro_sul": 39.97
+        }
+    },
+    "message": "Informações do dashboard obtidas com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/dashboard"
+}</code></pre>
+<blockquote>
+<p>Example response (500):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET api/v1/dashboard</code></p>
+<!-- END_8f5bbba9c61f23d65eddc127e763a2f9 -->
 <h1>DoadorController</h1>
 <p>Controller responsável pelo CRUD de doadores.</p>
 <!-- START_b3fba95f5e912d42c5fd681d1e2a21ec -->
@@ -2506,7 +2762,7 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "dolorem"
+            "tipo": "quisquam"
         }
     ],
     "enderecos": [
@@ -2543,7 +2799,7 @@ $response = $client-&gt;post(
             'telefones' =&gt; [
                 [
                     'telefone' =&gt; 92991234567,
-                    'tipo' =&gt; 'dolorem',
+                    'tipo' =&gt; 'quisquam',
                 ],
             ],
             'enderecos' =&gt; [
@@ -2571,7 +2827,7 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "dolorem"
+            "tipo": "quisquam"
         }
     ],
     "enderecos": [
@@ -2593,7 +2849,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/parceiros" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"dolorem"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"quisquam"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 </code></pre>
 <blockquote>
 <p>Example response (201):</p>
@@ -2747,7 +3003,7 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "quisquam"
+            "tipo": "et"
         }
     ],
     "enderecos": [
@@ -2784,7 +3040,7 @@ $response = $client-&gt;put(
             'telefones' =&gt; [
                 [
                     'telefone' =&gt; 92991234567,
-                    'tipo' =&gt; 'quisquam',
+                    'tipo' =&gt; 'et',
                 ],
             ],
             'enderecos' =&gt; [
@@ -2812,7 +3068,7 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "quisquam"
+            "tipo": "et"
         }
     ],
     "enderecos": [
@@ -2834,7 +3090,7 @@ response.json()</code></pre>
     "http://localhost/api/v1/parceiros/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"quisquam"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"et"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 </code></pre>
 <blockquote>
 <p>Example response (200):</p>

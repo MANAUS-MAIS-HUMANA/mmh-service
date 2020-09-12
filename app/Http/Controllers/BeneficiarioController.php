@@ -218,4 +218,34 @@ class BeneficiarioController extends Controller
 
         return $resource->response()->setStatusCode($resultado['code']);
     }
+
+    /**
+     * Listar Básico
+     *
+     * Endpoint listar dados básicos dos beneficiários.
+     *
+     * @authenticated
+     *
+     * @queryParam page Número da página para retornar os dados. Example: "1"
+     * @queryParam limit Total de elementos por página para retornar. Example: "6"
+     * @queryParam partner_id Filtrar elementos por parceiro. Example: "1"
+     * @queryParam search Filtrar elementos por nome, CPF ou email. Example: "João"
+     *
+     * @responseFile 200 responses/BeneficiarioController/getBasic.200.json
+     * @responseFile 404 responses/ParceiroController/getBeneficiaries.404.json
+     * @responseFile 401 responses/Middleware/unauthorized.401.json
+     * @responseFile 500 responses/ParceiroController/internalServerError.500.json
+     */
+    public function getBasic(Request $request): JsonResponse
+    {
+        $resultado = $this->beneficiarioService->getBeneficiariesBasic($request);
+
+        $resource = new BeneficiarioResource(
+            $resultado['data'] ??= null,
+            $resultado['success'],
+            $resultado['message'],
+        );
+
+        return $resource->response()->setStatusCode($resultado['code']);
+    }
 }
