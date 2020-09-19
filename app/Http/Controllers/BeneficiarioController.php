@@ -109,6 +109,7 @@ class BeneficiarioController extends Controller
      * @bodyParam renda_mensal float Renda mensal do beneficiário. Example: 1000
      * @bodyParam gostaria_montar_negocio boolean Indica se o beneficiário tem intersse em montar um negócio.
      * @bodyParam gostaria_participar_cursos boolean Indica se o usuário tem interesse em participar de cursos.
+     * @bodyParam curso_id int ID do curso que o usuário gostaria de participar.
      * @bodyParam tipo_curso string Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.
      * @bodyParam concorda_informacoes_verdadeiras boolean required Indica se o usuário concordou com os termos.
      * @bodyParam data_submissao string Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS. Example: 2020-05-01 10:11:12
@@ -161,6 +162,7 @@ class BeneficiarioController extends Controller
      * @bodyParam renda_mensal float Renda mensal do beneficiário. Example: 1000
      * @bodyParam gostaria_montar_negocio boolean Indica se o beneficiário tem intersse em montar um negócio.
      * @bodyParam gostaria_participar_cursos boolean Indica se o usuário tem interesse em participar de cursos.
+     * @bodyParam curso_id int ID do curso que o usuário gostaria de participar.
      * @bodyParam tipo_curso string Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.
      * @bodyParam concorda_informacoes_verdadeiras boolean required Indica se o usuário concordou com os termos.
      * @bodyParam data_submissao string Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS. Example: 2020-05-01 10:11:12

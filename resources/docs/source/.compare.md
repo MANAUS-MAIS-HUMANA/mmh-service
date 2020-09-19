@@ -1301,21 +1301,22 @@ let body = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": true,
-    "estado_civil_id": 9,
+    "estado_civil_id": 20,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "facere",
+    "situacao_moradia": "perferendis",
     "renda_mensal": 1000,
     "gostaria_montar_negocio": false,
     "gostaria_participar_cursos": true,
-    "tipo_curso": "vel",
-    "concorda_informacoes_verdadeiras": true,
+    "curso_id": 16,
+    "tipo_curso": "non",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "dolorem"
+            "tipo": "suscipit"
         }
     ],
     "enderecos": [
@@ -1355,21 +1356,22 @@ $response = $client->post(
             'data_nascimento' => '1990-01-01',
             'trabalho' => 'Trabalhador Autônomo',
             'esta_desempregado' => true,
-            'estado_civil_id' => 9,
+            'estado_civil_id' => 20,
             'nome_conjuge' => 'Carolina Novais.',
             'cpf_conjuge' => '10987654321',
             'total_residentes' => 4,
-            'situacao_moradia' => 'facere',
+            'situacao_moradia' => 'perferendis',
             'renda_mensal' => 1000.0,
             'gostaria_montar_negocio' => false,
             'gostaria_participar_cursos' => true,
-            'tipo_curso' => 'vel',
-            'concorda_informacoes_verdadeiras' => true,
+            'curso_id' => 16,
+            'tipo_curso' => 'non',
+            'concorda_informacoes_verdadeiras' => false,
             'data_submissao' => '2020-05-01 10:11:12',
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'dolorem',
+                    'tipo' => 'suscipit',
                 ],
             ],
             'enderecos' => [
@@ -1400,21 +1402,22 @@ payload = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": true,
-    "estado_civil_id": 9,
+    "estado_civil_id": 20,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "facere",
+    "situacao_moradia": "perferendis",
     "renda_mensal": 1000,
     "gostaria_montar_negocio": false,
     "gostaria_participar_cursos": true,
-    "tipo_curso": "vel",
-    "concorda_informacoes_verdadeiras": true,
+    "curso_id": 16,
+    "tipo_curso": "non",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "dolorem"
+            "tipo": "suscipit"
         }
     ],
     "enderecos": [
@@ -1439,7 +1442,7 @@ curl -X POST \
     "http://localhost/api/v1/beneficiarios" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":9,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"facere","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":true,"tipo_curso":"vel","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"dolorem"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":20,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"perferendis","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":true,"curso_id":16,"tipo_curso":"non","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"suscipit"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
@@ -1510,6 +1513,7 @@ Parameter | Type | Status | Description
         `renda_mensal` | float |  optional  | Renda mensal do beneficiário.
         `gostaria_montar_negocio` | boolean |  optional  | Indica se o beneficiário tem intersse em montar um negócio.
         `gostaria_participar_cursos` | boolean |  optional  | Indica se o usuário tem interesse em participar de cursos.
+        `curso_id` | integer |  optional  | ID do curso que o usuário gostaria de participar.
         `tipo_curso` | string |  optional  | Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.
         `concorda_informacoes_verdadeiras` | boolean |  required  | Indica se o usuário concordou com os termos.
         `data_submissao` | string |  optional  | Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.
@@ -1550,21 +1554,22 @@ let body = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": false,
-    "estado_civil_id": 14,
+    "estado_civil_id": 18,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "ex",
+    "situacao_moradia": "sequi",
     "renda_mensal": 1000,
     "gostaria_montar_negocio": true,
-    "gostaria_participar_cursos": true,
-    "tipo_curso": "rerum",
+    "gostaria_participar_cursos": false,
+    "curso_id": 3,
+    "tipo_curso": "provident",
     "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "cupiditate"
+            "tipo": "voluptate"
         }
     ],
     "enderecos": [
@@ -1604,21 +1609,22 @@ $response = $client->put(
             'data_nascimento' => '1990-01-01',
             'trabalho' => 'Trabalhador Autônomo',
             'esta_desempregado' => false,
-            'estado_civil_id' => 14,
+            'estado_civil_id' => 18,
             'nome_conjuge' => 'Carolina Novais.',
             'cpf_conjuge' => '10987654321',
             'total_residentes' => 4,
-            'situacao_moradia' => 'ex',
+            'situacao_moradia' => 'sequi',
             'renda_mensal' => 1000.0,
             'gostaria_montar_negocio' => true,
-            'gostaria_participar_cursos' => true,
-            'tipo_curso' => 'rerum',
+            'gostaria_participar_cursos' => false,
+            'curso_id' => 3,
+            'tipo_curso' => 'provident',
             'concorda_informacoes_verdadeiras' => false,
             'data_submissao' => '2020-05-01 10:11:12',
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'cupiditate',
+                    'tipo' => 'voluptate',
                 ],
             ],
             'enderecos' => [
@@ -1649,21 +1655,22 @@ payload = {
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
     "esta_desempregado": false,
-    "estado_civil_id": 14,
+    "estado_civil_id": 18,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "ex",
+    "situacao_moradia": "sequi",
     "renda_mensal": 1000,
     "gostaria_montar_negocio": true,
-    "gostaria_participar_cursos": true,
-    "tipo_curso": "rerum",
+    "gostaria_participar_cursos": false,
+    "curso_id": 3,
+    "tipo_curso": "provident",
     "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "cupiditate"
+            "tipo": "voluptate"
         }
     ],
     "enderecos": [
@@ -1688,7 +1695,7 @@ curl -X PUT \
     "http://localhost/api/v1/beneficiarios/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":14,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"ex","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":true,"tipo_curso":"rerum","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"cupiditate"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":18,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"sequi","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":false,"curso_id":3,"tipo_curso":"provident","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"voluptate"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
@@ -1767,6 +1774,7 @@ Parameter | Type | Status | Description
         `renda_mensal` | float |  optional  | Renda mensal do beneficiário.
         `gostaria_montar_negocio` | boolean |  optional  | Indica se o beneficiário tem intersse em montar um negócio.
         `gostaria_participar_cursos` | boolean |  optional  | Indica se o usuário tem interesse em participar de cursos.
+        `curso_id` | integer |  optional  | ID do curso que o usuário gostaria de participar.
         `tipo_curso` | string |  optional  | Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.
         `concorda_informacoes_verdadeiras` | boolean |  required  | Indica se o usuário concordou com os termos.
         `data_submissao` | string |  optional  | Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.
@@ -2636,7 +2644,7 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "quisquam"
+            "tipo": "voluptatibus"
         }
     ],
     "enderecos": [
@@ -2676,7 +2684,7 @@ $response = $client->post(
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'quisquam',
+                    'tipo' => 'voluptatibus',
                 ],
             ],
             'enderecos' => [
@@ -2707,7 +2715,7 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "quisquam"
+            "tipo": "voluptatibus"
         }
     ],
     "enderecos": [
@@ -2732,7 +2740,7 @@ curl -X POST \
     "http://localhost/api/v1/parceiros" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"quisquam"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"voluptatibus"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
@@ -2829,7 +2837,7 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "et"
+            "tipo": "magnam"
         }
     ],
     "enderecos": [
@@ -2869,7 +2877,7 @@ $response = $client->put(
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'et',
+                    'tipo' => 'magnam',
                 ],
             ],
             'enderecos' => [
@@ -2900,7 +2908,7 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "et"
+            "tipo": "magnam"
         }
     ],
     "enderecos": [
@@ -2925,7 +2933,7 @@ curl -X PUT \
     "http://localhost/api/v1/parceiros/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"et"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"magnam"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
