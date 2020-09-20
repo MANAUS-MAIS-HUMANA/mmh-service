@@ -991,6 +991,172 @@ Parameter | Status | Description
 
 <!-- END_b66ddf7052986a20d72d938918504a7c -->
 
+<!-- START_72732668cddc0c2f22c014ff77744237 -->
+## Listar Básico
+
+<br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small>
+Endpoint listar dados básicos dos beneficiários.
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/beneficiarios/basico"
+);
+
+let params = {
+    "page": ""1"",
+    "limit": ""6"",
+    "partner_id": ""1"",
+    "search": ""João"",
+};
+Object.keys(params)
+    .forEach(key => url.searchParams.append(key, params[key]));
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get(
+    'http://localhost/api/v1/beneficiarios/basico',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+        'query' => [
+            'page'=> '"1"',
+            'limit'=> '"6"',
+            'partner_id'=> '"1"',
+            'search'=> '"João"',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/beneficiarios/basico'
+params = {
+  'page': '"1"',
+  'limit': '"6"',
+  'partner_id': '"1"',
+  'search': '"João"',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()
+```
+
+```bash
+curl -X GET \
+    -G "http://localhost/api/v1/beneficiarios/basico?page=%221%22&limit=%226%22&partner_id=%221%22&search=%22Jo%C3%A3o%22" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 1,
+            "nome": "João dos Santos",
+            "ativo": 1,
+            "total_residentes": "2",
+            "data_doacao": "2020-09-08 20:17:27",
+            "total_cestas": "3"
+        },
+        {
+            "id": 2,
+            "nome": "Joana da Silva",
+            "ativo": 1,
+            "total_residentes": "3",
+            "data_doacao": "2020-09-11 20:17:37",
+            "total_cestas": "3"
+        }
+    ],
+    "first_page_url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/basico?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/basico?page=1",
+    "next_page_url": null,
+    "path": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/basico",
+    "per_page": 6,
+    "prev_page_url": null,
+    "to": 2,
+    "total": 2,
+    "message": "Beneficiarios obtidos com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/beneficiarios\/basico"
+}
+```
+> Example response (404):
+
+```json
+{
+    "data": [],
+    "message": "Erro #105: Parceiro 20 não encontrado.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros\/20\/beneficiarios"
+}
+```
+> Example response (401):
+
+```json
+{
+    "data": [],
+    "message": "Não autorizado",
+    "success": false
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}
+```
+
+### HTTP Request
+`GET api/v1/beneficiarios/basico`
+
+#### Query Parameters
+
+Parameter | Status | Description
+--------- | ------- | ------- | -----------
+    `page` |  optional  | Número da página para retornar os dados.
+    `limit` |  optional  | Total de elementos por página para retornar.
+    `partner_id` |  optional  | Filtrar elementos por parceiro.
+    `search` |  optional  | Filtrar elementos por nome, CPF ou email.
+
+<!-- END_72732668cddc0c2f22c014ff77744237 -->
+
 <!-- START_16c03d3a0496c95c245c0466712bd25d -->
 ## Buscar
 
@@ -1134,22 +1300,23 @@ let body = {
     "email": "fulano@tal.com",
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
-    "esta_desempregado": false,
-    "estado_civil_id": 15,
+    "esta_desempregado": true,
+    "estado_civil_id": 20,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "accusantium",
+    "situacao_moradia": "perferendis",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": true,
+    "gostaria_montar_negocio": false,
     "gostaria_participar_cursos": true,
-    "tipo_curso": "vero",
-    "concorda_informacoes_verdadeiras": true,
+    "curso_id": 16,
+    "tipo_curso": "non",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "adipisci"
+            "tipo": "suscipit"
         }
     ],
     "enderecos": [
@@ -1188,22 +1355,23 @@ $response = $client->post(
             'email' => 'fulano@tal.com',
             'data_nascimento' => '1990-01-01',
             'trabalho' => 'Trabalhador Autônomo',
-            'esta_desempregado' => false,
-            'estado_civil_id' => 15,
+            'esta_desempregado' => true,
+            'estado_civil_id' => 20,
             'nome_conjuge' => 'Carolina Novais.',
             'cpf_conjuge' => '10987654321',
             'total_residentes' => 4,
-            'situacao_moradia' => 'accusantium',
+            'situacao_moradia' => 'perferendis',
             'renda_mensal' => 1000.0,
-            'gostaria_montar_negocio' => true,
+            'gostaria_montar_negocio' => false,
             'gostaria_participar_cursos' => true,
-            'tipo_curso' => 'vero',
-            'concorda_informacoes_verdadeiras' => true,
+            'curso_id' => 16,
+            'tipo_curso' => 'non',
+            'concorda_informacoes_verdadeiras' => false,
             'data_submissao' => '2020-05-01 10:11:12',
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'adipisci',
+                    'tipo' => 'suscipit',
                 ],
             ],
             'enderecos' => [
@@ -1233,22 +1401,23 @@ payload = {
     "email": "fulano@tal.com",
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
-    "esta_desempregado": false,
-    "estado_civil_id": 15,
+    "esta_desempregado": true,
+    "estado_civil_id": 20,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "accusantium",
+    "situacao_moradia": "perferendis",
     "renda_mensal": 1000,
-    "gostaria_montar_negocio": true,
+    "gostaria_montar_negocio": false,
     "gostaria_participar_cursos": true,
-    "tipo_curso": "vero",
-    "concorda_informacoes_verdadeiras": true,
+    "curso_id": 16,
+    "tipo_curso": "non",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "adipisci"
+            "tipo": "suscipit"
         }
     ],
     "enderecos": [
@@ -1273,7 +1442,7 @@ curl -X POST \
     "http://localhost/api/v1/beneficiarios" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":15,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"accusantium","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":true,"tipo_curso":"vero","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"adipisci"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":20,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"perferendis","renda_mensal":1000,"gostaria_montar_negocio":false,"gostaria_participar_cursos":true,"curso_id":16,"tipo_curso":"non","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"suscipit"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
@@ -1344,6 +1513,7 @@ Parameter | Type | Status | Description
         `renda_mensal` | float |  optional  | Renda mensal do beneficiário.
         `gostaria_montar_negocio` | boolean |  optional  | Indica se o beneficiário tem intersse em montar um negócio.
         `gostaria_participar_cursos` | boolean |  optional  | Indica se o usuário tem interesse em participar de cursos.
+        `curso_id` | integer |  optional  | ID do curso que o usuário gostaria de participar.
         `tipo_curso` | string |  optional  | Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.
         `concorda_informacoes_verdadeiras` | boolean |  required  | Indica se o usuário concordou com os termos.
         `data_submissao` | string |  optional  | Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.
@@ -1383,22 +1553,23 @@ let body = {
     "email": "fulano@tal.com",
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
-    "esta_desempregado": true,
-    "estado_civil_id": 1,
+    "esta_desempregado": false,
+    "estado_civil_id": 18,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "voluptatem",
+    "situacao_moradia": "sequi",
     "renda_mensal": 1000,
     "gostaria_montar_negocio": true,
     "gostaria_participar_cursos": false,
-    "tipo_curso": "est",
-    "concorda_informacoes_verdadeiras": true,
+    "curso_id": 3,
+    "tipo_curso": "provident",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "nihil"
+            "tipo": "voluptate"
         }
     ],
     "enderecos": [
@@ -1437,22 +1608,23 @@ $response = $client->put(
             'email' => 'fulano@tal.com',
             'data_nascimento' => '1990-01-01',
             'trabalho' => 'Trabalhador Autônomo',
-            'esta_desempregado' => true,
-            'estado_civil_id' => 1,
+            'esta_desempregado' => false,
+            'estado_civil_id' => 18,
             'nome_conjuge' => 'Carolina Novais.',
             'cpf_conjuge' => '10987654321',
             'total_residentes' => 4,
-            'situacao_moradia' => 'voluptatem',
+            'situacao_moradia' => 'sequi',
             'renda_mensal' => 1000.0,
             'gostaria_montar_negocio' => true,
             'gostaria_participar_cursos' => false,
-            'tipo_curso' => 'est',
-            'concorda_informacoes_verdadeiras' => true,
+            'curso_id' => 3,
+            'tipo_curso' => 'provident',
+            'concorda_informacoes_verdadeiras' => false,
             'data_submissao' => '2020-05-01 10:11:12',
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'nihil',
+                    'tipo' => 'voluptate',
                 ],
             ],
             'enderecos' => [
@@ -1482,22 +1654,23 @@ payload = {
     "email": "fulano@tal.com",
     "data_nascimento": "1990-01-01",
     "trabalho": "Trabalhador Aut\u00f4nomo",
-    "esta_desempregado": true,
-    "estado_civil_id": 1,
+    "esta_desempregado": false,
+    "estado_civil_id": 18,
     "nome_conjuge": "Carolina Novais.",
     "cpf_conjuge": "10987654321",
     "total_residentes": 4,
-    "situacao_moradia": "voluptatem",
+    "situacao_moradia": "sequi",
     "renda_mensal": 1000,
     "gostaria_montar_negocio": true,
     "gostaria_participar_cursos": false,
-    "tipo_curso": "est",
-    "concorda_informacoes_verdadeiras": true,
+    "curso_id": 3,
+    "tipo_curso": "provident",
+    "concorda_informacoes_verdadeiras": false,
     "data_submissao": "2020-05-01 10:11:12",
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "nihil"
+            "tipo": "voluptate"
         }
     ],
     "enderecos": [
@@ -1522,7 +1695,7 @@ curl -X PUT \
     "http://localhost/api/v1/beneficiarios/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":true,"estado_civil_id":1,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"voluptatem","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":false,"tipo_curso":"est","concorda_informacoes_verdadeiras":true,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"nihil"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"parceiro_id":1,"nome":"Machado de Assis","cpf":"12345678901","email":"fulano@tal.com","data_nascimento":"1990-01-01","trabalho":"Trabalhador Aut\u00f4nomo","esta_desempregado":false,"estado_civil_id":18,"nome_conjuge":"Carolina Novais.","cpf_conjuge":"10987654321","total_residentes":4,"situacao_moradia":"sequi","renda_mensal":1000,"gostaria_montar_negocio":true,"gostaria_participar_cursos":false,"curso_id":3,"tipo_curso":"provident","concorda_informacoes_verdadeiras":false,"data_submissao":"2020-05-01 10:11:12","telefones":[{"telefone":92991234567,"tipo":"voluptate"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
@@ -1601,6 +1774,7 @@ Parameter | Type | Status | Description
         `renda_mensal` | float |  optional  | Renda mensal do beneficiário.
         `gostaria_montar_negocio` | boolean |  optional  | Indica se o beneficiário tem intersse em montar um negócio.
         `gostaria_participar_cursos` | boolean |  optional  | Indica se o usuário tem interesse em participar de cursos.
+        `curso_id` | integer |  optional  | ID do curso que o usuário gostaria de participar.
         `tipo_curso` | string |  optional  | Tipo de curso que o beneficiário gostaria de fazer: Presencial, Online ou Ambos.
         `concorda_informacoes_verdadeiras` | boolean |  required  | Indica se o usuário concordou com os termos.
         `data_submissao` | string |  optional  | Data e hora de submissão do formulário, no formato AAAA-MM-DD HH:MM:SS.
@@ -1728,6 +1902,116 @@ Parameter | Status | Description
     `beneficiario` |  required  | ID do beneficiário.
 
 <!-- END_bf69b99e6bfae0dd82366f4a6beb22cd -->
+
+#DashboardController
+
+
+Controller responsável por retornar as informações do dashboard.
+<!-- START_8f5bbba9c61f23d65eddc127e763a2f9 -->
+## Listar
+
+Endpoint para retornar informações do dashboard
+
+> Example request:
+
+```javascript
+const url = new URL(
+    "http://localhost/api/v1/dashboard"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+```php
+
+$client = new \GuzzleHttp\Client();
+$response = $client->get(
+    'http://localhost/api/v1/dashboard',
+    [
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ],
+    ]
+);
+$body = $response->getBody();
+print_r(json_decode((string) $body));
+```
+
+```python
+import requests
+import json
+
+url = 'http://localhost/api/v1/dashboard'
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+response = requests.request('GET', url, headers=headers)
+response.json()
+```
+
+```bash
+curl -X GET \
+    -G "http://localhost/api/v1/dashboard" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+
+> Example response (200):
+
+```json
+{
+    "data": {
+        "arrecadados": 364823.78,
+        "meta_arrecadacao": 670,
+        "cestas_doadas": 5370,
+        "meta_cestas_doadas": 10000,
+        "pessoas_impactadas": 21480,
+        "meta_pessoas_impactadas": 40000,
+        "familias_impactadas": 5370,
+        "meta_familias_atendidas": 10000,
+        "instituicoes_contemplada": 57,
+        "zonas": {
+            "sul": 13.08,
+            "oeste": 17.3,
+            "norte": 16.6,
+            "leste": 13.04,
+            "centro_sul": 39.97
+        }
+    },
+    "message": "Informações do dashboard obtidas com sucesso!",
+    "success": true,
+    "url": "http:\/\/back.localhost\/api\/v1\/dashboard"
+}
+```
+> Example response (500):
+
+```json
+{
+    "data": [],
+    "message": "Erro #1: Um erro inesperado ocorreu.",
+    "success": false,
+    "url": "http:\/\/back.localhost\/api\/v1\/parceiros"
+}
+```
+
+### HTTP Request
+`GET api/v1/dashboard`
+
+
+<!-- END_8f5bbba9c61f23d65eddc127e763a2f9 -->
 
 #DoadorController
 
@@ -2360,7 +2644,7 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "dolorem"
+            "tipo": "voluptatibus"
         }
     ],
     "enderecos": [
@@ -2400,7 +2684,7 @@ $response = $client->post(
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'dolorem',
+                    'tipo' => 'voluptatibus',
                 ],
             ],
             'enderecos' => [
@@ -2431,7 +2715,7 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "dolorem"
+            "tipo": "voluptatibus"
         }
     ],
     "enderecos": [
@@ -2456,7 +2740,7 @@ curl -X POST \
     "http://localhost/api/v1/parceiros" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"dolorem"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"voluptatibus"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
@@ -2553,7 +2837,7 @@ let body = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "quisquam"
+            "tipo": "magnam"
         }
     ],
     "enderecos": [
@@ -2593,7 +2877,7 @@ $response = $client->put(
             'telefones' => [
                 [
                     'telefone' => 92991234567,
-                    'tipo' => 'quisquam',
+                    'tipo' => 'magnam',
                 ],
             ],
             'enderecos' => [
@@ -2624,7 +2908,7 @@ payload = {
     "telefones": [
         {
             "telefone": 92991234567,
-            "tipo": "quisquam"
+            "tipo": "magnam"
         }
     ],
     "enderecos": [
@@ -2649,7 +2933,7 @@ curl -X PUT \
     "http://localhost/api/v1/parceiros/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
-    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"quisquam"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
+    -d '{"nome":"Manaus+Humana","email":"fulano@tal.com","cnpj":"13245678901234","cpf":"12345678901","telefones":[{"telefone":92991234567,"tipo":"magnam"}],"enderecos":[{"endereco":"Rua da paz, 150","bairro_id":1,"zona_id":1,"cidade_id":1}]}'
 
 ```
 
