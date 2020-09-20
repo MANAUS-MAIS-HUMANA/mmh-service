@@ -49,13 +49,14 @@ class AtualizarBeneficiarioRequest extends FormRequest
                 'min:2',
                 new ValidarSeExisteSobrenome(),
             ],
-            'cpf_conjuge' => 'nullable|required_with:nome_conjuge|cpf|size:11|' .
+            'cpf_conjuge' => 'nullable|required_with:nome_conjuge|cpf|size:11|different:cpf|' .
                 'unique:beneficiarios,cpf|unique:beneficiarios,cpf_conjuge,' . $this->id,
             'total_residentes' => 'nullable|integer|min:0',
-            'situacao_moradia' => 'nullable|in:Alugada,Cedido,Própria,Própria Financiada',
+            'situacao_moradia' => "nullable|in:{$this->getHouseStatus()}",
             'renda_mensal' => 'nullable|numeric|min:0',
             'gostaria_montar_negocio' => 'nullable|boolean',
             'gostaria_participar_cursos' => 'nullable|boolean',
+            'curso_id' => 'nullable|integer|exists:cursos,id',
             'tipo_curso' => 'nullable|string',
             'concorda_informacoes_verdadeiras' => 'required|boolean',
             'data_submissao' => 'nullable|date_format:Y-m-d H:i:s',
@@ -70,6 +71,11 @@ class AtualizarBeneficiarioRequest extends FormRequest
         ];
 
         return $rules;
+    }
+
+    protected function getHouseStatus()
+    {
+        return 'Alugada,Cedido,Local de trabalho,Outros,Própria,Própria Financiada';
     }
 
     /**
@@ -95,6 +101,7 @@ class AtualizarBeneficiarioRequest extends FormRequest
             "required" => "O :attribute é obrigatório.",
             "unique" => "O :attribute já existe no sistema.",
             "required_with" => "O nome e CPF do cônjuge precisam ser fornecidos juntos.",
+            "different" => "O CPF do cônjuge deve ser diferente do CPF do beneficiário.",
         ];
     }
 
@@ -121,6 +128,7 @@ class AtualizarBeneficiarioRequest extends FormRequest
             'renda_mensal' => 'Renda Mensal',
             'gostaria_montar_negocio' => 'Gostaria de Montar um Negócio',
             'gostaria_participar_cursos' => 'Gostaria de Participar de Cursos',
+            'curso_id' => 'ID do curso que gostaria de participar',
             'tipo_curso' => 'Tipo do Curso',
             'concorda_informacoes_verdadeiras' => 'Concorda que Informações são Verdadeiras',
             'data_submissao' => 'Data de Submissão',

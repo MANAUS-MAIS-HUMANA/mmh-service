@@ -17,7 +17,6 @@ class Beneficiario extends Model
         'created_at',
         'updated_at',
         'estado_civil_id',
-        'parceiro_id',
     ];
 
     public function estadoCivil()
