@@ -221,18 +221,19 @@ class BeneficiarioService
             if ($parceiroId) {
                 $beneficiariosQuery = $beneficiariosQuery
                     ->where('beneficiarios.parceiro_id', '=', $parceiroId)
-                    ->orWhere(function($query) use ($parceiroId) {
-                        $query->where('beneficiarios_doacoes.parceiro_id', '=', $parceiroId)
-                            ->whereNull('beneficiarios_doacoes.parceiro_id');
+                    ->where(function ($query) use ($parceiroId) {
+                        $query->whereNull('beneficiarios_doacoes.parceiro_id')
+                            ->orWhere('beneficiarios_doacoes.parceiro_id', '=', $parceiroId);
                     });
             }
 
             if ($request->query('search')) {
                 $value = $request->query('search');
-                $beneficiariosQuery = $beneficiariosQuery
-                    ->where('beneficiarios.nome', 'like', '%' . $value . '%')
-                    ->orWhere('beneficiarios.cpf', '=', $value)
-                    ->orWhere('beneficiarios.email', 'like', '%' . $value . '%');
+                $beneficiariosQuery = $beneficiariosQuery->where(function ($query) use ($value) {
+                    $query->orWhere('beneficiarios.nome', 'like', '%' . $value . '%')
+                        ->orWhere('beneficiarios.cpf', '=', $value)
+                        ->orWhere('beneficiarios.email', 'like', '%' . $value . '%');
+                });
             }
 
             $beneficiarios = $beneficiariosQuery
