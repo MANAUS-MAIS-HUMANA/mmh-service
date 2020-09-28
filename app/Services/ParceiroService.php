@@ -333,6 +333,14 @@ class ParceiroService
             ];
         }
 
+        if ($beneficiario->parceiro_id !== $parceiro->id) {
+            return [
+                'success' => false,
+                'message' => ApiError::beneficiarioOutroParceiro($beneficiaryId),
+                'code' => HttpStatus::UNPROCESSABLE_ENTITY,
+            ];
+        }
+
         DB::beginTransaction();
 
         try {
@@ -467,6 +475,14 @@ class ParceiroService
                 'success' => false,
                 'message' => ApiError::beneficiarioNaoEncontrado($beneficiaryId),
                 'code' => HttpStatus::NOT_FOUND,
+            ];
+        }
+
+        if ($beneficiario->parceiro_id !== $parceiro->id) {
+            return [
+                'success' => false,
+                'message' => ApiError::beneficiarioOutroParceiro($beneficiaryId),
+                'code' => HttpStatus::UNPROCESSABLE_ENTITY,
             ];
         }
 
