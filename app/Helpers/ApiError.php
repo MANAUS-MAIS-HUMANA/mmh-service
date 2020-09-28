@@ -25,6 +25,7 @@ class ApiError
     const CODIGO_ERRO_DOACAO_DE_OUTRO_PARCEIRO = 205;
     const CODIGO_ERRO_DOACAO_DE_OUTRO_BENEFICIARIO = 206;
     const CODIGO_ERRO_REMOVER_DOACAO_DE_BENEFICIARIO = 207;
+    const CODIGO_ERRO_BENEFICIARIO_OUTRO_PARCEIRO = 208;
 
     public static function erroInesperado(string $message)
     {
@@ -199,4 +200,11 @@ class ApiError
         );
     }
 
+    public static function beneficiarioOutroParceiro($beneficiarioId)
+    {
+        return self::setMessageAndCode(
+            'Beneficiario ' . $beneficiarioId . ' não está associado ao parceiro especificado.',
+            self::CODIGO_ERRO_BENEFICIARIO_OUTRO_PARCEIRO,
+        );
+    }
 }
