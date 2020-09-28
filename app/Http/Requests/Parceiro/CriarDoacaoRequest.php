@@ -33,7 +33,7 @@ class CriarDoacaoRequest extends FormRequest
     {
         return [
             'total_cestas' => 'required|integer|min:0',
-            'data_doacao' => 'required|date',
+            'data_doacao' => 'date',
         ];
     }
 
@@ -45,8 +45,8 @@ class CriarDoacaoRequest extends FormRequest
     public function messages(): array
     {
         return [
-            "required" => "O :attribute é obrigatório.",
-            "date" => "O :attribute deve ser uma data válida.",
+            "required" => "O atributo :attribute é obrigatório.",
+            "date" => "A :attribute deve ser uma data válida.",
             "integer" => "O :attribute deve ser um número inteiro.",
             "min" => "O :attribute deve ser um número positivo.",
         ];

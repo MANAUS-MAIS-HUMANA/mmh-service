@@ -15,6 +15,7 @@ class ValidarToken
         '/api\/v1\/auth\/refresh.*/' => ['admin', 'codese', 'parceiro'],
         '/api\/v1\/usuario\/.+\/set-status/' => ['admin', 'codese'],
         '/api\/v1\/beneficiarios.*/' => ['admin', 'codese', 'parceiro'],
+        '/api\/v1\/parceiros\/.+\/beneficiarios/' => ['admin', 'codese', 'parceiro'],
         '/api\/v1\/parceiros.*/' => ['admin', 'codese'],
     ];
 
